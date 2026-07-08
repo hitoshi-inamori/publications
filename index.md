@@ -11,7 +11,7 @@ Welcome to my research portal. This archive hosts my working manuscripts and der
 
 | Title | Description | Access |
 | :--- | :--- | :--- |
-| General Relativity cheat sheet | A minimal introduction to general relativity | [PDF](./introductionGeneralRelativity/manuscript.pdf) |
+| General Relativity cheat sheet | A minimal introduction to general relativity | [PDF](./introductionGeneralRelativity/Relativity.pdf) |
 
 
 ## About this Archive
