@@ -1,0 +1,1009 @@
+% Hitoshi Inamori
+% Cheat sheets Standard Format File
+
+%\documentstyle[11pt]{article}
+\documentclass[11pt]{article}
+%\usepackage{leftidx}% http://ctan.org/pkg/leftidx
+% Default margins are too wide all the way around.  I reset them here
+\setlength{\topmargin}{-.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{-0.3in}
+%\setlength{\evensidemargin}{.125in}
+\setlength{\textwidth}{6.25in}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% My commands are here: basically we create a new standard table using
+% \toshTable
+% Then 
+%		a definition is created using \toshDefinition
+%   a property is created using \toshProperty
+%   a proof (one column) is created using \toshProof
+%   an example (one column) is created using \toshExample
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\toshTableBegin} 			{\begin{tabular}{|p{5cm}|p{11cm}|}}
+\newcommand{\toshTableEnd} 				{\hline \end{tabular}}
+\newcommand{\toshTableTitle}[1] 	{\hline \multicolumn{2}{|l|}{{\bf{#1}}}\\ \hline}
+\newcommand{\toshTableNotation}[1]{\hline \multicolumn{2}{|p{16cm}|}{(\textbf{Note}) #1}\\}
+\newcommand{\toshDefinition}[2]		{\hline (D) {\bf{#1}} & {#2} \\}
+\newcommand{\toshProperty}[2]			{\hline (P) {#1} & {#2} \\}
+\newcommand{\toshProof}[1]				{\hline \multicolumn{2}{|p{16cm}|}{(\small \underline{Proof}) #1}\\}
+\newcommand{\toshExample}[1]			{\hline \multicolumn{2}{|p{16cm}|}{\small (Example) #1}\\}
+\newcommand{\toshRemark}[1]			{\hline \multicolumn{2}{|p{16cm}|}{\small (Remark) #1}\\}
+\newcommand{\toshNewPage}					{\hline \end{tabular} \newpage \toshTableBegin}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For Definitions or Properties with several conditions or implications
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\toshBlockStart}		{\begin{tabular}{l}}
+\newcommand{\toshBlockItem}[1]	{{#1} \\}
+\newcommand{\toshBlockDesc}[2]	{{\bf{(#1)}}\, {#2} \\}
+\newcommand{\toshBlockEnd}			{\end{tabular}}
+\newcommand{\toshLeftBlock}[1]	{$\left.{#1}\right]$}
+\newcommand{\toshRightBlock}[1]	{$\left[{#1}\right.$}
+\newcommand{\toshDef}[1]				{{\textbf{#1}}}
+\newcommand{\toshDual}{\tilde{E}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Preferred Symbols
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\toshEquivalent}		{$\iff$}
+\newcommand{\toshImply}					{\Rightarrow}
+\newcommand{\toshByDef}					{$\stackrel{D}{\iff}$}
+\newcommand{\toshEqByDef}				{\,\stackrel{D}{=}\,}
+\newcommand{\toshIdentity}			{{\mathbf{1}}}
+\newcommand{\toshItoInt}				{{\mathcal{I}}}
+\newcommand{\toshB}							{{\mathcal{B}}\,}
+\newcommand{\toshC}							{{\mathbf{C}}}
+\newcommand{\toshCylinder}			{{\mathcal{C}}_1}
+\newcommand{\toshF}							{{\mathcal{F}}\,}
+\newcommand{\toshG}							{{\mathcal{G}}\,}
+\newcommand{\toshH}							{{\mathcal{H}}\,}
+\newcommand{\toshL}							{{\mathcal{L}}}
+\newcommand{\toshLOne}					{{\mathcal{L}}^1}
+\newcommand{\toshM}							{{\mathcal{M}}\,}
+\newcommand{\toshMStep}					{M^2_{{step}}}
+\newcommand{\toshMTwo}					{M^2}					
+\newcommand{\toshN}							{{\mathbf{N}}\,}
+\newcommand{\toshNuST}					{{\nu^{m\times n}_{\toshH}(S,T)}}
+\newcommand{\toshST}						{\,/\,} % Such That
+\newcommand{\toshR}							{{\mathbf{R}}}
+\newcommand{\toshT}							{{\mathbf{T}}}
+\newcommand{\toshVar}						{{\textrm{Var}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Quantum physics
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\state}[1]{\left|{#1}\right>}
+\newcommand{\stateBasis}[2]{\left|{#1}\right>_{#2}}
+\newcommand{\bra}[1]{\left<{#1}\right|}
+\newcommand{\braBasis}[2]{\left<{#1}\right|_{#2}}
+\newcommand{\braket}[2]{\left<{#1}|{#2}\right>}
+%\newcommand{\braketBasis}[3]{\leftidx{_{#3}}{\left<{#1}|{#2}\right>}_{#3}}
+\newcommand{\Tr}[1]{\textrm{Tr}\left({#1}\right)}
+\newcommand{\PartTr}[2]{\textrm{Tr}_{#2}\left({#1}\right)}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Begin document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title{General Relativity cheat sheet}
+\author{Hitoshi Inamori}
+%\renewcommand{\today}{April, 2008}
+\maketitle
+
+%\abstract{This is a note on General Relativity in a condensed format, with a first section dedicated to pure mathematical tool, and the second part with application to physics.}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tensors
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bigskip
+
+\textbf{Mathematical tools}
+
+\toshTableBegin
+\toshTableTitle{Tensors}
+% Hermitian matrix
+\toshDefinition{Dual space}{
+Let $E$ be a finite dimensional vector space.
+
+A \textbf{one-form} is a linear function mapping a vector into a scalar.
+
+The \textbf{dual space of $E$, $\toshDual$,} is the vector space of all one-forms on $E$.
+
+Let $\{e_\mu\}_\mu$ be a basis (not necessarily orthonormal) of $E$. 
+
+Then there exists a unique basis $\{\tilde{e}^\nu\}_\nu$, called \textbf{dual basis} one-forms such that for all $\mu$ and $\nu$, $\tilde{e}^\nu(e_\mu)=\delta^\nu_\mu$. The one-form $\tilde{e}^\mu$ is also called \textbf{component one-form} as for any vector $V=V^\mu e_\mu$, $\tilde{e}^\mu(V)=V^\mu$.
+}
+\toshRemark{The one-form may appear a highly abstract notion but the concept of dual vector space is present in quantum physics as well (bra and kets). In quantum mechanics, the distinction between bras (one forms) and kets (vectors) is necessary because probability amplitudes are complex numbers. In general relativity, the distinction between vectors and one-forms is necessary because spacetime is curved.
+}
+\toshDefinition{Tensors}{A \textbf{$(m,n)$-tensor} (or \textbf{$m$-contravariant and $n$-covariant tensor}) is defined to be a scalar function of $m$ one-forms and $n$ vectors that is linear in all of its arguments (i.e. a mapping from the product space of $m$ one-forms and $n$ vectors to a scalar). It is a linear combination of $e_{\mu_1}\otimes\cdots\otimes e_{\mu_m}\otimes \tilde{e}^{\nu_1}\otimes\cdots\otimes\tilde{e}^{\nu_n}$:
+	
+\bigskip
+	
+\quad $A=A^{\mu_1\ldots \mu_m}_{\nu_1\ldots \nu_n}e_{\mu_1}\otimes\cdots\otimes e_{\mu_m}\otimes \tilde{e}^{\nu_1}\otimes\cdots\otimes\tilde{e}^{\nu_n}$	
+
+\bigskip
+
+It follows that $A(e_{\mu_1}\otimes\cdots\otimes e_{\mu_m}\otimes \tilde{e}^{\nu_1}\otimes\cdots\otimes\tilde{e}^{\nu_n})=A^{\mu_1\ldots \mu_m}_{\nu_1\ldots \nu_n}$, and $A^{\mu_1\ldots \mu_m}_{\nu_1\ldots \nu_n}$ are said to be $m$-contravariant $n$-covariant components of $A$.
+}
+\toshDefinition{Metric tensor}{
+A \textbf{metric tensor} $g$ is a (0,2)-tensor such that:
+
+\toshRightBlock{
+\toshBlockStart
+\toshBlockDesc{1}{Symmetric: for all $V$ and $W$ in $E$, $g(V,W)=g(W,V)$.}
+\toshBlockDesc{2}{Non singular: the matrix$(g_{\mu \nu})$ where $g_{\mu \nu}=g(e_\mu,e_\nu)$}
+\toshBlockItem{\quad is invertible.}
+\toshBlockEnd	
+}
+
+The \textbf{inverse metric tensor} $g^{-1}$ is a (2,0)-tensor defined by:
+
+\quad $g^{-1}(X,Y)=g^{\mu \nu}X_\mu Y_\nu$ \quad for $X=X_\mu \tilde{e}^\mu$, $Y=Y_\mu \tilde{e}^\mu$ in $\toshDual$
+
+where $(g^{\mu \nu})$ is the inverse matrix of $g_{\mu \nu}$, i.e. $g_{\mu \alpha}g^{\alpha \nu}=\delta^\nu_\mu$. 
+
+\smallskip
+
+Note that $g=g_{\mu \nu}\tilde{e}^\mu \tilde{e}^\nu$ and $g^{-1}=g^{\mu \nu}{e}_\mu {e}_\nu$.
+}
+\toshNewPage
+\toshProperty{Mapping between covariant and contravariant tensors}{
+The metric tensor $g$ defines a mapping from vectors to one-forms:
+
+\quad $V\in E\mapsto g(V,\cdot)\in\toshDual$ with $g(V,\cdot): W\in E\mapsto g(V,W)\in\toshR$
+
+Given a basis $\{e_\mu\}_\mu$ and the dual basis $\{\tilde{e}^\mu\}_\mu$ we have:
+
+\quad $g(V,\cdot)=g_{\mu\nu}V^\mu \tilde{e}^\nu\in \toshDual$ \quad for any $V=V^\mu e_\mu\in E$.
+
+\bigskip
+
+Conversely, $g^{-1}$ defines a mapping from one-forms to vectors:
+
+\quad $X\in \toshDual\mapsto g^{-1}(X,\cdot)\in E$ with $g^{-1}(X,\cdot): Y\in \toshDual\mapsto g^{-1}(X,Y)$
+
+Given the bases above we have:
+
+\quad $g^{-1}(X,\cdot)=g^{\mu\nu}X_\mu e_\nu\in E$ \quad for any $X=X_\mu \tilde{e}^\mu\in \toshDual$.
+
+\smallskip
+
+Note however that the mapping between vectors and one-forms defined by the metric tensor is not the one which maps a basis $\{e_\mu\}_\mu$ of $E$ to its conjugate basis $\{e^\nu\}_\nu$ of $\tilde{E}$.
+}
+\toshProof{$g(V,\cdot)=g_{\mu\nu}\tilde{e}^\mu V^\alpha e_\alpha \tilde{e}^\nu=g_{\mu\nu}\delta^\mu_\alpha  V^\alpha \tilde{e}^\nu=g_{\mu\nu}V^\mu \tilde{e}^\nu$, likewise for $g^{-1}$. 
+
+For the last remark note that $g(e_\alpha,\cdot)=g_{\alpha \nu}\tilde{e}^\nu \neq \tilde{e}^\alpha$.
+}
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Covariant derivatives, Christoffel symbols
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\toshTableBegin
+\toshTableTitle{Covariant derivatives, Christoffel symbols, Riemann tensor}
+\toshDefinition{Differentiable manifold,
+
+\bigskip
+
+Coordinate chart,
+
+\bigskip
+
+Atlas 
+
+(or coordinate system)}{a \toshDef{differentiable manifold} $\mathcal{M}$ of dimension $n$ is a set of points such that:
+
+\smallskip
+
+1) any point in $\mathcal{M}$ has a neighborhood $U\subset \mathcal{M}$ and a set of $n$ continuously differentiable scalar fields $M\in U \mapsto x(M)=(x^\mu(M))_\mu\in\toshR^n$ that assigns the coordinates $(x^\mu(M))_\mu$ to each point $M\in U$. The pair $(U,x)$ is called a \toshDef{coordinate chart}.
+
+\smallskip
+
+2) a collection of coordinate charts $\{(U_i,x_i)\}$ covers the whole manifold, i.e. ${\mathcal{M}}={\bigcup}_i U_i$. Such collection is called an \toshDef{atlas} of ${\mathcal{U}}$.
+
+\smallskip
+
+3) for any $i$ and $j$ such that $U_i \cap U_j \neq \emptyset$, the coordinate transformation $M\in U_i \cap U_j \mapsto x_i(x_j^{-1}(M))\in\toshR^n$ is continuously differentiable.
+
+\bigskip
+
+In the following we consider a point $M$ and a point infinitesimally close to $M+dM$ in a given coordinate chart and we will drop the chart index $i$. Their coordinates are denoted $x^\mu$ and $x^\mu+dx^\mu$.
+}
+\toshDefinition{Tensor field}{A \textbf{(m,n)-tensor field} is a map that links each point $M$ of a manifold to an (m,n)-tensor. We assume that this map is continuously differentiable in $M$.
+}
+\toshDefinition{Coordinate basis}{A \textbf{coordinate basis} at $M$ is the vector basis $\{e_\mu(M)\}_\mu$ defined by:
+
+\quad $e_\mu(M) = \frac{\partial M}{\partial x^\mu}$
+
+\smallskip 
+
+The basis is only defined at $M$ and in the neighborhood of $M$ provided the manifold is smooth.
+
+Its dual basis of one forms, the \textbf{coordinate dual basis}, is denoted by $\{\tilde{e}(M)^\mu\}_\mu$. When there is no ambiguity, the reference to $M$ is omitted.
+}
+\toshNewPage
+\toshDefinition{Christoffel symbols}{The Christoffel symbols gives the variation of the coordinate vector basis between $M$ and $M+dM$, {\bf projected} in the coordinate vector basis at $M$:
+	
+\quad $e_\mu(M+dM)	- e_\mu(M) = \Gamma^\lambda_{\mu\nu} e_\lambda(M)dx^\nu$, \quad i.e. $\displaystyle \frac{\partial e_\mu}{\partial x^\nu}=\Gamma^\lambda_{\mu\nu}e_\lambda$
+
+
+When a manifold is embedded in a higher-dimensional space, the standard partial derivative of a basis vector contains both a tangential component and an orthogonal (extrinsic) component. Because General Relativity relies strictly on intrinsic geometry, the covariant derivative discards the orthogonal component.
+}
+\toshProperty{Christoffel symbols first properties}{
+\toshBlockStart
+\toshBlockDesc{Not a tensor}{The Christoffel symbols are not components}
+\toshBlockItem{\quad of a (1,2) tensor}
+\toshBlockDesc{Symmetry}{$\Gamma^\lambda_{\mu\nu}=\Gamma^\lambda_{\nu\mu}$ }
+\toshBlockDesc{One-forms}{The dual coordinate basis' variation reads}
+\toshBlockItem{$\tilde{e}^\mu(M+dM)	- \tilde{e}^\mu(M) = -\Gamma^\mu_{\nu\lambda} \tilde{e}^\lambda(M)dx^\nu$, \quad i.e. $\displaystyle \frac{\partial \tilde{e}^\mu}{\partial x^\nu}=-\Gamma^\mu_{\nu\lambda}\tilde{e}^\lambda$}
+\toshBlockEnd
+
+}
+\toshProof{For symmetry, because $\frac{\partial e_\mu}{\partial x^\nu}=\frac{\partial^2 M}{\partial x^\mu \partial x^\nu}=\frac{\partial e_\nu}{\partial x^\mu}$.
+	
+Assume that $\displaystyle \frac{\partial \tilde{e}^\mu}{\partial x^\nu}=\Pi^\mu_{\nu\lambda}\tilde{e}^\lambda$ for some $\Pi^\mu_{\nu\lambda}$. By differentiating the relation $\tilde{e}^\mu(e_\nu)=\delta^\mu_\nu$, with respect to $x^\alpha$ and using the bilinearity of the mapping $f:(V,\tilde W)\in E\times\tilde{E}\mapsto \tilde W(V)$, we get $\frac{\partial \tilde{e}^\mu}{\partial x^\alpha}(e_\nu)+\tilde{e}^\mu(\frac{\partial e_\nu}{\partial x^\alpha})=\Pi^\mu_{\alpha\lambda}\tilde{e}^\lambda(e_\nu) + \Gamma^\lambda_{\nu\alpha}\tilde{e}^\mu(e_\lambda)=\Pi^\mu_{\alpha\nu}+\Gamma^\mu_{\nu\alpha}=0$ thus $\Pi^\mu_{\alpha\nu}=-\Gamma^\mu_{\nu\alpha}$.
+}
+
+\toshDefinition{Covariant derivative}{For any (m,n)-tensor field $A$, the \textbf{covariant derivative} of $A$ is a (m,n+1)-tensor $\nabla A$ which maps the variation $dM\in E$ to the variation of the tensor $A$ between $M$ and $M+dM$, taking into account both the variation of the tensor components and the variation of the coordinate basis (and its dual).
+
+\bigskip
+
+\quad $\nabla A: dM\in E \mapsto \nabla A(dM)= A(M+dM)-A(M)$
+
+\bigskip
+
+If $A=A^{\mu_1\ldots \mu_m}_{\nu_1\ldots \nu_n}e_{\mu_1}\otimes\cdots\otimes e_{\mu_m}\otimes \tilde{e}^{\nu_1}\otimes\cdots\otimes\tilde{e}^{\nu_n}$, then using the Christoffel symbols we get:
+
+\bigskip 
+
+$\nabla A = (\nabla_\alpha A)\tilde{e}^\alpha$ with
+$\displaystyle \nabla_\alpha A = \frac{\partial A^{\mu_1\ldots \mu_m}_{\nu_1\ldots \nu_n}}{\partial x^\alpha}  e_{\mu_1}\otimes\cdots\otimes e_{\mu_m}\otimes \tilde{e}^{\nu_1}\otimes\cdots\otimes\tilde{e}^{\nu_n}+A^{\mu_1\ldots \mu_m}_{\nu_1\ldots \nu_n}\left(\Gamma^\kappa_{\mu_1\alpha}e_\kappa\right)e_{\mu_2}\otimes\cdots\otimes e_{\mu_m}\otimes \tilde{e}^{\nu_1}\otimes\cdots\otimes\tilde{e}^{\nu_n}+\cdots$
+with $m$ terms with positive $\Gamma$'s and $n$ terms with negative $\Gamma$'s.
+
+\bigskip
+
+In particular, for a vector field $V$ we have:
+
+\quad $\nabla V = \nabla_\alpha V^\beta \,\tilde{e}^\alpha\otimes e_\beta$ \quad with  \quad $\displaystyle \nabla_\alpha V^\beta = \frac{\partial V^\beta}{\partial x^\alpha}+\Gamma^\beta_{\kappa \alpha}V^\kappa$
+
+\bigskip
+
+and for a one-form field $X$ we have:
+
+\quad $\nabla X = \nabla_\alpha X_\beta \,\tilde{e}^\alpha\otimes \tilde{e}^\beta$ \quad with  \quad $\displaystyle \nabla_\alpha X_\beta = \frac{\partial X_\beta}{\partial x^\alpha}-\Gamma^\kappa_{\alpha \beta}X_\kappa$
+}
+\toshProof{
+By definition of $\nabla A$, for $A=V^\beta e_\beta$, $\nabla A=(\partial_\alpha V^\beta)e_\beta + V^\beta \Gamma^\gamma_{\beta \alpha}e_\gamma$ the last term, by change of indexation being equal to  $V^\kappa \Gamma^\beta_{\kappa \alpha}e_\beta$ similarly for the other formula. }
+\toshRemark{
+In general, vectors or tensors at distant points on the manifold cannot be compared as they lie in different tangent spaces. The notion of parallel transport allows this, provided the path linking the two points is specified.
+}
+\toshDefinition{Notation}{For any tensor field $A$, 
+
+\quad $\frac{\partial A}{\partial x^\alpha}$ can be denoted as $A_{,\alpha}$ 
+
+\quad $\nabla_\alpha A$ as $A_{;\alpha}$
+}
+\toshNewPage
+
+\toshDefinition{Parallel transport}{Let $M(\tau)$ of coordinate $x^\mu(\tau)$ be a curve parametrized by a real number $\tau$. The curve has a tangent vector $V=\frac{dM}{d\tau}=\frac{dx^\mu}{d\tau}e_\mu=V^\mu e_\mu$.
+
+The derivative of a tensor field $A$ along the curve $M(\tau)$ is defined as:
+
+\quad $\displaystyle \frac{d A}{d\tau}=\nabla_V A=\nabla A (V)=V^\kappa (\nabla_\kappa A)$.
+
+A tensor $A$ is said to be \textbf{parallel transported} along a curve $M(\tau)$ if and only if $\nabla_V A=0$.
+}
+\toshDefinition{Geodesics}{A \textbf{geodesic curve} is one that parallel transports its own tangent vector  i.e. 
+	
+\quad $\displaystyle \nabla_V V=\left\{\frac{dV^\mu}{d\tau}+\Gamma^\mu_{\kappa \lambda}V^\kappa V^\lambda\right\}	e_\mu=0$ \quad where \quad $\displaystyle V=\frac{dx^\mu}{d\tau}e_\mu$.
+}
+\toshDefinition{Riemann curvature tensor}{Suppose that we parallel-transport a vector field $W=W^\nu e_\nu$ along $dM=dx^\kappa e_\kappa$ then $\delta M = \delta x^\lambda e_\lambda$ then $ - dM$ and finally $-\delta M$. The difference between such parallel transported $W$ back to $M$ and the original $W$ is a vector which can be shown to be linear in $dx^\kappa$, $\delta x^\lambda$ and $W^\nu$:
+
+\smallskip
+
+\quad $R(W,dM,\delta M)	= R^\mu_{\nu \kappa\lambda}W^\nu dx^\kappa \delta x^\lambda e_\mu$
+
+\smallskip
+
+The \textbf{Riemann curvature tensor} is the (1,3)-tensor $R$ which maps the 3 vectors ($W$, $dM$, $\delta M$) to the $(1,0)$-tensor (i.e. vector) $R(W,dM,\delta M)$. 
+It can be shown that:
+
+\smallskip
+
+\quad $\displaystyle R^\mu_{\nu\kappa\lambda}=\partial_\kappa\Gamma^\mu_{\nu\lambda}-\partial_\lambda\Gamma^\mu_{\nu\kappa}+\Gamma^\mu_{\alpha\kappa}\Gamma^\alpha_{\nu\lambda}-\Gamma^\mu_{\alpha\lambda}\Gamma^\alpha_{\nu\kappa}$
+
+}
+\toshProof{Without loss of generality take $dM = \delta x^1 \, e_1$ and $\delta M = \delta x^2\,e_2$ for some small real numbers $\delta x^1$, $\delta x^2$, suppose we start from point $A$ and we parallel transport $W$ to $B = A + \delta x^1 \, e_1$ then to $C=B+\delta x^2 \, e_2$ then to $D = C -\delta x^1 \, e_1$ and back to $A = D - \delta x^2 \, e_2$. Parallel transporting $W$ along $dM$ means $\nabla_{dM} W = \delta x^1\nabla_1 W = 0$ i.e. $\partial_1 W^\alpha=-\Gamma^\alpha_{\beta 1}W^\beta$. For small $\delta x^1$ we have $W^\alpha(B) = W^\alpha(A) - \left. \Gamma^\alpha_{\beta 1} W^\beta\right|_{x_2=x_2}\delta x^1$. Likewise $W^\alpha(C) = W^\alpha(B) - \left. \Gamma^\alpha_{\beta 2} W^\beta\right|_{x_1=x_1+\delta x^1}\delta x^2$,  $W^\alpha(D) = W^\alpha(C) + \left. \Gamma^\alpha_{\beta 1} W^\beta\right|_{x_2=x_2+\delta x^2}\delta x^1$ and $W^\alpha(A') = W^\alpha(D) + \left. \Gamma^\alpha_{\beta 2} W^\beta\right|_{x_1=x_1}\delta x^2$. Therefore $\delta W^\alpha = W^\alpha(A') - W^\alpha(A)  = \delta x_1 \delta x_2\left[ -\frac{\delta}{\delta x_1}\left(\Gamma^\alpha_{\beta 2} V^\beta\right) + \frac{\delta}{\delta x_2}\left(\Gamma^\alpha_{\beta 1} V^\beta\right)\right]$. 
+
+Using again the relation $\partial_1 W^\alpha=-\Gamma^\alpha_{\beta 1} W^\beta$, we get $\delta W^\alpha = W^\beta\delta x^1 \delta x^2 \left[\partial_2\Gamma^\alpha_{\beta 1}-\partial_1\Gamma^\alpha_{\beta 2} + \Gamma^\alpha_{\nu 2} \Gamma^\nu_{\beta 1} - \Gamma^\alpha_{\nu 1} \Gamma^\nu_{\beta 2} \right]$ cqfd.
+}
+\toshProperty{Riemann tensor as the commutator of the covariant derivative}{The Riemann tensor verifies:
+
+\bigskip
+
+
+\quad $R^\mu_{\nu \kappa\lambda}W^\nu=(\nabla_\kappa \nabla_\lambda -\nabla_\lambda \nabla_\kappa )W^\mu = \left[\nabla_\kappa, \nabla_\lambda\right] W^\mu$
+}
+\toshProof{Direct application of $\nabla_\alpha V^\beta = \frac{\partial V^\beta}{\partial x^\alpha}+\Gamma^\beta_{\kappa \alpha}V^\kappa$ (a straightforward but a bit painful calculous with reindexations. Note that this is also how we defined the Riemann curvature tensor above).
+}
+\toshDefinition{Flat manifold}{A \toshDef{flat manifold} is a manifold with a coordinate system so that the Riemann tensor $R^\mu_{\nu\kappa\lambda}$ is identically null. In a flat manifold a vector can be moved around parallel to itself on an arbitrary curve and will return to its starting point unchanged.
+}
+\toshDefinition{Ricci tensor}{the \textbf{Ricci tensor} is the (0,2)-tensor field defined by
+	\smallskip
+	
+	\quad $\displaystyle R_{\mu \nu} = R^\alpha_{\mu \alpha \nu}$
+	
+}
+\toshNewPage
+\toshDefinition{Ricci scalar}{If a metric $g$ is defined then the \textbf{Ricci scalar} is the scalar field defined by
+	\smallskip
+	
+	\quad $\displaystyle R = g^{\mu \nu} R_{\mu \nu}$
+	
+}
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Riemannian manifold
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\toshTableBegin
+\toshTableTitle{Riemannian manifold}
+\toshDefinition{Riemannian manifold}{A differentiable manifold on which a symmetric $(0,2)$-tensor field $g$ has been defined to act as a metric at each point and to provide the mapping between covariant and contravariant tensors (see section above) is called a \toshDef{Riemannian manifold}.
+}
+\toshDefinition{Locally flat coordinate system}{Let a diagonal matrix $\eta$ of dimension the dimension of the manifold with $+1$ or $-1$ for its diagonal elements define the \toshDef{flat} metric. 
+
+Given a point $M$ on the manifold, a \toshDef{locally flat coordinate system} $x^\mu$ at $M$ is a coordinate system in which 
+
+\smallskip
+
+\quad $\displaystyle  g_{\alpha \beta}(M) = \eta_{\alpha \beta}$
+
+\smallskip
+
+\quad $\displaystyle\left.\frac{\partial}{\partial x^\gamma} g_{\alpha \beta}\right|_M = 0$
+
+\smallskip
+
+\quad $\displaystyle \left.\frac{\partial }{\partial x^\nu}e_\mu\right|_M=0$, i.e.  $\Gamma^\lambda_{\mu\nu} (M) = 0$}
+\toshDefinition{Smooth Riemannian manifold}{A \toshDef{smooth Riemannian manifold} is a Riemannian manifold for which a locally flat coordinate system exists.
+}
+\toshProperty{covariant derivative of $g$ for a smooth manifold}{
+In a smooth Riemannian manifold, $\nabla g = \nabla g^{-1} = 0$.
+}
+\toshProof{$\nabla_\alpha g_{\beta\gamma} = \partial_\alpha g_{\beta\gamma} - \Gamma^\kappa_{\alpha \beta}g_{\kappa\gamma} - \Gamma^\kappa_{\alpha \gamma}g_{\beta\kappa} = 0$, each term being zero by definition in the locally flat coordinate system. As this is an equality on tensor it is true for all coordinate systems.
+}
+\toshProperty{strategy to prove tensor properties}{It is usually much simpler to prove tensor identities in a locally flat coordinate system as the Christoffel symbols are zeros locally (caution their derivatives are not zero). One can prove tensor properties by extending partial derivatives $\partial_\alpha$ to covariant derivatives $\nabla_\alpha$ as the Christoffels coefficients are zero locally. If this leads to a tensor property then this property holds generally, independently of the choice of the coordinate basis.
+}
+\toshProperty{Christoffel symbols}{In a smooth Riemannian manifold, in any coordinate system $x^\mu$,
+
+\bigskip 
+
+\quad $\displaystyle \Gamma^\lambda_{\mu \nu} = \frac{1}{2} g^{\lambda\kappa}(\partial_\mu g_{\nu\kappa}+\partial_\nu g_{\mu\kappa}-\partial_\kappa g_{\mu\nu})$
+	
+}
+\toshProof{The covariant derivative of $g$ being zero, we have $\nabla_\lambda  g_{\mu\nu} = \partial_\lambda g_{\mu\nu} - \Gamma^\kappa_{\lambda \mu}g_{\kappa\nu} - \Gamma^\kappa_{\lambda \nu}g_{\mu\kappa} = 0$ and since $g_{\kappa\nu}=g_{\nu\kappa}$ we have (A) $\partial_\lambda g_{\mu\nu}=\Gamma^\kappa_{\lambda\mu}g_{\nu\kappa}+\Gamma^\kappa_{\lambda\nu}g_{\mu\kappa}$. Permuting the indices $(\lambda,\mu,\nu)$ to $(\mu,\lambda,\nu)$ (B) and to $(\nu,\lambda,\mu)$ (C) and computing (A)-(C)+(B) we obtain the relation (use $\Gamma^\kappa_{\alpha\beta}=\Gamma^\kappa_{\beta\alpha}$).   
+}
+\toshProperty{Riemann tensor in locally inertial frame}{In the \underline{locally inertial frame}, the Riemann tensor reads
+
+\bigskip
+	
+\quad $R_{\mu\nu\kappa\lambda}=g_{\mu\alpha}R^\alpha_{\nu\kappa\lambda}=\frac{1}{2}\left(
+\partial_{\nu \kappa} g_{\mu \lambda}-\partial_{\nu \lambda} g_{\mu \kappa}+\partial_{\mu \lambda} g_{\nu \kappa}-\partial_{\mu \kappa} g_{\nu \lambda}
+\right)$
+
+}
+\toshProof{In the locally inertial frame the Christoffel symbols are zero but not its derivatives, and we have
+$R^\mu_{\nu\kappa\lambda}=\partial_\kappa\Gamma^\mu_{\nu\lambda}-\partial_\lambda\Gamma^\mu_{\nu\kappa}$. Using $\Gamma^\lambda_{\mu \nu} = \frac{1}{2} g^{\lambda\kappa}(\partial_\mu g_{\nu\kappa}+\partial_\nu g_{\mu\kappa}-\partial_\kappa g_{\mu\nu})$ , and because $\partial_\alpha g_{\mu\nu}=0$ and using $g_{\mu\alpha}g^{\alpha\phi}=\delta^\phi_\mu$ we get the result.
+}
+\toshNewPage
+\toshProperty{Riemann tensor symmetries}{In any coordinate system,
+
+\toshBlockStart
+\toshBlockItem{$R_{\mu\nu\kappa\lambda}=R_{\kappa\lambda\mu\nu}=-R_{\nu\mu\kappa\lambda}=-R_{\mu\nu\lambda\kappa}$}
+\toshBlockItem{$R_{\mu\nu\kappa\lambda}+R_{\mu\kappa\lambda\nu}+R_{\mu\lambda\nu\kappa}=0$}
+\toshBlockEnd		
+
+In particular this reduces the number of independent components of the Riemann tensor in four dimensions from $4^4=256$ to 20.
+}
+\toshProof{The symmetry can be shown in a straightforward manner in the locally inertial frame using the formula shown above (and using $\partial_{\alpha\beta}=\partial_{\alpha\beta}$ and $g_{\alpha\beta}=g_{\beta\alpha}$). Because the Riemann tensor is a tensor contrary to Christoffel symbols, its symmetrical properties hold with any coordinate system.
+	
+$R_{\alpha\beta\mu\nu}=-R_{\alpha\beta\nu\mu}$ and $R_{\alpha\beta\mu\nu}=-R_{\beta\alpha\mu\nu}$implies $R_{\alpha\beta\mu\nu}=0$ if $\mu=\nu$ or $\alpha=\beta$ and we only have to consider the entries with $\alpha < \beta$ ($C^2_4=6$ cases) and $\mu < \nu$ (6 cases as well). You can consider that it is a square matrix $(R_{A,B})_{A,B}$ of dimension 6 with $A$ corresponding to the couple $(\alpha,\beta)$ (6 possibilities) and  $B$ corresponding to the couple $(\mu,\nu)$ (6 possibilities). Now we also have $R_{\alpha\beta\mu\nu}=R_{\mu\nu\alpha\beta}$ therefore $R_{A,B}=R_{B,A}$, i.e. the 6-dimesional matrix is symmetric and thus has 21 degrees of freedom. Finally the last symmetry leads to one additional condition when $\alpha<\beta<\mu<\nu$. 	
+}
+\toshProperty{Bianchi identity}{Applying the covariant derivative on the Riemann tensor we get:
+
+\bigskip
+ 
+\quad $\nabla_\sigma R^\mu_{\nu\kappa\lambda}+\nabla_\kappa R^\mu_{\nu\lambda\sigma}+\nabla_\lambda R^\mu_{\nu\sigma\kappa}=0$
+
+}
+\toshProof{Use the expression for Riemann tensor in the locally inertial frame, noting that all non differentiated Christofell symbols disappear (so that in the local frame $\nabla_\alpha=\partial_\alpha$ because you differentiate only once). You have only triple partial derivatives on the metric tensor which net with each others.
+}
+\toshDefinition{Einstein tensor}{The Einstein tensor is defined by
+
+\bigskip
+
+\quad $\displaystyle G^{\mu\nu} = R^{\mu \nu}-\frac{1}{2}g^{\mu\nu}R + \lambda g^{\mu\nu}$
+
+where the term $\lambda$ is called the \toshDef{cosmological constant}.
+}
+\toshProperty{Einstein tensor covariant derivative}{The covariant divergence of the Einstein tensor vanishes:
+
+\quad $\nabla_\nu G^{\mu\nu}=0$
+}
+\toshProof{Start from the Bianchi identity:
+$\nabla_\sigma R^\mu_{\nu\kappa\lambda}+\nabla_\kappa R^\mu_{\nu\lambda\sigma}+\nabla_\lambda R^\mu_{\nu\sigma\kappa}=0$. 
+Summing over $\mu=\kappa$ and using the antisymmetry of Riemann tensor for the last term we get $\nabla_\sigma R_{\nu\lambda}+\nabla_\mu R^\mu_{\nu\lambda\sigma} - \nabla_\lambda R^\mu_{\nu\mu\sigma}$ where the last term is $\nabla_\lambda R_{\nu\sigma}$. Multiplying by $g^{\nu\lambda}$ and summing over $\nu$ and $\lambda$ we get, noting that the covariant derivative of the metric tensor is zero: $\nabla_\sigma R+\nabla_\mu (g^{\nu\lambda}R^\mu_{\nu\lambda\sigma}) - \nabla_\lambda (g^{\nu\lambda} R_{\nu\sigma})=
+\nabla_\sigma R+\nabla_\mu (R^{\mu\lambda}_{\lambda\sigma}) - \nabla_\lambda (g^{\nu\lambda} R_{\nu\sigma})=
+\nabla_\sigma R-\nabla_\mu (R^{\lambda\mu}_{\lambda\sigma}) - \nabla_\lambda (g^{\nu\lambda} R_{\nu\sigma})=
+\nabla_\sigma R - 2\nabla_\lambda R^\lambda_\sigma=\nabla_\lambda\left(\delta_\sigma^\lambda R - 2 R^\lambda_\sigma\right) = 0 $ and noting again that covariant divergence of $g$ is zero.
+}
+\toshProperty{Lovelock theorem~\cite{Lovelock}}{In 4 dimensions, the only symmetric (2,0)-tensor which has zero covariant divergence and which is built from the metric $g_{\mu\nu}$ and its first two partial derivatives $\partial_\alpha g_{\mu\nu}$ and $\partial_{\alpha\beta} g_{\mu\nu}$ is the Einstein tensor.
+}
+\toshTableEnd
+\bigskip
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Application in simple setups
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\toshTableBegin
+\toshTableTitle{Application for a sphere surface embedded in $\toshR^3$}
+\toshDefinition{coordinate chart}{$(x^\mu)_\mu=(\theta,\phi)$, 
+
+corresponding to $( R \sin\theta\cos\phi, R \sin\theta\sin\phi,R\cos\theta)$ in $\toshR^3$.
+}
+\toshProperty{vector basis}{$\{e_\mu\}_\mu=\{e_\theta,e_\phi\}$ denoted also $\{\partial_\theta,\partial_\phi\}$, 
+
+\smallskip
+
+\quad$e_\theta=R(\cos\theta\cos\phi, \cos\theta\sin\phi,-\sin\theta)$
+
+\quad$e_\phi=R(-\sin\theta\sin\phi, \sin\theta\cos\phi, 0)$
+}
+\toshDefinition{metric/mapping covariant-contravariant}{We make the sphere a Riemannian manifold with the metric
+
+\smallskip
+
+$g_{\mu\nu} =
+\left(
+\begin{array}{cc}
+R^2 & 0 \\
+0 & R^2\sin^2\theta
+\end{array}
+\right)$
+\quad\quad
+$g^{\mu\nu} =
+\left(
+\begin{array}{cc}
+1/R^2 & 0 \\
+0 & 1/(R^2\sin^2\theta)
+\end{array}
+\right)$
+}
+\toshProperty{dual basis}{$\{\tilde{e}^\mu\}_\mu=\{\tilde{e}^\theta,\tilde{e}^\phi\}$ denoted also $\{\textrm{d}\theta,\textrm{d}\phi\}$, 
+
+\quad$\tilde{e}^\theta=g^{\theta\theta}e_\theta + g^{\theta\phi}e_\phi=g^{\theta\theta}e_\theta=(\cos\theta\cos\phi,\cos\theta\sin\phi,-\sin\theta)/R$
+
+
+\quad$\tilde{e}^\phi=g^{\phi\theta}e_\theta + g^{\phi\phi}e_\phi=g^{\phi\phi}e_\phi=(-\sin\phi,\cos\phi,0)/(R\sin\theta)$
+
+in the basis such that $\tilde{e}^\mu(e_\nu)$ is their scalar product in $R^3$.
+}
+\toshProperty{Christoffel symbols}{From  $\Gamma^\lambda_{\mu \nu} = \frac{1}{2} g^{\lambda\kappa}(\partial_\mu g_{\nu\kappa}+\partial_\nu g_{\mu\kappa}-\partial_\kappa g_{\mu\nu})$ we get:
+
+$\Gamma^\theta_{\phi\phi} = -\sin\theta\cos\theta$ \quad and \quad $\Gamma^\phi_{\theta\phi}=\Gamma^\phi_{\phi\theta}=\cos\theta/\sin\theta$
+
+the other terms being zero.
+}
+\toshRemark{Note again that Christoffel symbols give only the projection of the derivatives of the basis vectors onto the tangential space. For instance, $\partial_{\theta}e_{\theta}=R(-\sin\theta\cos\phi,-\sin\theta\sin\phi,-\cos\theta)$ is orthogonal to the tangent space, and therefore its related Christoffel symbols ($\Gamma_{\theta\theta}^{\theta}$ and $\Gamma_{\theta\theta}^{\phi}$) are zero. Regarding $\partial_{\phi}e_{\phi}$, it is orthogonal to $e_{\phi}$ (hence $\Gamma_{\phi\phi}^{\phi}=0$) but not to $e_{\theta}$, which yields the non-zero component $\Gamma_{\phi\phi}^{\theta} = -\sin\theta\cos\theta$.
+}
+\toshProperty{Riemann tensor}{From $R^\mu_{\nu\kappa\lambda}=\partial_\kappa\Gamma^\mu_{\nu\lambda}-\partial_\lambda\Gamma^\mu_{\nu\kappa}+\Gamma^\mu_{\alpha\kappa}\Gamma^\alpha_{\nu\lambda}-\Gamma^\mu_{\alpha\lambda}\Gamma^\alpha_{\nu\kappa}$ and because we are in 2 dimensions, there is only one independent component:
+
+$R^\theta_{\phi\theta\phi}=\sin^2\theta$
+
+note howver that this gives $R^\phi_{\theta\phi\theta}=1$ for instance.
+}
+\toshProof{The proofs in this section are straightforward, slightly less for the last equality:
+
+ $R^\phi_{\theta\phi\theta}=g^{\phi\phi}R_{\phi\theta\phi\theta}=g^{\phi\phi}R_{\theta\phi\theta\phi}=g^{\phi\phi}g_{\theta\theta}R^\theta_{\phi\theta\phi}=1$
+}
+\toshProperty{Ricci tensor and scalar}{
+$\displaystyle R_{\mu\nu}
+=
+\left(
+\begin{array}{cc}
+1 & 0 \\
+0 & \sin^2\theta
+\end{array}
+\right)$ \quad and \quad $\displaystyle R=\frac{2}{R^2}$
+}
+\toshTableEnd
+\bigskip
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Equivalence principle and consequences
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\textbf{Application to Physics}
+
+\toshTableBegin
+\toshTableTitle{Equivalence principle and consequences}
+\toshProperty{Assumption (1)
+
+\smallskip
+
+ Spacetime, distance}{All observable events are located in \toshDef{spacetime}, a 4-dimensional manifold with a tensor $g$ such that the \toshDef{distance} between any points $M$ and $M+dM$ is given by $g(dM, dM)$. }
+\toshProperty{Assumption (2)
+
+\smallskip
+
+Equivalence principle}{In a freely falling inertial frame, the laws of physics reduce locally to the laws of special relativity with a constant metric $g_{\mu \nu}=\eta_{\mu \nu}=diag(-1,1,1,1)$
+
+As a consequence, the velocity $V^\mu=dx^\mu/d\tau$ of a free particle remains constant in the freely falling inertial frame. This implies that its trajectory $x^\mu(\tau)$ must be such that $\nabla_V V=0$ i.e. it must be a geodesic for the metric $g$.
+}
+\toshProperty{Principles restated}{All observable events can be located uniquely in a 4-dimensional smooth Riemannian manifold, such that, at each point $M$ a locally flat coordinate system $x^\mu$ exists with the metric 
+
+\smallskip
+
+\quad $g_{\mu\nu}(M)=\eta_{\mu \nu}=diag(-1,1,1,1)$
+
+\smallskip
+
+Such coordinate system is called the \textbf{locally inertial frame} at $M$.
+Note that there might not exist a single coordinate system such that the above is true for the whole space-time. As such the locally inertial frame at $M$ may fulfill the above conditions only at point $M$.
+}
+\toshDefinition{Energy momentum tensor}{
+
+$T^{\mu\nu}$ is the flux of $\mu$ momentum (for $\mu=0$ it is energy) across a surface of constant $x^\nu$.
+
+\quad$T^{00}$ is energy density
+
+\quad$T^{i0}$ is momentum density
+
+\quad$T^{0i}$ is energy flux across constant-$x^i$ surface
+
+For a particle at rest at position $\vec{x}_0$, $T^{00}=mc^2 \delta(\vec{x}-\vec{x_0})$ with the other components being zero.
+}
+\toshProperty{Assumption (3)
+
+\smallskip
+
+The constraints on the metric $g_{\mu\nu}$ and the Einstein equation
+
+}{Einstein assumed that the metric obeyed the following conditions:
+
+\toshBlockStart
+\toshBlockDesc{a}{The law must be independent of the coordinate system}
+\toshBlockItem{\quad $\Rightarrow$ the equation must be in tensorial form}
+\toshBlockDesc{b}{To be in line with other physical laws, the equation on the } 
+\toshBlockItem{\quad metric must be local and depend only up to the second }
+\toshBlockItem{\quad differential with respect to space time}
+\toshBlockDesc{c}{The tensor expressing the dynamics of the metric tensor}
+\toshBlockItem{\quad must equate the energy momentum tensor $T^{\mu\nu}$ and depend }
+\toshBlockItem{\quad only on it.}
+\toshBlockEnd
+
+Because the energy momentum tensor is symmetric and covariant divergence free, following Lovelike theorem, the conditions above states that the equation must be of the form:
+
+\smallskip
+
+\quad\quad\quad\quad\quad\quad\quad\quad$\displaystyle G^{\mu\nu}=\kappa T^{\mu\nu} $
+
+\smallskip
+
+where $\kappa$ is chosen so that the equation gives Newton law in a weak gravitation field at low speeds as shown in the next section.
+
+\bigskip
+
+\quad\quad\quad\quad\quad\quad $\displaystyle R^{\mu \nu}-\frac{1}{2}g^{\mu\nu}R + \lambda g^{\mu\nu} = \frac{8\pi G}{c^4} T^{\mu\nu}$
+
+}
+\toshNewPage
+\toshProperty{Einstein equation in trace revsersed form}{The Einstein equation in \toshDef{trace-reversed form} reads:
+
+\smallskip
+
+\quad\quad$\displaystyle R^{\mu\nu} = \kappa \left(T^{\mu\nu}-\frac{1}{2} g^{\mu\nu} T\right) +\lambda g^{\mu\nu}$
+
+\smallskip
+
+where $T=T^{\mu}_\mu=g_{\mu\nu}T^{\mu\nu}$.
+
+}
+\toshProof{From Einstein equation $R^{\mu \nu}-\frac{1}{2}g^{\mu\nu}R + \lambda g^{\mu\nu} = \kappa T^{\mu\nu}$ multiply by $g_{\mu\nu}$ and sum over $\mu$ and $\nu$. This gives $R- 4/2 R +4\lambda =\kappa T$ i.e. $R=-\kappa T + 4\lambda$. Replacing $R$ in the original Einstein equation leads to the trace reversed form. 
+}
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Newtonian limit
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\toshTableBegin
+\toshTableTitle{Newtonian limit}
+\toshDefinition{classical limit}{
+In the \toshDef{classical limit}, we assume that the gravitation field is weak and static, such that  $g_{\mu\nu}=\eta_{\mu\nu}+h_{\mu\nu}$ with $|h_{\mu\nu}|\ll 1$, $|\partial_\alpha h_{\mu\nu}|\ll 1$ and $\partial_0 g_{\mu\nu}=0$. 
+
+We also assume that the involved velocities are very small compared to speed of light $c$.
+}
+\toshDefinition{Newtonian limit}{In the classical limit, the following metric, 
+
+\smallskip
+
+\quad $\displaystyle g_{00} = - \left(1 + \frac{2\Phi}{c^2}\right)$, \quad $g_{0 i}= 0$, \quad $\displaystyle g_{i j} =\left(1 - \frac{2\Phi}{c^2}\right)\delta_{i j}$
+
+\smallskip
+
+called \toshDef{Newtonian limit metric}, reproduces the Newton laws 
+
+\smallskip
+
+\quad $\displaystyle\frac{\partial x_i^2 }{dt^2}=-\partial_i\Phi$, where $\Phi$ is the gravitation potential.
+
+For instance $\displaystyle\Phi=-\frac{{\mathcal{G}} m}{r}$ for a mass $m$ at distance $r$.
+}
+\toshProof{Assume a particle is at position $x^\mu=(ct,x,0,0)$ and velocity $\frac{dx^\mu}{d\tau}=\frac{1}{\sqrt{1-(v/c)^2}}(c,v,0,0)$ , of a mass $m$ at the origin ($v=\frac{dx}{dt}\ll c$). 
+
+
+In this case, the Newton law states that $\frac{\partial^2 x}{dt^2}=-\partial_1\Phi$. 
+
+Einstein equivalence principle states that the particle follows the geodesic 
+
+$\displaystyle \frac{d^2 x^\mu}{d\tau^2}+ \Gamma^\mu_{\alpha\beta}\frac{dx^\alpha}{d\tau}\frac{dx^\beta}{d\tau} =0$ therefore $\displaystyle \frac{d^2 x}{dt^2}= -\Gamma^1_{00}c^2$ at leading order in $1/c^2$ because $d\tau = dt \sqrt{1-\left(\frac{v}{c}\right)^2}\simeq dt$, and $\frac{dx^0}{d\tau}\simeq c \gg \frac{dx}{d\tau}$.
+
+Assuming the Newtonian limit metric, we obtain $ \Gamma^1_{00} = \frac{1}{2}g^{1\kappa}(\partial_0 g_{0\kappa}+\partial_0 g_{0\kappa}-\partial_\kappa g_{00})= \frac{1}{c^2}\partial_1\Phi$ therefore the geodesics equation gives $\frac{\partial^2 x}{dt^2}=-\partial_1\Phi$, i.e. the Newton law.
+}
+\toshProperty{Christoffel symbols}{With the Newtonian limit metric, Christoffel components are zero except for:
+
+\smallskip
+
+\quad $\displaystyle\Gamma^i_{00} =\frac{1}{c^2}\partial_i \Phi$, and $\Gamma^0_{0 i}=\Gamma^0_{i 0} \simeq\frac{1}{c^2}\partial_i \Phi$
+  
+\quad $\displaystyle\Gamma^i_{jk}\simeq-\frac{1}{c^2}(\delta^i_k\partial_j\Phi+\delta^i_j\partial_k\Phi-\delta_{jk}\partial^i\Phi)$
+}
+\toshProof{
+Straightforward applying the formula $\Gamma^\lambda_{\mu\nu}=\frac{1}{2}g^{\lambda\kappa}(\partial_\mu g_{\nu\kappa}+\partial_\nu g_{\mu\kappa}-\partial_\kappa g_{\mu\nu})$ and the definition of the Newtonian limit metric. Approximation is coming from the inverse metric $g^{\mu\nu}$ assumed to be close to $\eta^{\mu\nu}$.}
+\toshProperty{Riemann tensor in Newton limit}{With the Newtonian limit metric, at the first order in $1/c^2$,  the Riemann tensor components are zero except for:
+
+\smallskip
+
+\quad$\displaystyle R^i_{0 j 0}= \frac{1}{c^2}\partial^i\partial_j\Phi$, \quad\quad 
+$\displaystyle R^0_{i 0 j}= -\frac{1}{c^2}\partial_i\partial_j\Phi$
+
+\smallskip
+
+\quad$\displaystyle R^i_{jkl}= \frac{1}{c^2}(-\delta^i_l\partial_{k}\partial_{j}\Phi+\delta^i_k\partial_{l}\partial_{j}\Phi+\delta_{jl}\partial_{k}\partial^i\Phi-\delta_{jk}\partial_{l}\partial^i\Phi)$
+}
+\toshProof{Because this is first order in $1/c^2$, you can ignore the $\Gamma \Gamma$ terms in the equation to get the Riemmann tensor, i.e. $R^\mu_{\nu\kappa\lambda}\simeq\partial_\kappa \Gamma^\mu_{\nu \lambda}-\partial_\lambda\Gamma^\mu_{\nu \kappa}$. Then straightforward calculus.}
+\toshNewPage
+\toshProperty{Ricci tensor and scalar in Newton limit}{The non zero components are
+
+\smallskip
+
+\quad $\displaystyle R_{00}=\frac{1}{c^2}\partial^i\partial_i\Phi=\frac{1}{c^2}\Delta\Phi$ 
+ \quad and \quad $\displaystyle R_{ij}=\frac{1}{c^2}\left(\delta_{ij}\Delta\Phi+\partial_i\partial_j\Phi\right)$. 
+
+\smallskip
+ 
+The term $\partial_i\partial_j\Phi$ is called the tidal factor and is usually ignored in Newton limit. 
+}
+\toshProperty{\smallskip
+$\displaystyle\kappa =\frac{8\pi{\mathcal{G}}}{c^4}$}{In the case of a single mass $m$, and using the property $\Delta \left(\frac{1}{r}\right)=-4\pi\delta(\vec{x})$ , the Einstein equation in the trace reversed form for a mass $m$ at origin reads:
+
+\smallskip
+
+\quad$\displaystyle R_{00}=\frac{1}{c^2}\Delta \Phi = \kappa \left(T_{00}-\frac{1}{2}g_{00} T\right) + \lambda g_{00}$
+
+\smallskip
+
+leading to $\displaystyle\kappa =\frac{8\pi{\mathcal{G}}}{c^4}$ assuming $\lambda$ is small.
+
+}
+\toshProof{We first prove $\Delta \left(\frac{1}{r}\right)=\partial^i\partial_i \left(\frac{1}{r}\right)=-4\pi\delta(\vec{x})$
+
+By Stoke's theorem, $\int_S \nabla\left(\frac{1}{r}\right) d\vec{S} = \int_V \nabla\cdot\nabla\left(\frac{1}{r}\right)dV=\int_V \Delta\left(\frac{1}{r}\right)dV$ for a sphere of surface $S$ and volume $V$, and $\nabla\left(\frac{1}{r}\right)=-\frac{\vec{r}}{r^2}$  while $d\vec{S} = r^2 \vec{r} \sin\theta d\theta d\phi$ thus $\int_S \nabla\left(\frac{1}{r}\right) d\vec{S}=-4\pi$ for any radius $r$ thus $\Delta\left(\frac{1}{r}\right)=-4\pi\delta(\vec{x})$.
+
+Now with the Einstein equation in the trace  reversed form:
+
+\quad$\displaystyle R_{\mu\nu}=\kappa\left(T_{\mu\nu}-\frac{1}{2}T g_{\mu\nu}\right)$ 
+
+where $T=g^{\mu\nu}T_{\mu\nu} = -mc^2\delta(\vec{x})$ for the example above, you get 
+
+$\displaystyle R_{00}=\frac{1}{c^2} \Delta\Phi =-\frac{{\mathcal G} m}{c^2} \Delta\frac{1}{r}= \frac{4\pi{\mathcal G}}{c^2} m \delta(\vec x) =\kappa \left(T_{00} - g_{00}T\right)= \kappa \frac{1}{2} mc^2\delta(\vec{x})$, thus the value for $\kappa$.
+}
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Schwarzschild metric
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\toshTableBegin
+\toshTableTitle{Schwarzschild metric}
+\toshDefinition{Schwarzschild metric}{
+The Schwarzschild metric is defined by the coordinate system
+
+\smallskip
+
+\quad $(x^0,x^1,x^2,x^3)=(c t,r,\theta,\phi)$
+
+\smallskip
+	
+with the metric tensor with zero non-diagonal entries and
+
+\smallskip
+
+\quad $g_{00}=-U(r)$ \quad $g_{11}=V(r)$ \quad $g_{22}=r^2$ \quad $g_{33}=r^2 \sin^2 \theta$
+
+\smallskip
+
+as it is a diagonal matrix, its inverse is simply the diagonal matrix with inverse diagonal elements
+
+\smallskip
+
+\quad $\displaystyle g^{00}=-\frac{1}{U(r)}$ \quad $\displaystyle g^{11}=\frac{1}{V(r)}$ \quad $\displaystyle g^{22}=\frac{1}{r^2}$ \quad $\displaystyle g^{33}=\frac{1}{r^2 \sin^2 \theta}$
+	
+\smallskip
+
+We assume furthermore that the equivalence principle holds.	
+}
+\toshProperty{Christoffel symbols}{
+The only non-zero Christoffel symbols are:
+
+\smallskip
+
+\quad $\displaystyle \Gamma^0_{01}=\Gamma^0_{10}=\frac{U'}{2U}$
+
+\smallskip
+
+\quad $\displaystyle \Gamma^1_{00}=\frac{U'}{2V}$ \quad $\displaystyle \Gamma^1_{11}=\frac{V'}{2V}$
+\quad $\displaystyle \Gamma^1_{22}=-\frac{r}{V}$ \quad $\displaystyle \Gamma^1_{33}=-\frac{r}{V}\sin^2\theta$
+
+\smallskip
+
+\quad $\displaystyle \Gamma^2_{12}=\Gamma^2_{21}=\frac{1}{r}$ \quad $\displaystyle \Gamma^2_{33}=-\cos\theta\sin\theta$
+
+\smallskip
+
+\quad $\displaystyle \Gamma^3_{13}=\Gamma^3_{31}=\frac{1}{r}$ \quad $\displaystyle \Gamma^3_{23}=\Gamma^3_{32}=-\cot \theta$	
+
+\smallskip
+
+where $X'$ and $X''$ are derivatives with respect to $r$.
+}
+\toshNewPage
+\toshProof{These are tedious but straightforward calculations, taking into account that:
+\toshBlockStart
+\toshBlockDesc{1}{the derivative f $g_{\mu\nu}$ with respect to $t$ is zero}
+\toshBlockDesc{2}{$g_{\alpha\beta}=0$ if $\alpha \neq \beta$ so we have $\displaystyle \Gamma^\lambda_{\mu\nu}=\frac{1}{2}g^{\lambda\lambda}(\partial_\mu g_{\nu\lambda} + \partial_\nu g_{\mu\lambda}-\partial_\lambda g_{\mu\nu})$}
+\toshBlockDesc{3}{$\Gamma^\mu_{\alpha\beta}=\Gamma^\mu_{\beta\alpha}$}
+\toshBlockEnd
+}
+
+\toshProperty{Ricci tensor and scalar}{
+The off diagonal terms of the Ricci tensor are zero, $R_{\mu\nu}=0$ if $\mu\neq\nu$.
+
+$\displaystyle R_{00}=\frac{1}{2}\frac{U''}{V}-\frac{1}{4}\frac{U' V'}{V^2}-\frac{1}{4}\frac{(U')^2}{U V}+\frac{1}{r}\frac{U'}{V}$
+
+\smallskip
+
+$\displaystyle R_{11}= - \frac{1}{2}\frac{U''}{U}+\frac{1}{4}\frac{(U')^2}{U^2}+\frac{1}{4}\frac{U' V'}{U V}+\frac{1}{r}{V'}{V}$
+
+\smallskip
+
+$\displaystyle R_{22}= - \frac{r}{2}\frac{U'}{UV}-\frac{1}{V}+\frac{r}{2}\frac{V'}{V^2}+1$
+
+\smallskip
+
+$\displaystyle R_{33}= R_{22}\, \sin^2\theta$
+
+\smallskip
+
+$\displaystyle R= -\frac{U''}{UV}+\frac{1}{2}\frac{U'V'}{UV^2}+\frac{1}{2}\frac{(U')^2}{U^2 V}-\frac{2}{r}\frac{U'}{UV}+\frac{2}{r}\frac{V'}{V^2}+\frac{2}{r^2}\left(1-\frac{1}{V}\right)$
+
+}
+\toshProof{Tedious calculation but not a hard one. I checked them manually. The details are in the paper~\cite{Oas}}
+\toshProperty{The solution of Einstein's equation for Schwarzschild metric}
+{The solution to the Einstein's equation
+
+\smallskip
+	
+\quad $\displaystyle R_{\mu \nu}-\frac{1}{2}g_{\mu\nu} R = 0$ 
+
+\smallskip
+
+reads:
+
+\smallskip
+
+\quad $\displaystyle U(r)=\left(1-\frac{r_S}{r}\right)$ \quad $\displaystyle V(r)=\frac{1}{1-\frac{r_S}{r}}$
+
+\smallskip
+
+where $r_S$ is the Schwarzschild radius
+
+\smallskip
+
+\quad $\displaystyle r_S = \frac{2 G M}{c^2}$.
+
+\smallskip
+
+so the Schwarzschild metric reads:
+
+\smallskip
+
+\quad $\displaystyle ds^2=\left(1-\frac{2 G M}{c^2 r}\right) c^2 dt^2 - \frac{dr^2}{1-\frac{2 G M}{c^2 r}} -r^2 d\theta^2 - r^2 sin^2 \theta d\phi^2$
+}
+\toshProof{
+$\displaystyle R_{00}-\frac{1}{2}g_{00} R = 0$ leads to $-\frac{dr}{r}=\frac{dV}{V(V-1)}$ and we use the fact that the integral of $\frac{1}{x(x-1)}$ is $\ln\left(\frac{x-1}{x}\right)$ to get $V(r)=\frac{1}{1-\frac{K}{r}}$ for a constant $K$.
+
+Then we inject this solution to the equation $\displaystyle R_{11}-\frac{1}{2}g_{11} R = 0$ which leads to $\frac{dU}{U}=\frac{K dr}{r^2-K r}$. We use the fact that the integral of $\frac{1}{x^2-\alpha x}$ is $\ln\left(1-\frac{\alpha}{r}\right)$ to get the first result:
+
+$ds^2=\left(1-\frac{K}{r}\right) c^2 dt^2 - \frac{dr^2}{1-\frac{K}{r}} - r^2d\theta^2 -r^2 \sin^2\theta d\phi^2$
+
+Now to get $K$, assume that we can only move in $r$ direction in space and that we are at a limit $r\gg K$ and $v^i=\frac{d x^i}{d s} \ll v^0 =\frac{d x^0}{d s}$ i.e. we are at speed much lower than speed of light.  In this case, Newton gravitation law is applicable and we have $\frac{d^2 r}{dt}=-\frac{GM}{r^2}$.
+
+Now using the geodesic in the Schwarzschild metric above obeys:
+
+$\frac{d v^1}{d s}=\frac{d v^1}{d x^0}\frac{d x^0}{d s}=\frac{d v^1}{d x^0}v^0=-\Gamma^1_{\alpha \beta} v^\alpha v^\beta\approx-\Gamma^1_{00} v^0 v^0\approx -\frac{K}{2 r^2}v^0 v^0$ we also have $ds^2=g_{00}c^2dt^2+g_{11} dr^2$ and as we are at low speed limits, we have $ds^2\approx g_{00}c^2 dt^2$ i.e $v^0=\frac{d x^0}{d s}\approx\frac{1}{\sqrt{g_{00}}}=\frac{1}{\sqrt{U}}\approx 1$. We deduce that  $\frac{d v^1}{d s}\approx\frac{d^2  r}{c^2 dt^2}\approx-\frac{K}{2 r^2}$. Comparing with the Newton law we deduce that $K=\frac{2GM}{c^2}$.
+}
+\toshNewPage	
+\toshProperty{Schwarzschild radius as black hole radius}
+{The Scharzschild metric is singular for $r=r_S=\frac{2 G M}{c^2}$, and $r_S$ can be interpreted as the radius of a black hole as it corresponds to the radius at which the escape speed (speed at which a particle can escape the gravitational field from a mass $M$), computed with Newton law, is equal to the light speed, namely:
+
+\smallskip
+
+\quad $\{\textrm{cinetic energy}\} = \frac{1}{2} mc^2 = \{\textrm{potential energy}\} = \frac{G M m}{r}$
+
+\smallskip
+
+For Earth ($M=5.97\times10^{24}$ kg), $r_S = 8.87$ mm. 
+
+For the Sun, ($M=1.99\times10^{30}$ kg), $r_S = 2.95$ km.
+}
+\toshProperty{(Feynman) Excess radius}{The space-time metric is distorted due to mass. As a consequence, the measured radius $R_m$ of a sphere may be different from the radius implied $\sqrt{\frac{A}{4\pi}}$ from the measured surface $A$ of a sphere.
+
+If there is a sphere in which a mass $M$ is distributed uniformly, then this radius excess is given by:
+
+\smallskip
+
+\quad $\displaystyle \{\textrm{radius excess}\} = R_m - \sqrt{\frac{A}{4\pi}} = \frac{G M}{3 c^2}$
+
+\smallskip
+
+For Earth, the excess radius is around 1.5 mm.
+}
+\toshProof{As $M$ is uniformly distributed, the sphere of radius $r\leq R$ has mass $\frac{M r^3}{R^3}$. Using Schwarzschild metric, the measured radius of the sphere is given by
+$R_m = \int_0^R \frac{dr}{\sqrt{1-\frac{2 G m(r)}{c^2r}}}=\int_0^R \frac{dr}{\sqrt{1-\frac{2 G M r^2}{c^2 R^3}}}$. As the primitive of $\frac{1}{\sqrt{1-x^2}}$ is $\arcsin x$, we get $R_m = \sqrt{\frac{c^2 R^3}{2 G M}}\arcsin\left(\sqrt{\frac{2 G M }{c^2 R}}\right)$. Assuming $R$ is much larger than the Schwarzschild radius, using $\arcsin\epsilon \simeq \epsilon + \frac{\epsilon^3}{6}$ we get $R_m = R+\frac{G M}{3c^2}$.
+}
+\toshProperty{(Feynman) Slower time}{The space-time metric is distorted due to mass. The Schwarzschild metric shows that time duration $dt_m$ observed in the presence of mass $M$ is lower than the time duration $dt$ in the absence of mass:
+
+\smallskip
+
+\quad $dt_m =dt \sqrt{1-\frac{r_S}{r}}$ 
+
+\smallskip
+
+On Earth, the duration $dt_H$ observed at height $H$ is higher than the duration $dt$ observed at surface level by:
+
+\smallskip
+
+\quad $dt_H = dt \left(1 + \frac{g H}{c^2}\right)$
+
+\smallskip
+
+where $g = \frac{G M}{R} \simeq 9.807 \textrm{m/s}^2$. For a heigh of 20m, the time difference is of order $10^{-15}$ (M{\"o}ssbauer effect).
+
+}
+\toshProof{straightforward using first order expansion}
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Notes from Carlo Rovelli's books
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\toshTableBegin
+\toshTableTitle{Notes from Carlo Rovelli's book}
+\toshDefinition{On the existence of space-time}{Einstein theory can be stated in two manners (1) there is no gravitation field and it's the space-time which is deformed (2) there is no space-time, only the gravitation field exists. The first manner is the common way to present general relativity but it assumes the existence of space-time independent of the field. It is better to accept that space-time does not exist, and that only the gravitation field exists.
+}
+\toshDefinition{Relational notion of space and time}{Before Newton, the way of understanding space and time was that there is no space without things, and there is no time if nothing happens, because space is an arrangement of things and time is a counting of happenings.
+}
+\toshDefinition{Intrinsic geometry of a surface}{The \toshDef{intrinsic geometry} of a surface is the geometry defined by the length of the lines on the surface. If this geometry is the same as that of the lines on a flat plane (like a sheet of flat paper bent to form a cylinder) we say that the surface is intrinsically flat or has no intrinsic curvature. Otherwise (like a sphere, on which the sum of angles of a triangle is over $\pi$ radians and the perimeter of a circle is less than $2\pi R$) we say that the surface has intrinsic curvature.
+}
+\toshDefinition{Gauss' curvature}{(by distance) The \toshDef{Gauss curvature} of a surface $S$ at a point $p\in S$ is 
+
+\smallskip
+
+\quad $\displaystyle K = \frac{3}{\pi} \lim_{r\rightarrow 0} \frac{2\pi r - P}{r^3}$
+
+\smallskip
+
+where $P$ is the perimeter of a circle of radius $r$ and center $p$ drawn on the surface $S$.
+
+\bigskip
+
+(by angle) Consider a closed path on $S$ starting and ending at $p$, composed of straight lines and delimiting an area $A$. Parallel transport a vector tangent to the surface along the path and call $\alpha$ the angle between the vector starting at $p$ and ending at $p$. The Gauss curvature is
+
+\smallskip
+
+\quad $\displaystyle K = \lim_{A\rightarrow 0} \frac{\alpha}{A}$
+
+\smallskip
+
+In the case of a sphere of radius $R$ both definitions give $K=1/R^2$.
+}
+\toshProof{(by distance), the perimeter of the circle centered at the north pole is $P=2\pi R \sin\theta$ and for small $\theta$, $\sin\theta \simeq \theta - \theta/3!$ (by angle) consider the path starting at the equator at longtitude 0, up to the north pole and down to the equator on the longtitude $\phi$. Parallel transport a vector which is originally pointing east on the equator. The delimited surface is $\phi R^2$.
+}
+\toshDefinition{Flat space vs empty space}{A space is \toshDef{flat} if the Riemann tensors are null. A space is \toshDef{empty} i.e. has no mass nor energy in it if the Ricci tensors are null.
+}
+\toshNewPage
+\toshProperty{Coordinates and time}{While $t$ coordinate in non-general-relativistic theories indicates the quantity measured by a clock, in general relativity $t$ does not indicate time measured by a clock. In general it does not indicate anything physical or measurable. The time measured by a clock moving along a path $\gamma$ between two events is the \toshDef{proper time}:
+
+\quad $\displaystyle T =\int_\gamma \sqrt{-g_{_\mu\nu} \frac{d \gamma^\mu}{d\tau}\frac{d \gamma^\nu}{d\tau}} d\tau$.
+
+Since the proper time between two spacetime events depends on $\gamma$, in general there is no way to assign a unique physical time coordinate to spacetime events.
+}
+\toshTableEnd
+\bigskip
+
+
+\toshTableBegin
+\toshTableTitle{Miscellanea}
+\toshProperty{Geodesics length is an extremum}{The total path length is stationary for a geodesic, namely
+
+\smallskip
+
+\quad $\displaystyle \delta\int_A^B ds =\delta\int_A^B \sqrt{\left(\pm g_{\mu\nu} \frac{d x^\mu}{d\tau}\frac{d x^\nu}{d\tau}\right)}d\tau = 0$
+
+\smallskip
+
+where $\delta$ referes to a variation of the integral arising from a variation of the curve $x^\mu(\tau)\mapsto x^\mu(\tau)+\delta x^\mu(\tau)$ with fixed endpoints.
+}
+\toshProof{(needing the formula giving Christoffel symbol from the metric given later) We have $\delta\int_A^B ds = \int_A^B \frac{(\delta g_{\mu\nu})V^\mu V^\nu + 2 g_{\mu\nu}(\delta V^\mu)V^\nu}{2\sqrt{g_{\mu\nu} V^\mu V^\nu}} d\tau$. Parametrise now the path so that $d\tau= ds$ which gives$\sqrt{g_{\mu\nu} V^\mu V^\nu}=1$ and integrate by part keeping in mind that $\delta x^\mu (A)=\delta x^\mu (B)= 0$, you get $\int_A^B ((\partial_\kappa g_{\mu\nu})V^\mu V^\nu - 2 d/d\tau (g_{\kappa \nu} V^\nu))\delta x^\kappa d\tau = 0$. As this is null for all $\delta x^\kappa$ and using the symmetry of $V^\mu V^\nu$ when permuting $\mu$ and $\nu$ you get $d/ d\tau V^\kappa + \Gamma^\kappa_{\mu \nu}V^\mu V^\nu = 0$ with $\Gamma^\kappa_{\mu \nu}$ given by the formula proven below.
+}
+\toshTableEnd
+\bigskip
+
+
+ \begin{thebibliography}{}
+ 
+\bibitem{Schutz} Bernard Schutz (2022), `A First Course in General Relativity', Cambridge University Press
+
+\bibitem{Lovelock}Lovelock, David (1972). `The four-dimensionality of space and the Einstein tensor'. Journal of Mathematical Physics, 13(6), 874–876. https://doi.org/10.1063/1.1666069
+Cited by: 983
+ 
+\bibitem{Bertschinger} Edmund Bertschinger (1999), `Introduction to Tensor Calculus for General Relativity Physics 8.962', Massachusetts Institute of Technology
+
+\bibitem{Feynman} Richard Feynman, et al. (1964)`The Feynman Lectures on Physics. Vol. 2: Mainly Electromagnetism and Matter'. Addison‑Wesley
+
+\bibitem{Rovelli2012} Carlo Rovelli (2012), `Et si le temps n'existait pas', EKHO
+
+\bibitem{Rovelli2021} Carlo Rovelli (2021), `General Relativity: the Essentials', Cambridge University Press
+
+\bibitem{Oas} Gary Oas, `Full derivation of the Scharzschild solution', EPGY Summer Institute SRGR 
+ 
+
+
+\end{thebibliography}
+
+\end{document}
