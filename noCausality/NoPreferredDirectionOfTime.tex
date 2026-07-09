@@ -1,0 +1,560 @@
+%\documentclass[aps,onecolumn, amsmath,amssymb,10pt]{revtex4-1}
+%\documentclass[10pt,amsmath,amssymb,latexsym]{article}
+\documentclass[11pt,amsmath,amssymb,latexsym,a4paper]{article} 
+\usepackage{graphicx}  % needed for figures
+\usepackage{dcolumn}   % needed for some tables
+\usepackage{bm}        % for math
+\usepackage{verbatim}  % for math
+\usepackage{mathtools}  % for math
+
+ \usepackage{color} % for highlighting
+ 
+\newtheorem{myDefinition}{Definition}
+\newtheorem{myPostulate}{Postulate}
+\newtheorem{myProperty}{Property}
+\newtheorem{myFact}{Fact}
+\newtheorem{myExample}{Example}
+\newtheorem{myProof}{Proof}
+\newtheorem{myExperiment}{Experiment}
+
+
+\newcommand{\toshProperty}[1]{{\bf{Property}} {#1}}
+\newcommand{\toshProof}[1]{{\bf{Proof}} #1 cqfd}
+\newcommand{\ket}[1]{\left|{#1}\right>}
+\newcommand{\ketBasis}[2]{\left|{#1}\right>_{#2}}
+\newcommand{\ketbraBasis}[3]{\left|{#1}\right>_{#3}\left<{#2}\right|}
+\newcommand{\bra}[1]{\left<{#1}\right|}
+\newcommand{\braBasisBis}[2]{\left<{#1}\right|_{#2}}
+\newcommand{\braBasis}[2]{\prescript{}{#2}{\left<{#1}\right|}}
+\newcommand{\braket}[2]{\left<{#1}|{#2}\right>}
+\newcommand{\braketBasisRight}[3]{\left<{#1}|{#2}\right>_{#3}}
+\newcommand{\braketBasisLeft}[3]{\prescript{}{#3}{\left<{#1}|{#2}\right>}}
+\newcommand{\Tr}[1]{\textrm{Tr}\left({#1}\right)}
+\newcommand{\PartTr}[2]{\textrm{Tr}_{#1}\left({#2}\right)}
+\newcommand{\toshIdentity}{{\mathbf{1}}}
+
+% For highlighting changes in this version with red color
+%\newcommand{\highlight}[1] {{\color{red}{#1}}}
+% Remove all text highlighting
+% Useful to generate the final version of the PDF
+\newcommand{\highlight}[1] {#1}
+
+\begin{document}
+
+\title{A static representation of quantum circuit without preferential direction of time}
+%\author{Hitoshi Inamori\\
+%\small\it Soci\'et\'e G\'en\'erale\\
+%\small\it Boulevard Franck Kupka, 92800 Puteaux, France\\
+%}
+
+%\bigskip
+
+\date{\today}
+
+
+\maketitle
+
+\begin{abstract}
+We present a representation of quantum circuit without the projections linked to measurement processes. This leads to a static representation of the quantum circuit, without a preferential time ordering of events: the physical evolution is completely unitary and deterministic. There is no irreversibility in the evolution of the quantum state of the system, and the knowledge of the state at one instant of time is equivalent to the knowledge of the state at any other time. 
+\bigskip
+
+%\textbf{Keywords:} Quantum mechanics, Measurement, Everett's interpretation of quantum mechanics
+
+\end{abstract}
+
+
+
+\section{Measurement = Entanglement + Projection}  
+
+Suppose that we have an observer, $O$, described by a Hilbert space $H_O$ and initially in a state $\ketBasis{0}{O}\in H_O$ at some instant $t_a$, and that this observer performs a measurement on a system $S$, described by a Hilbert space $H_S$ and initially in a state $\ketBasis{\phi}{S}\in H_S$ at $t_a$. 
+
+\bigskip
+
+According to quantum mechanics~\cite{vonNeumann}, the Measurement is done in two steps:
+
+\begin{description}
+\item[Entanglement] There is a physical interaction between $O$ and $S$ such that the combined system $O+S$ evolves unitarily into an entangled state $\ket{\Psi}\in H_O\otimes H_S$.
+
+\begin{equation} 
+\ketBasis{0}{O} \otimes \ketBasis{\phi}{S} \textrm{ at } t_a \mapsto \ket{\Psi}\in H_O\otimes H_S \textrm{ at } t_b
+\end{equation} 
+
+\item[Projection] An orthonormal basis $\{\ketBasis{e_i}{O}\}_i$ of $O$ is assigned to this Projection, with each value for $i$ corresponding to a possible outcome of the Projection. The outcome $i$ is witnessed with the probability given by the square norm of the projected state:
+
+\begin{equation} 
+\braketBasisLeft{e_i}{\Psi}{O} \in H_S
+\end{equation} 
+
+\end{description}
+
+\section{The evolution of a physical system does not depend on the Projection phase}
+
+One key insight, also demonstrated earlier in~\cite{Inamori}, is that although the Entanglement step has an impact on the physical evolution of the combined system $O+S$, the Projection step has none\footnote{A related result is that any quantum circuit can be described as a circuit in which no measurement occurs until the very end, as described in~\cite{Nielsen} and proven later in~\cite{Gurevich}.}.  Furthermore, the Projection in one measurement does not have any impact on another measurement.
+
+
+Consider the following simple example to clarify what we mean by this. An observer $O$, a single qubit~\footnote{An observer is usually assumed to be a macroscopic system but this does not change the nature of our discussion.} initially in the state $\ketBasis{0}{O}$ performs a measurement on the system $S$, another single qubit initially in the state $\ketBasis{\phi}{S}=(\ketBasis{0}{S}+\ketBasis{1}{S})/\sqrt{2}$.  Suppose that $O$ witnesses the result $\ketBasis{1}{O}$. This can be represented by the quantum circuit in Figure~\ref{FigureA}, where $\ketbraBasis{1}{1}{O}$ stands for the projection of the observer state onto the basis state $\ketBasis{1}{O}$. 
+
+
+
+\setlength{\unitlength}{0.025 in}
+\begin{figure}[!h]
+\centering
+\begin{picture}(100,40)
+
+\put(0,30){\makebox(0,0){$\displaystyle\ketBasis{\phi}{S}$}}
+
+\put(23,34){\makebox(0,0){$S$}}
+
+\put(20,30){\line(1,0){60}}
+\put(50,30){\circle*{4}}
+
+\put(50,30){\line(0,-1){23}}
+\put(50,10){\circle{6}}
+
+\put(0,10){\makebox(0,0){$\ketBasis{0}{O}$}}
+
+\put(23,14){\makebox(0,0){$O$}}
+
+\put(20,10){\line(1,0){60}}
+
+\put(90,10){\makebox(0,0){$\ketbraBasis{1}{1}{O}$}}
+\end{picture}
+
+\caption{The observer $O$ measuring $S$}\label{FigureA}
+\end{figure}
+
+In this measurement, the Entanglement step is performed by the controlled-NOT gate, which indeed changes the state of the system, from  $(\ketBasis{0}{S}+\ketBasis{1}{S})/\sqrt{2}\otimes\ketBasis{0}{O}$ to $(\ketBasis{0}{S}\otimes\ketBasis{0}{S}+\ketBasis{1}{S}\otimes\ketBasis{1}{O})/\sqrt{2}$. This is a physical evolution which is observable, as it correlates the outcome of subsequent measurements on qubits $S$ and $O$. 
+
+However, the Projection step represented by the projection operator $\ketbraBasis{1}{1}{O}$ does not affect the physical evolution of the system. It is obvious that it does not affect the state of the system outside $O$. The added insight is that the projection does not impact the state for $O$ either, and only affects the outcome of the present measurement. This claim seems first at odds with one implication of quantum mechanics: we should observe $\ketBasis{1}{O}$ with certainty if a previous measurement gave $\ketBasis{1}{O}$, and that seemingly implies that the first Projection has altered the physical state of the combined system. What is important to note however is that the measurement in which we compare the outcome of the measurement with the result of a previous measurement requires the addition of another system $R$ corresponding to the outcome of the first meansurement.
+The corresponding quantum circuit would be given by Figure~\ref{FigureB}, which is different from Figure~\ref{FigureA}. 
+
+\setlength{\unitlength}{0.025 in}
+\begin{figure}[!h]
+\centering
+\begin{picture}(140,60)
+
+\put(0,50){\makebox(0,0){$\displaystyle\ketBasis{\phi}{S}$}}
+
+\put(23,54){\makebox(0,0){$S$}}
+
+\put(20,50){\line(1,0){90}}
+
+\put(50,50){\circle*{4}}
+\put(50,50){\line(0,-1){23}}
+\put(50,30){\circle{6}}
+
+\put(0,30){\makebox(0,0){$\ketBasis{0}{R}$}}
+
+\put(23,34){\makebox(0,0){$R$}}
+
+\put(20,30){\line(1,0){90}}
+
+\put(120,30){\makebox(0,0){$\ketbraBasis{1}{1}{R}$}}
+
+\put(0,10){\makebox(0,0){$\ketBasis{0}{O}$}}
+
+\put(23,14){\makebox(0,0){$O$}}
+
+\put(20,10){\line(1,0){90}}
+
+\put(80,50){\circle*{4}}
+\put(80,50){\line(0,-1){43}}
+\put(80,10){\circle{6}}
+
+\put(120,10){\makebox(0,0){$\ketbraBasis{1}{1}{O}$}}
+\end{picture}
+
+\caption{The observer $O$ measuring $S$ twice, having kept the result of the first outcome}\label{FigureB}
+\end{figure}
+
+
+Generally,
+\begin{itemize}
+\item  A measurement (1) in which a system is observed in a given state $\ket{a}$ without any further information, and
+\item  A measurement (2) in which this system is observed in $\ket{a}$ together with a record inferring that a previous measurement outcome gave $\ket{a}$
+\end{itemize}
+are two distinct measurements with two distinct Projections. The outcome of the measurement (1) is unrelated to the outcome of the measurement (2). What quantum mechanics tells us is that if the measurement (2) is performed, then the outcome of the measurement for the system should in line with the outcome of the measurement for the record kept from a previous measurement. But we should not forget that checking the consistency with a previous observation is possible only if a physical system acts as a record of the outrcome of the previous measurement.
+
+As a conclusion, the Projection in a given Mesurement has an impact on the Projection of this Measurement only. Namely:
+\begin{itemize}
+\item the choice of the orthonormal basis  $\{\ketBasis{e_i}{O}\}_i$,
+\item the outcome of the Projection step,
+\item the very fact that the Projection step has occurred at all,
+\end{itemize}
+impact only what is witnessed in this Projection alone. It has no physical or observable impact outside itself~\cite{Inamori} and does not influence any other Projection or any other Measurement. It has no impact on the evolution of the quantum system.
+
+
+
+\section{A fully unitary description of a quantum circuit}
+
+Once we accept the conclusion of the previous section we can drastically simplify our description of a quantum system. To describe the physical evolution of the system, we can remove the Projection steps of all measurements, leaving only the physical interactions needed for the Entanglement steps which can be represented by unitary gates. 
+The physical evolution is thus purely unitary and deterministic. There is no irreversibility in the evolution of the quantum state of the system, and the knowledge of the state at one instant of time is equivalent to the knowledge of the state at any other time. 
+
+So which instant of time should we take as a reference for the specification of the quantum state? We could equally choose this reference time to be at the end of the experiment instead of its beginning, but we could also take a time well before, well after or even in the midst of the experiment. Note however, that if we choose the reference time to be the starting time of the experiment, the quantum state of the system at the beginning is not simply $(\ketBasis{0}{S}+\ketBasis{1}{S})/\sqrt{2}\otimes\ketBasis{0}{O}$. Indeed, the system $S+O$ could well have been in a completely different state. We happened to have witnessed an experiment which started in the state $(\ketBasis{0}{S}+\ketBasis{1}{S})/\sqrt{2}\otimes\ketBasis{0}{O}$ but we could have witnessed otherwise. In an experiment, what is measured is not only the outcome of the experiment. The initial state of an experiment is also part of the result of an experiment.
+In other words, the ``initial state'' of a quantum circuit should not be considered as an exogeneous parameter but as the outcome of an ``initial'' measurement at the beginning of the experiment.  As seen in the previous section, we can remove the Projection part of this initial measurement and obtain a quantum circuit in which we have a unitary and deterministic diffusion of the quantum state throughout the time. 
+
+Because the system $S+O$ could interact with other systems before or after the experiment, we need to consider a physical system sufficiently large, call it $\Omega$, to include these ancillary systems. We will call the Environment and denote by $E$ the set of the ancillary system so that $S+O+E =\Omega$. Without loss of generality, we can assume the state of $\Omega$ to be a pure state as it is known that any mixed state can be obtained as a partial trace of a pure state in a larger Hilbert space~\cite{Bergou}. Because the evolution of $\Omega$ is unitary, its state is pure at any time. Let's denote by $\ket{\Psi_{-\infty}}$ the state of $\Omega$ at a time $t_{-\infty}$ well before the experiment, and by $\ket{\Psi_{+\infty}}$ the state of $\Omega$ at a time $t_{+\infty}$ well after the experiment. 
+For any system $X$ and any times $s$ and $t$, $U_X(t, s)$ stands for the unitary operator giving the evolution of X between $s$ and $t$ (so that for instance $\ket{\Psi_{+\infty}} = U_\Omega(t_{+\infty}, t_{-\infty}) \ket{\Psi_{-\infty}}$). Our first experiment Figure~\ref{FigureA} can be represented by the quantum circuit Figure~\ref{FigureC}, where we assume that $S+O$ is isolated from the environment from a time $t_0 < t_a$ and until a time $t_1 > t_b$.
+
+
+
+\setlength{\unitlength}{0.025 in}
+\begin{figure}[!h]
+\centering
+\begin{picture}(190,80)
+% t -_infty
+\def\xa{0}
+\def\xb{12}
+\def\xba{15}
+\def\xbb{18}
+\def\xc{22}
+\def\xd{47}
+\def\xe{52} %t0
+\def\xf{57} %USO_a begin
+\def\ld{10}
+\def\lf{23} %width USO
+\def\lfa{86} %width UE
+\def\xg{80} %USO_a end
+\def\lg{40}
+\def\xh{89} %ta
+\def\xi{100} %CNOT
+\def\xj{111} %tb
+\def\xk{120} %USO_b begin
+\def\xl{143} %USO_b end
+\def\xm{148} %t1
+\def\xn{153} 
+\def\xo{176} 
+\def\xoa{180} 
+\def\xp{196} 
+
+
+\put(\xa,40){\makebox(0,0){$\scriptstyle\ket{\Psi_{-\infty}}$}}
+
+\put(\xba,74){\makebox(0,0){$\scriptstyle E$}}
+
+\put(\xb,70){\line(1,0){10}}
+
+\put(\xbb,62){\makebox(0,0){$\displaystyle\vdots$}}
+
+\put(\xb,50){\line(1,0){10}}
+
+\put(\xba,34){\makebox(0,0){$\scriptstyle S$}}
+
+\put(\xb,30){\line(1,0){10}}
+
+\put(\xba,14){\makebox(0,0){$\scriptstyle O$}}
+
+\put(\xb,10){\line(1,0){10}}
+
+\put(\xc,5){\framebox(25,70){$\scriptstyle\small U(t_0,t_{-\infty})$}}
+
+% t 0
+\multiput(\xe,5)(0, 4){18}{\line(0,1){2}}
+\put(\xe,0){\makebox(0,0){$\scriptstyle t_0$}}
+
+\put(\xd,70){\line(1,0){\ld}}
+
+\put(\xd,50){\line(1,0){\ld}}
+
+\put(\xd,30){\line(1,0){\ld}}
+
+\put(\xd,10){\line(1,0){\ld}}
+
+\put(\xf,45){\framebox(\lfa,30){$\scriptstyle U_E(t_1,t_0)$}}
+
+\put(\xf,5){\framebox(\lf,30){$\scriptscriptstyle U_{SO}(t_0,t_a)$}}
+
+\put(\xg,30){\line(1,0){\lg}}
+
+\put(\xg,10){\line(1,0){\lg}}
+
+% t a
+\multiput(\xh,5)(0, 4){9}{\line(0,1){2}}
+\put(\xh,0){\makebox(0,0){$\scriptstyle t_a$}}
+
+\put(\xi,30){\circle*{4}}
+\put(\xi,30){\line(0,-1){23}}
+\put(\xi,10){\circle{6}}
+
+% t b
+\multiput(\xj,5)(0, 4){9}{\line(0,1){2}}
+\put(\xj,0){\makebox(0,0){$\scriptstyle t_b$}}
+
+\put(\xk,5){\framebox(\lf,30){$\scriptscriptstyle U_{SO}(t_1,t_b)$}}
+
+\put(\xl,70){\line(1,0){\ld}}
+
+\put(\xl,50){\line(1,0){\ld}}
+
+\put(\xl,30){\line(1,0){\ld}}
+
+\put(\xl,10){\line(1,0){\ld}}
+
+
+% t 1
+\multiput(\xm,5)(0, 4){18}{\line(0,1){2}}
+\put(\xm,0){\makebox(0,0){$\scriptstyle t_1$}}
+
+\put(\xn,5){\framebox(\lf,70){$\scriptstyle U(t_{+\infty},t_1)$}}
+
+\put(\xo,70){\line(1,0){10}}
+
+\put(\xoa,62){\makebox(0,0){$\displaystyle\vdots$}}
+
+
+\put(\xo,50){\line(1,0){10}}
+
+\put(\xo,30){\line(1,0){10}}
+
+\put(\xo,10){\line(1,0){10}}
+
+% t +_infty
+
+
+\put(\xp,40){\makebox(0,0){$\scriptstyle\ket{\Psi_{+\infty}}$}}
+
+
+\end{picture}
+
+\caption{The observer $O$ measuring $S$ in the proposed representation}\label{FigureC}
+\end{figure}
+
+
+In this representation, the first set of unspecified number of qubits represents the Environment $E$. We had supposed that the Environment does not interact with $S$ and $O$ during the time interval $[t_0,t_1]$ and undergoes its own unitary evolution  $U_E(t_1,t_0)$ during the experiment.
+
+
+
+
+\section{Probabilities obtained from the quantum circuit}
+We now have fully described the unitray evolution corresponding to the experiment including the entanglement between the observer and the system under study.
+
+To get the joint probability of observing the system $S+O$ in the state $\ketBasis{\phi}{S}\otimes\ketBasis{0}{O}$ at $t_a$, and the observer in the state $\ketBasis{0}{O}$ at $t_b$, one only need to insert the corresponding projections for the corresponding qubits and times, as in Figure~\ref{FigureC}, and compute the corresponding probability amplitude:
+
+\setlength{\unitlength}{0.025 in}
+\begin{figure}[!h]
+\centering
+\begin{picture}(190,80)
+% t -_infty
+\def\xa{0}
+\def\xb{12}
+\def\xba{15}
+\def\xbb{18}
+\def\xc{22}
+\def\xd{47}
+\def\xe{52} %t0
+\def\xf{57} %USO_a begin
+\def\ld{10}
+\def\lf{23} %width USO
+\def\lfa{86} %width UE
+\def\xg{80} %USO_a end
+\def\lg{40}
+\def\xh{89} %ta
+\def\xha{96}
+\def\lha{8}
+\def\lhb{24}
+\def\xi{100} %CNOT
+\def\xj{111} %tb
+\def\xja{118}
+\def\lja{2}
+\def\xk{120} %USO_b begin
+\def\xl{143} %USO_b end
+\def\xm{148} %t1
+\def\xn{153} 
+\def\xo{176} 
+\def\xoa{180} 
+\def\xp{196} 
+
+
+\put(\xa,40){\makebox(0,0){$\scriptstyle\ket{\Psi_{-\infty}}$}}
+
+\put(\xba,74){\makebox(0,0){$\scriptstyle E$}}
+
+\put(\xb,70){\line(1,0){10}}
+
+\put(\xbb,62){\makebox(0,0){$\displaystyle\vdots$}}
+
+\put(\xb,50){\line(1,0){10}}
+
+\put(\xba,34){\makebox(0,0){$\scriptstyle S$}}
+
+\put(\xb,30){\line(1,0){10}}
+
+\put(\xba,14){\makebox(0,0){$\scriptstyle O$}}
+
+\put(\xb,10){\line(1,0){10}}
+
+\put(\xc,5){\framebox(25,70){$\scriptscriptstyle U(t_0,t_{-\infty})$}}
+
+% t 0
+\multiput(\xe,5)(0, 4){18}{\line(0,1){2}}
+\put(\xe,0){\makebox(0,0){$\scriptstyle t_0$}}
+
+\put(\xd,70){\line(1,0){\ld}}
+
+\put(\xd,50){\line(1,0){\ld}}
+
+\put(\xd,30){\line(1,0){\ld}}
+
+\put(\xd,10){\line(1,0){\ld}}
+
+\put(\xf,45){\framebox(\lfa,30){$\scriptstyle U_E(t_1,t_0)$}}
+
+\put(\xf,5){\framebox(\lf,30){$\scriptscriptstyle U_{SO}(t_0,t_a)$}}
+
+\put(\xg,30){\line(1,0){2}}
+
+\put(\xg,10){\line(1,0){2}}
+
+% t a
+
+\put(\xh,0){\makebox(0,0){$\scriptstyle t_a$}}
+
+\put(\xi,30){\circle*{4}}
+\put(\xi,30){\line(0,-1){23}}
+\put(\xi,10){\circle{6}}
+
+\put(\xh,30){\makebox(0,0){$\scriptscriptstyle \ketbraBasis{\phi}{\phi}{S}$}}
+
+\put(\xh,10){\makebox(0,0){$\scriptscriptstyle \ketbraBasis{0}{0}{O}$}}
+
+\put(\xha,30){\line(1,0){\lhb}}
+
+\put(\xha,10){\line(1,0){\lha}}
+
+
+% t b
+\put(\xj,0){\makebox(0,0){$\scriptstyle t_b$}}
+
+\put(\xk,5){\framebox(\lf,30){$\scriptscriptstyle U_{SO}(t_1,t_b)$}}
+
+\put(\xl,70){\line(1,0){\ld}}
+
+\put(\xl,50){\line(1,0){\ld}}
+
+\put(\xl,30){\line(1,0){\ld}}
+
+\put(\xl,10){\line(1,0){\ld}}
+
+\put(\xj,10){\makebox(0,0){$\scriptscriptstyle \ketbraBasis{0}{0}{O}$}}
+
+\put(\xja,10){\line(1,0){\lja}}
+
+% t 1
+\multiput(\xm,5)(0, 4){18}{\line(0,1){2}}
+\put(\xm,0){\makebox(0,0){$\scriptstyle t_1$}}
+
+\put(\xn,5){\framebox(\lf,70){$\scriptstyle U(t_{+\infty},t_1)$}}
+
+\put(\xo,70){\line(1,0){10}}
+
+\put(\xoa,62){\makebox(0,0){$\displaystyle\vdots$}}
+
+
+\put(\xo,50){\line(1,0){10}}
+
+\put(\xo,30){\line(1,0){10}}
+
+\put(\xo,10){\line(1,0){10}}
+
+% t +_infty
+
+
+\put(\xp,40){\makebox(0,0){$\scriptstyle\ket{\Psi_{+\infty}}$}}
+
+
+\end{picture}
+
+\caption{Obtaining the joint probability amplitude for the initial and final states}\label{FigureD}
+\end{figure}
+
+
+\begin{eqnarray} 
+\chi_{a b}&=&\bra{\Psi_{+\infty}} U(t_{+\infty},t_1) U_E(t_1,t_0) \nonumber\\
+&& \otimes [ U_{SO}(t_1,t_b) \pi_b U_{SO}(t_b,t_a) \pi_a U_{SO}(t_a,t_0)] \nonumber\\
+&&   U(t_0,t_{+\infty}) \ket{\Psi_{-\infty}}.
+\end{eqnarray} 
+
+where
+$\pi_b = \toshIdentity_S\otimes\ketbraBasis{b}{b}{O}$, and $\pi_a = \ketbraBasis{\phi}{\phi}{S}\otimes\ketbraBasis{0}{0}{O}$.
+
+
+The process can actually be generalised for more than two times. The probability amplitude of observing the state $\ket{\psi_1}$ at time $s_1$, the state $\ket{\psi_2}$ at time $s_2$, \ldots, the state $\ket{\psi_n}$ at time $s_n$, reads:
+\begin{eqnarray} 
+\chi_{1,\ldots,n}&=&\bra{\Psi_{+\infty}} U(t_{+\infty},t_1) U_E(t_1,t_0) \nonumber\\
+&& \otimes [ U_{SO}(t_1,s_n) \pi_n U_{SO}(s_n, s_{n-1}) \pi_{n-1}\cdots U_{SO}(s_2, s_1) \pi_{1} U_{SO}(s_1,t_0)] \nonumber\\
+&&   U(t_0,t_{+\infty}) \ket{\Psi_{-\infty}}.
+\end{eqnarray} 
+where $\pi_i=\ket{\psi_i}\bra{\psi_i}$ is the projection onto the state $\ket{\psi_i}$.
+
+Coming back to our case with the times $t_a$ and $t_b$, we are in general looking for conditional probabilities of events at $t_b$ given that we have observed a given state at $t_a$ i.e.
+
+\begin{equation}
+Pr(b | a) = \frac{\chi_{a b}^\dag\chi_{a b}}{\chi_{a}^\dag\chi_{a}}
+\end{equation}
+where $\chi_{a}$ is the probability amplitude of observing $S+O$ in the state $\ketBasis{\phi}{S}\otimes\ketBasis{0}{O}$ at $t_a$ only, i.e.
+
+\begin{eqnarray} 
+\chi_{a}&=&\bra{\Psi_{+\infty}} U(t_{+\infty},t_1) U_E(t_1,t_0) \nonumber\\
+&& \otimes [ U_{SO}(t_1,t_a) \ketbraBasis{\phi}{\phi}{S}\otimes\ketbraBasis{0}{0}{O}U_{SO}(t_a,t_0)] \nonumber\\
+&&   U(t_0,t_{+\infty}) \ket{\Psi_{-\infty}}.
+\end{eqnarray} 
+
+\section{Link to the standard formulae}
+The general formulae above are not workable in practice: we have no description of the system $\Omega$ and the initial or final states $\ket{\Psi_{\pm\infty}}$ are completely unknown.
+However, when the system $S+O$ is considerably smaller than the environment $E$, we can show that the formulae can be simplified to give the usual formulation of quantum mechanics.
+
+It is known that in this case~\cite{Popescu06}, for almost all pure states for $\Omega$, the state of the subsystem $S+O$ is indistinguishable from the fully mixed state $\frac{1}{d}\toshIdentity$ where $d$ is the dimension of the Hilbert Space describing $S+O$ . We can therefore restrict our analysis of the previous section to the system $S+O$ starting with the fully mixed state  $\frac{1}{d}\toshIdentity$ at $t_0$ and ending in the fully mixed state  $\frac{1}{d}\toshIdentity$ at $t_1$. As any unitary transformation transforms the fully mixed state into the fully mixed state, the joint probability of $a$ and $b$ becomes:
+
+\begin{eqnarray}
+Pr(b,a) &=& \Tr{ \pi_b U_{SO}(t_b,t_a) \pi_a \left(\frac{1}{d}\toshIdentity\right) \pi_a U^\dag_{SO}(t_b,t_a) \pi_b\left(\frac{1}{d}\toshIdentity\right) }\\
+&=&\frac{1}{d^2}\Tr{ \pi_b U_{SO}(t_b,t_a) \pi_a  U^\dag_{SO}(t_b,t_a) }
+\end{eqnarray}
+whereas the marginal probability of observing $a$ is 
+
+\begin{eqnarray}
+Pr(a) &=&\frac{1}{d^2}\Tr{U_{SO}(t_b,t_a) \pi_a  U^\dag_{SO}(t_b,t_a)}\\
+&=& \frac{1}{d^2}.
+\end{eqnarray}
+
+We get the conditional probability of $b$ given $a$:
+
+\begin{equation}
+Pr(b|a) = \frac{Pr(b,a)}{Pr(a)} = \Tr{\pi_b U_{SO}(t_b,t_a) \pi_a  U^\dag_{SO}(t_b,t_a)}
+\end{equation}
+which is the standard formula giving the conditional probability that we observe $b$ given that the system $S+O$ starts in the state $\pi_a$, follows the unitary evolution $U_{SO}(t_b,t_a)$ between $t_a$ and $t_b$ and is measured in state $\pi_b$.
+
+\section{No preferred direction of time nor causality}
+
+What is different in theory from the usual description:
+
+no causality 
+
+physics does not allow any third party adding initiative, specifying initial states. No source.
+
+Should forbid misleading words such as ``prepare'', ``decide'', ``choose''
+
+no time ordering
+
+\section{Discussion}
+Why is it difficult to get rid of the impression of causality? Causality is linked to the notion of initiative, of source, of a third party influence coming outside the physical realm, influencing physical events. Such intervention is forbidden by the physical laws we know of but the notion appears perniciously in our description of physical laws in sentences such as ``Alice decides the bit value'', ``let's prepare the system in a given state'', ``initially'' etc.
+
+The usual representation of quantrum circuits have the same misleading features: initial state defined on the left side but not on the right, reading of the diagram from left to right, projections breaking the symmetry of the graph. Our proposed representation represents the past and future in equal footing and helps to get rid of impression of causality and the preferred arrow of time. Physical laws do not allow any notion of initiave or causal relationships. There are only correlations in observations made cojointly.
+
+This note considered that the quantum circuit itself was deterministic. It could have been otherwise and our formalism does not take into account this possibility. To take into account this possibility, we need to consider the whole experimental setup as a configuration of elementary particles that can evolve and to do this we need a quantum field formalism but encompassing the measuring apparatus and the observer, which is far more complex than the current use of QFT.
+
+\begin{thebibliography}{}
+\bibitem{vonNeumann} von Neumann, J. (1955), `Mathematical Foundations of Quantum Theory', Princeton University Press
+
+\bibitem{Nielsen} Nielsen, M. A., Chuang, I. (2010), `Quantum Computation and Quantum Information', Cambridge University Press
+
+\bibitem{Inamori} Inamori, H. (2018), `Quantum mechanics allows undetectable inconsistencies in witnessed events', arXiv:1801.05317
+
+\bibitem{Gurevich} Gurevich, Y., Blass, A. (2021), `Quantum circuits with classical channels and the principle of deferred measurements', arXiv:2107.08324
+
+\bibitem{Bergou} Bergou, J. A., Hillery, M. (2013) Introduction to the Theory of Quantum Information Processing, Springer (Chapter 2)
+
+\bibitem{Popescu06} Popescu, S., Short A. J., Winter, A. (2006), `The foundations of statistical mechanics from entanglement: Individual states vs. averages'
+
+\end{thebibliography}
+
+\end{document}
