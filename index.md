@@ -11,6 +11,14 @@ Welcome to my research portal. This archive hosts my working manuscripts and der
 
 | Title | Description | Access |
 | :--- | :--- | :--- |
+| A static representation of quantum circuit without preferential direction of time | Presents how quantum circuits can be interpreted free of direction of flow of time| [PDF](./noCausality/NoPreferredDirectionOfTime.pdf) |
+
+
+
+## Technical documents, cheat sheets
+
+| Title | Description | Access |
+| :--- | :--- | :--- |
 | General Relativity cheat sheet | A minimal introduction to general relativity | [PDF](./introductionGeneralRelativity/Relativity.pdf) |
 
 
