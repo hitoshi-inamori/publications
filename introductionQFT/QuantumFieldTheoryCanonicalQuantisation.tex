@@ -1,0 +1,943 @@
+% Hitoshi Inamori
+% Cheat sheets Standard Format File
+
+% !TEX encoding = UTF-8 Unicode
+% !TEX TS-program = pdflatex
+
+%\documentstyle[11pt]{article}
+\documentclass[11pt,amsmath,amssymb,latexsym]{article}
+
+
+
+% Default margins are too wide all the way around.  I reset them here
+\setlength{\topmargin}{-.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{-0.3in}
+%\setlength{\evensidemargin}{.125in}
+\setlength{\textwidth}{6.25in}
+
+
+\usepackage{leftidx}% http://ctan.org/pkg/leftidx
+\usepackage{slashed}
+
+\usepackage{graphicx}
+\DeclareGraphicsRule{*}{mps}{*}{} 
+\usepackage[errorstop]{feynmp-auto}
+%\usepackage{feynmf}
+%\usepackage{tikz-feynman}
+%\tikzfeynmanset{compat=1.0.0} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% My commands are here: basically we create a new standard table using
+% \toshTable
+% Then 
+%		a definition is created using \toshDefinition
+%   a property is created using \toshProperty
+%   a proof (one column) is created using \toshProof
+%   an example (one column) is created using \toshExample
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\toshTableBegin} 			{\begin{tabular}{|p{5cm}|p{11cm}|}}
+\newcommand{\toshTableEnd} 				{\hline \end{tabular}}
+\newcommand{\toshTableTitle}[1] 	{\hline \multicolumn{2}{|l|}{{\bf{#1}}}\\ \hline}
+\newcommand{\toshTableNotation}[1]{\hline \multicolumn{2}{|p{16cm}|}{(\textbf{Note}) #1}\\}
+\newcommand{\toshDefinition}[2]		{\hline (D) {\bf{#1}} & {#2} \\}
+\newcommand{\toshProperty}[2]			{\hline (P) {#1} & {#2} \\}
+\newcommand{\toshProof}[1]				{\hline \multicolumn{2}{|p{16cm}|}{(\small \underline{Proof}) #1}\\}
+\newcommand{\toshExample}[1]			{\hline \multicolumn{2}{|p{16cm}|}{\small (Example) #1}\\}
+\newcommand{\toshNewPage}					{\hline \end{tabular} \newpage \toshTableBegin}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For Definitions or Properties with several conditions or implications
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\toshBlockStart}		{\begin{tabular}{l}}
+\newcommand{\toshBlockItem}[1]	{{#1} \\}
+\newcommand{\toshBlockDesc}[2]	{{\bf{(#1)}}\, {#2} \\}
+\newcommand{\toshBlockEnd}			{\end{tabular}}
+\newcommand{\toshLeftBlock}[1]	{$\left.{#1}\right]$}
+\newcommand{\toshRightBlock}[1]	{$\left[{#1}\right.$}
+\newcommand{\toshDef}[1]				{{\textbf{#1}}}
+\newcommand{\toshDual}{\tilde{E}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Preferred Symbols
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\toshEquivalent}		{$\iff$}
+\newcommand{\toshImply}					{\Rightarrow}
+\newcommand{\toshByDef}					{$\stackrel{D}{\iff}$}
+\newcommand{\toshEqByDef}				{\,\stackrel{D}{=}\,}
+\newcommand{\toshIdentity}			{{\mathbf{1}}}
+\newcommand{\toshItoInt}				{{\mathcal{I}}}
+\newcommand{\toshA}							{{\mathcal{A}}}
+\newcommand{\toshB}							{{\mathcal{B}}\,}
+\newcommand{\toshC}							{{\mathbf{C}}}
+\newcommand{\toshCylinder}			{{\mathcal{C}}_1}
+\newcommand{\toshF}							{{\mathcal{F}}\,}
+\newcommand{\toshG}							{{\mathcal{G}}\,}
+\newcommand{\toshH}							{{\mathcal{H}}\,}
+\newcommand{\toshL}							{{\mathcal{L}}}
+\newcommand{\toshLOne}					{{\mathcal{L}}^1}
+\newcommand{\toshM}							{{\mathcal{M}}\,}
+\newcommand{\toshMStep}					{M^2_{{step}}}
+\newcommand{\toshMTwo}					{M^2}					
+\newcommand{\toshN}							{{\mathbf{N}}\,}
+\newcommand{\toshNuST}					{{\nu^{m\times n}_{\toshH}(S,T)}}
+\newcommand{\toshST}						{\,/\,} % Such That
+\newcommand{\toshR}							{{\mathbf{R}}}
+\newcommand{\toshT}							{{\mathbf{T}}}
+\newcommand{\toshVar}						{{\textrm{Var}}}
+\newcommand{\Schrodinger}						{{Schr\"{o}dinger}}
+
+\newcommand{\grad}							{{\mathbf{grad}\,}}
+\newcommand{\divergence}						{{\textrm{div}\,}}
+\newcommand{\rot}							{{\mathbf{rot}\,}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Special Relativity and Electromagnetism
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\state}[1]{\left|{#1}\right>}
+\newcommand{\ket}[1]{\left|{#1}\right>}
+\newcommand{\stateBasis}[2]{\left|{#1}\right>_{#2}}
+\newcommand{\bra}[1]{\left<{#1}\right|}
+\newcommand{\braBasis}[2]{\left<{#1}\right|_{#2}}
+\newcommand{\braket}[2]{\left<{#1}|{#2}\right>}
+%\newcommand{\braketBasis}[3]{\leftidx{_{#3}}{\left<{#1}|{#2}\right>}_{#3}}
+\newcommand{\Tr}[1]{\textrm{Tr}\left({#1}\right)}
+\newcommand{\PartTr}[2]{\textrm{Tr}_{#2}\left({#1}\right)}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Begin document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title{Quantum field theory cheat sheet\\ -- canonical quantisation -- }
+\author{Hitoshi Inamori}
+%\renewcommand{\today}{April, 2008}
+\maketitle
+\begin{abstract}
+From David Tong Quantum Field Theory Part III Mathematical Tripos course and Peskin Schroeder ``An introduction to Quantum Field Theory''
+\end{abstract}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Dyson formula, Schrodinger, Heinsenberg, Interaction picture
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Dyson formula, \Schrodinger, Heisenberg, Interaction picture}
+\toshDefinition{Dyson formula, time-ordering operator}{
+The solution to the equation for the operator $U_H(t,t_0)$ 
+
+\smallskip
+
+\quad $\displaystyle \frac{d}{dt} U_H(t) = - i H(t) U_H(t,t_0)$
+
+\smallskip
+
+where $H(t)$ is a time-dependent operator, is given by the Dyson formula:
+
+\smallskip
+
+\quad $\displaystyle U_H(t,t_0) = T\left[ \exp\left(- i\int_{t_0}^t H(s)ds\right)\right]$
+
+\smallskip
+
+where $T$ is the \toshDef{time ordering operator} ($f=1$ for fermions)
+
+\quad $T[H(t_1) H(t_2)] = \left\{\begin{array}{l} H(t_1)H(t_2) \textrm{ if } t_1 \geq t_2\\ (-1)^f H(t_2)H(t_1) \textrm{ if } t_1 < t_2\end{array}\right.$ 
+
+
+}
+\toshDefinition{\Schrodinger, Heisenberg, Interaction picture}{Let the Hamiltonian be $H = H_0 + H_I$ where typically $H_0$ describes the interaction-free laws and $H_I$ describes the interactions between fields.
+
+\bigskip
+
+In the \toshDef{\Schrodinger\, picture}:
+
+\toshBlockStart
+\toshBlockItem{The operators $O_S$ and the bases of the Hilbert spaces are}
+\toshBlockItem{time-independent.}
+\toshBlockItem{The states $\ket{\phi(t)}_S = U(t,t_0)\ket{\phi(t_0)}_S$ are time-dependent.}
+\toshBlockEnd
+
+\bigskip
+
+In the \toshDef{Heisenberg picture}:
+
+\toshBlockStart
+\toshBlockItem{The operators $O_H(t) = U^\dagger (t,t_0) O_H(t_0) U(t,t_0)$ and the bases}
+\toshBlockItem{$\ket{i(t)}_H =  U^\dagger (t,t_0)\ket{i(t_0)}_H$ of the Hilbert spaces are}
+\toshBlockItem{time-dependent, and $\frac{d O_H}{dt} = i[H,O_H]$.}
+\toshBlockItem{The states $\ket{\phi}_H$ are time-dependent.}
+\toshBlockEnd
+
+\bigskip
+
+In the \toshDef{interaction picture}:
+
+\toshBlockStart
+\toshBlockItem{The operators $O_I(t) = U_{H_0}^\dagger (t,t_0) O_I(t_0) U_{H_0}(t,t_0)$ and the bases}
+\toshBlockItem{$\ket{i(t)}_I =  U_{H_0}^\dagger (t,t_0)\ket{i(t_0)}_I$ of the Hilbert spaces are}
+\toshBlockItem{time-dependent, and $\frac{d O_H}{dt} = i[H,O_H]$, including $O_H=H_I$. }
+\toshBlockItem{The states $\ket{\phi(t)}_I = U_{H_I(t)}(t,t_0)\ket{\phi(t_0)}_S$ are time-dependent,}
+\toshBlockItem{with $H_I(t) = U_{H_0}^\dagger (t,t_0) H_I(t_0) U_{H_0}(t,t_0)$.}
+\toshBlockEnd
+}
+
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Canonical quantisation steps
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Canonical quantisation steps}
+\toshProperty{Interaction picture}{We consider a physical system described by a Lagrangian $\toshL = \toshL_0 + \toshL_I$ where $\toshL_0$ describes the free fields and $\toshL_I$ describes the interaction of the fields. Typically $\toshL_I$ is assumed to be smaller than $\toshL_0$ so that calculations can be made using perturbative series in $\toshL_I$.
+
+\smallskip
+
+We compute the general momentum field
+
+\smallskip
+
+\quad $\displaystyle \pi(x) = \frac{\partial\toshL}{\partial (\partial_0\phi)} = \frac{\partial\toshL_0}{\partial (\partial_0\phi)}$
+
+\smallskip
+
+as typically $\toshL_I$ does not depend on $\partial_0\phi$, and define the Hamiltonian as
+
+\quad $\displaystyle H = \int d^3 \vec{x} \left[\pi(x)\partial_0\phi(x) - \toshL\right] = H_0 + H_I$ 
+
+where $H_0 = \int d^3 \vec{x} \left[\pi(x)\partial_0\phi(x) - \toshL_0\right]$ and $H_I = - \int d^3\vec{x} \toshL_I$.
+
+\smallskip
+
+We use the interaction picture, with the basis states defined as eigenstates for the free-field Hamiltonian $H_0$. These basis states are used to define the incoming and outgoing particles at ``asymptotic times'', before and after the interactions occur (this is a debatable assumption as the interactions may not disappear at asymptotic times). 
+
+The free-field Hamiltonian $H_0$ gives also the time evolution of all operators, inlcluding $\phi$ and $\pi$.
+
+We denote by \toshDef{$\ket{0}$} the \toshDef{vaccum state for the free-field theory} $H_0$, i.e. $H_0 \ket{0} = 0$, $\braket{0}{0} = 1$.
+
+We denote by \toshDef{$\ket{\Omega}$} the \toshDef{vaccum state for the full theory} $H$, i.e. $H \ket{\Omega} = 0$, $\braket{\Omega}{\Omega} = 1$.
+}
+\toshProperty{Canonical quantisation}{
+To allow computation of $H_0$ and $H_I$, the fields $\phi(x)$ and $\pi(x)$ are \toshDef{quantized} for the free field theory $\toshL_0$, $H_0$ i.e. promoted as fields of operators, where we impose the following constraints:
+
+\smallskip
+
+(1) The field $\phi(x)$ obeys the Euler-Lagrange equation obtained from the free-field Lagrangian $\toshL_0$ (contrary to path-integral formulation where the field has no such constraint):
+
+\quad $\displaystyle \frac{\partial \toshL_0}{\partial \phi} - \frac{\partial}{\partial x^\mu}\frac{\partial \toshL_0}{\partial(\partial_\mu \phi)} = 0$,
+
+\smallskip
+
+(2) The field $\phi(x)$ and $\pi(x)$ obey the commutation relations:
+
+\smallskip
+
+\quad For fields describing \toshDef{Bose} particles:
+
+\quad \toshBlockStart
+\toshBlockItem{ $[\phi_a(x),\pi_b(y)] = i \delta(x - y)\delta_{a b}$}
+\toshBlockItem{ $[\phi_a(x),\phi_b(y)] = 0$, \quad $[\pi_a(x),\pi_b(y)] = 0$}
+\toshBlockEnd
+
+\smallskip
+
+\quad For fields describing \toshDef{Fermi} particles:
+
+\quad\toshBlockStart
+\toshBlockItem{ $\{\phi_a(x),\pi_b(y)\} = i \delta(x - y)\delta_{a b}$}
+\toshBlockItem{ $\{\phi_a(x),\phi_b(y)\} = 0$, \quad $\{\pi_a(x),\pi_b(y)\} = 0$}
+\toshBlockEnd
+
+\quad where we made explicit the degrees of freedom for the fields 
+
+\quad $\phi = \{\phi_a\}_a$ and $\pi_a = \partial \toshL / \partial (\partial_0\phi_a)$.
+
+\smallskip
+
+(3) The operators are \toshDef{normal ordered}, so that all operators creating particles are placed to the left compared to the operators annihilating the same particles ($(-1)\times$ applies when permuting fermion operators). A normal ordered product of operators $\phi(x_1)\cdots\phi(x_2)$ is denoted $:\phi(x_1)\cdots\phi(x_2):$
+}
+\toshNewPage
+\toshDefinition{Scattering matrix}{The \toshDef{scattering matrix} $S$ is the operator defined by
+
+\quad $\displaystyle S=U_{H_I}(t_+,t_-) = T\left[\exp\left( - i\int_{t_-}^{t_+} H_I(s)ds\right)\right]$ 
+
+so that for the initial state $\ket{i}$ at asympotic time $t_-\rightarrow -\infty$ and the final state $\ket{f}$ at asymptotic time $t_+\rightarrow +\infty$ (recall they are eigenstates of $H_0$), $\bra{f}S\ket{i}$ is the probability amplitude to observe $\ket{f}$ starting from state $\ket{i}$.
+}
+\toshProperty{$n$-point Green function or correlation function}{The $n$-point \toshDef{Green function} or \toshDef{correlation function} is defined as
+
+\smallskip
+
+\quad $\displaystyle G^{(n)}(x_1,\ldots,x_n) = \bra{\Omega} T\left[ \phi_H(x_1) \cdots\phi_H(x_n)\right] \ket{\Omega}$
+
+\smallskip
+
+where the states and the field operators are in the Heisenberg picture for the full Hamiltonian $H$. 
+
+\smallskip
+
+(Assuming that the spectrum for $H$ gives an isolated minimum energy 0,) we can show that:
+
+\smallskip
+
+\quad $\displaystyle G^{(n)}(x_1,\ldots,x_n) = \frac{\displaystyle\bra{0} T\left[ \phi_I(x_1)\cdots\phi_I(x_n) S\right]\ket{0}}{\displaystyle\bra{0}  S \ket{0}}$
+
+\smallskip
+
+where the numerator $\bra{0}  S \ket{0}$ corresponds to vacuum bubbles which corresponds to particles creation/annihilation in the vaccum not connected to the ingoing/outgoing particles. The factoring on the right hand side says that we only need to consider processes which are connected to the ingoing/outgoing particles.
+}
+\toshProof{Using $S =  T\left[ \exp\left(- i\int_{t_-}^{t_+} H_I(s)ds\right)\right]$, the numerator reads $\bra{0} T\left[ \phi_I(x_1)\cdots\phi_I(x_n) S\right]\ket{0}$
+
+$ = \bra{0}U_I(t_{+},t_1)\phi_I(x_1)U_I(t_1,t_2)\phi_I(x_2)\cdots\phi_I(x_n) U_I(t_n,t_{t-})\ket{0} = \bra{0}U_I(t_+,t_0)\phi_H(x_1) \cdots \phi_H(x_n)U_I(t_0,t_-)\ket{0}$. 
+
+Assume now that the spectrum of $H$ has an isolated eigenvalue 0 (of eigenstate $\ket{\Omega}$) and a continuum spectrum $E > 0$. We have, for any state $\ket{\psi}$,  $\bra{\psi}U_I(t_0,t_-)\ket{0} = \bra{\psi}U_I(t_0,t_-)[\ket{\Omega}\bra{\Omega} + \int dE\ket{E}\bra{E}]\ket{0}=\bra{\psi}U_I(t_0,t_-)\ket{\Omega}\braket{\Omega}{0} + \int dE \bra{\psi}U_I(t_0,t_-)\ket{E}\braket{E}{0}$. The last term reads $\int dE \braket{\psi}{E}e^{-i E (t_0 - t_-)}\braket{E}{0}$ which converges to 0 as $(t_0 - t_-)$ tends to infinity using the Riemann Lebesgue theorem. We get $G^{(n)}(x_1,\ldots,x_n) = \frac{\braket{0}{\Omega}\bra{\Omega}T[\phi_H(x_1) \cdots \phi_H(x_n)]\ket{\Omega}\braket{\Omega}{0}}{\braket{0}{\Omega}\braket{\Omega}{\Omega}\braket{\Omega}{0}}$ which concludes the proof.
+}
+\toshProperty{How to get the $S$ matrix from the correlation function
+
+\smallskip
+
+Lehmann-Symanzik-Zimmermann (LSZ) formula}{First step is to perform the Fourier transform
+
+\quad $\displaystyle \tilde{G}^{(n)}(p_1,\ldots,p_n) = \int\left[\prod_{i=1}^n d^4 x_i e^{-i p_i x_i}\right] G^{(n)}(x_1,\ldots,x_n)$
+
+This however contains the propagators for the external legs ($i/(p^2-m^2+i\epsilon)$ for the scalar field for instance) so you need to cancel them by multiplying by their inverses. For a scalar field we get:
+
+\smallskip
+
+$\displaystyle\bra{p'_1,\ldots p'_{n'}} S-\toshIdentity \ket{p_1,\ldots,p_n}  = (-i)^{n+n'}$
+
+\quad $\displaystyle\times\prod_{i=1}^{n'} ({p'_i}^2-m^2)\prod_{j=1}^{n} (p_j^2-m^2) \tilde{G}^{(n)}(-{p'}_1,\ldots, -p'_{n'},p_1,\ldots,p_n)$
+
+\smallskip
+
+Noting that the correlation functions are given with all momenta ingoing. The LSZ formula is valid provided that the field verifies (shift and multiply $\phi$ by constants if needed): 
+
+\quad $\displaystyle\bra{\Omega} \phi_H(x)\ket{\Omega} = 0$ \quad and \quad $\displaystyle\bra{k}\phi_H(x)\ket{\Omega}=e^{-ikx}$ 
+
+for any position $x$ and one particle state $\ket{k}$ of momentum $k$.
+}
+\toshNewPage
+\toshProof{We have $\bra{p'_1,\ldots p'_{n'}} S-\toshIdentity \ket{p_1,\ldots,p_n} =\braket{f}{i}$ with $\ket{i}=\lim_{t\rightarrow -\infty} a_1^\dagger(t)\ket{\Omega}$ and  $\ket{f}=\lim_{t\rightarrow +\infty} a_{1'}^\dagger(t)\ket{\Omega}$ for one-particle states for instance, provided $\bra{\Omega}\phi(x)\ket{\Omega}=0$ (so that $a^\dagger$ does not create a multi-particle state but a purely single particle state) and provided $\bra{k}\phi(x)\ket{\Omega}=e^{-ikx}$ (so that such single-particle state is normalized). We have defined $a^\dagger_1(t) = \int d\vec{k} f_1(\vec{k})a^\dagger (\vec{k})$ where $f_1(\vec{k}) \propto \exp[ -(\vec{k}-\vec{k_1})^2/4\sigma^2]$ describes a wavepacket around momentum $\vec{k}_1$. We have $a^\dagger(\vec{k}) = -i\int d\vec{x} (e^{ikx}\partial_0 \phi(x) -  i k_0 e^{ikx}\phi(x))$ and $a^\dagger_1(+\infty) - a^\dagger_1(-\infty) = \int_{-\infty}^\infty dt \partial_0 a_1^\dagger(t) = -i\int d\vec{k} f_1(\vec{k})\int d^4 x e^{ikx}(-\partial^2+m^2)\phi(x)$. Applying the time ordering operator we have $a_{1'}(-\infty)\ket{\Omega} = 0$ and $\bra{\Omega}a_{1}(+\infty)= 0$. The only terms remaining are the one given by the LSZ formula, for $\sigma\rightarrow 0$ which gives Diract functions $\delta(\vec{k}-\vec{k}_1)$.
+}
+\toshDefinition{Feynman propagator and contraction}{The \toshDef{Feynman propagator} $\Delta_F$ is defined by
+
+\smallskip
+
+\quad $\displaystyle \Delta_F(x - y) = \bra{0}T\left[\phi(x)\phi(y)\right]\ket{0}$
+
+\smallskip
+
+For a product of fields 
+
+\quad $\cdots\phi(x_{i+1})\phi(x_i)\phi(x_{i-1})\cdots\phi(x_{j+1})\phi(x_j)\phi(x_{j-1})$ 
+
+\toshDef{contracting a pair of fields $\phi(x_i)$ and $\phi(x_j)$} consists in replacing these two operators with the Feynman propagator $\Delta_F(x_i-x_j)$.
+
+\quad $\cdots\phi(x_{i+1})\overbrace{\phi(x_i)\phi(x_{i-1})\cdots\phi(x_{j+1})\phi(x_j)}\phi(x_{j-1})=$
+
+\quad \quad $ = \Delta_F(x_i-x_j) \cdots\phi(x_{i+1})\phi(x_{i-1})\cdots\phi(x_{j+1})\phi(x_{j-1})$
+
+}
+\toshProperty{Wick's theorem}{For a product of fields $\phi(x_1)\cdots\phi(x_n)$,
+
+\smallskip
+
+\quad $T[\phi(x_1)\cdots\phi(x_n)] = :\phi(x_1)\cdots\phi(x_n): + :\textrm{all contractions}:$
+
+\smallskip
+
+Example for $\phi_1\phi_2\phi_3\phi_4$ where $\phi_i=\phi(x_i)$
+
+\smallskip
+
+\quad $T[\phi_1\phi_2\phi_3\phi_4] = :\phi_1\phi_2\phi_3\phi_4: + \Delta_F(x_1-x_2):\phi_3\phi_4:$
+
+\quad $\quad + \Delta_F(x_1-x_3):\phi_2\phi_4:   + $ (four similar terms)
+
+\quad $\quad + \Delta_F(x_1-x_2)\Delta_F(x_3-x_4) + \Delta_F(x_1-x_3)\Delta_F(x_2-x_4)$
+
+\quad $\quad + \Delta_F(x_1-x_4)\Delta_F(x_2-x_3)$.
+
+This allows the computation of the Green function or the Scattering matrix with perturbative expansion in $H_I$.
+}
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Canonical quantisation for real scalar fields
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Canonical quantisation for real scalar fields}
+\toshDefinition{Real scalar field 
+
+Klein Gordon equation}{Consider a one-dimensional real field $\phi(x)$ with the free field Lagrangian:
+
+\smallskip
+
+\quad $\displaystyle \toshL_0 = \frac{1}{2} (\partial_\mu\phi)(\partial^\mu\phi)-\frac{1}{2} m^2\phi^2$
+ 
+ \smallskip
+ 
+ The Euler-Lagrange equation gives
+ 
+ \quad $\displaystyle \partial_\mu\partial^\mu\phi + m^2\phi = 0$
+ 
+ called the \toshDef{Klein-Gordon} equation.
+ 
+ \smallskip
+ 
+ The momentum is
+ 
+ \quad $\displaystyle \pi = \partial_0\phi$
+
+ \smallskip
+ 
+ The Hamiltonian is
+ 
+ \quad $\displaystyle H = \int d^3 x \left[\frac{1}{2}\pi^2 + \frac{1}{2}\partial_k\partial^k \phi + \frac{1}{2}m^2\phi^2\right]$
+ 
+}
+\toshProperty{Fourier transform
+
+Creation/annihilation operators}{Consider the generic Fourier transform for $\phi(x)$:
+
+\quad $\displaystyle\phi(x) = \int\frac{d^4 p}{(2\pi)^4} \phi(p)e^{-ipx}$
+
+\smallskip
+
+Applying the Euler-Lagrange equation we get the constraint on $p_0$: $p_0=\pm E_{\vec{p}}$ where $E_{\vec{p}}=\sqrt{m^2+\vec{p}^2}$
+
+\quad $\displaystyle\phi(x) = \int\frac{d^4 p}{(2\pi)^4} \phi(p)e^{-ipx}\delta(p^2-m^2)\theta(p_0)$
+
+\quad\quad $\displaystyle +\int\frac{d^4 p}{(2\pi)^4} \phi(p)e^{-ipx}\delta(p^2-m^2)\theta(-p_0)$
+
+By changing the variable $p\mapsto -p$ in the second term and by noting that $\phi$ is real and labelling $a_{\vec{p}} = \phi(p)/\sqrt{2E_{\vec{p}}}$, $a^\dagger_{\vec{p}} = \phi(-p)/\sqrt{2E_{\vec{p}}} = \phi(p)^\dagger/\sqrt{2E_{\vec{p}}}$ (with $p_0=E_p$) we get:
+
+\smallskip
+
+\quad $\displaystyle\phi(x) = \int\frac{d^3 p}{(2\pi)^3} \frac{1}{\sqrt{2 E_{\vec{p}}}} \left[a_{\vec{p}} e^{-ipx}+a^\dagger_{\vec{p}} e^{+ipx}\right]$
+
+\smallskip 
+
+Using $\pi(x)=\partial_0 \phi(x)$ we have
+
+\quad $\displaystyle\pi(x) = \int\frac{d^3 p}{(2\pi)^3} (-i)\sqrt{\frac{E_{\vec{p}}}{2}} \left[a_{\vec{p}} e^{-ipx}-a^\dagger_{\vec{p}} e^{+ipx}\right]$
+
+and we see that the Bose particle commutation relation $[\phi(x),\pi(y)]=i\delta(x-y)$, $[\phi(x),\phi(y)]=[\pi(x),\pi(y)]=0$ is satisfied if and only if
+
+\smallskip
+
+\quad $\displaystyle \left[a_{\vec{p}}, a^\dagger_{\vec{q}}\right] = (2\pi)^3\delta(\vec{p}-\vec{q})$ \quad and \quad $\displaystyle \left[a_{\vec{p}}, a_{\vec{q}}\right] = \left[a^\dagger_{\vec{p}}, a^\dagger_{\vec{q}}\right] = 0$
+}
+\toshProperty{Hamiltonian, Fock space}{From $\pi$ and $\phi$ we get the free field Hamiltonian $H_0$ after normal ordering
+
+\quad $\displaystyle H_0 = \int\frac{d^3 p}{(2\pi)^3}E_{\vec{p}}\, a^\dagger_{\vec{p}}\,a_{\vec{p}}$
+
+and we find $\left[H_0,a^\dagger_{\vec{p}}\right] = E_{\vec{p}} a^\dagger_{\vec{p}}$ and $\left[H_0,a_{\vec{p}}\right] = -E_{\vec{p}} a_{\vec{p}}$. If $\ket{\epsilon}$ is an eignestate of $H_0$ for energy $\epsilon$ then $a_{\vec{p}}\ket{\epsilon}$ is an eignestate of $H_0$ for energy $(\epsilon-E_{\vec{p}})$ and $a^\dagger_{\vec{p}}\ket{\epsilon}$ is an eignestate of $H_0$ for energy $(\epsilon+E_{\vec{p}})$. 
+
+\smallskip
+
+Define the vacuum state $\ket{0}$ for the free field as the eigenstate of $H_0$ for energy 0. Then $a_{\vec{p}}\ket{0} = 0$ and we define the states $a^\dagger_{\vec{p_1}}\cdots a^\dagger_{\vec{p_n}}\ket{0} = \ket{p_1,\ldots p_n}$ as the state with Bose particles $p_1,\ldots,p_n$. The state is symmetric under permutation of particles as the operators $a^\dagger_{\vec{p}}$ are.
+}
+\toshNewPage
+\toshProperty{Feynman propagator for real fields}{The Feynman propagator for a real field reads
+
+\smallskip
+
+\quad $\displaystyle\Delta_F(x-y) = \bra{0}T[\phi(x)\phi(y)]\ket{0}$
+
+\quad\quad $\displaystyle= \int\frac{d^3p}{(2\pi)^3}\frac{1}{2E_{\vec{p}}}e^{-ip\cdot(x-y)\theta(x^0-y^0)+ip\cdot(x-y)\theta(y^0-x^0)}$
+
+\quad\quad $\displaystyle= \int\frac{d^4p}{(2\pi)^4} \frac{i e^{-ip(x-y)}}{p^2-m^2+i\epsilon}$
+
+\smallskip
+
+where the $+i\epsilon$ called the ``Feynman prescription'' is here so that we select the correct pole in the contour integration depending on the sign of $(x^0-y^0)$ when doing the contour integration in $p_0$.
+
+\smallskip
+
+The Feynman propagator is a Green's function for the Klein-Gordon operator, i.e.:
+
+\quad $\displaystyle \left(\frac{\partial}{\partial x^\mu}\frac{\partial}{\partial x_\mu} + m^2\right) \Delta_F(x-y) = - i\delta(x-y)$
+}
+\toshTableEnd
+\bigskip
+
+\newpage 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Canonical quantisation for spinor fields
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Canonical quantisation for spinor fields}
+\toshDefinition{Spinor fields}{The spinor field is a complex 4-dimensional vector field $\psi$, $\overline{\psi}=\psi^\dagger\gamma^0$, with the free field Lagrangian:
+
+\smallskip
+
+\quad $\displaystyle \toshL_0 = \overline{\psi}(x)(i\slashed{\partial} - m)\psi(x)$
+
+\smallskip
+
+where $\psi$ and $\overline{\psi}$ should be considered as independent variables (or you need to consider the real part and the imaginary part as independent variables).
+
+\smallskip
+
+The Euler-Lagrange equation applied on $\overline{\psi}$ gives
+
+\quad $\displaystyle (i\slashed{\partial} - m)\psi(x) = 0$
+
+\smallskip
+
+Applying $(i\slashed{\partial}+m)$ on the left we see that each of the 4 components of $\psi(x)$ obeys the Klein-Gordon equation
+
+\quad $\displaystyle (\partial_\mu\partial^\mu + m^2)\psi_\mu(x) = 0$
+
+
+\smallskip
+
+The momentum is 
+
+\quad $\pi = i\psi^\dagger$
+
+\smallskip
+
+The Hamiltonian is
+
+\quad $\displaystyle H_0 = \int d^3 x \overline{\psi}(-i\gamma^k\partial_k + m)\psi$ \quad(caution sum over $k=1,2,3$)
+
+}
+\toshProperty{Fourier transform
+
+Creation/annihilation operators}{Consider the generic Fourier transform for $\psi(x)$, with a decomposition in a basis $\{w^s(p)\}_s$ for the four-vector space:
+
+\quad $\displaystyle\psi(x) = \sum_s \int\frac{d^4 p}{(2\pi)^4} \psi^s(p)w^s(p)e^{-ipx}$
+
+
+as for the real field, applying the Klein-Gordon equation constrains $p_0$ to be $\pm E_{\vec{p}}$ (but without the complex conjugate condition as $\psi$ is not a real field).
+
+
+Applying the Dirac equation to the $w^s(p)e^{\mp ipx}$ we get
+
+\smallskip
+
+\quad $\displaystyle\left(\begin{array}{cc} \mp m & p_\mu\sigma^\mu \\ p_\mu\overline{\sigma}^\mu & \mp m \end{array}\right) w^s(p) = 0$ \quad i.e. $\quad w^s=\left(\begin{array}{c}\sqrt{p\cdot\sigma}\xi \\ \pm\sqrt{p\cdot\overline{\sigma}}\xi\end{array}\right)$
+
+where $\xi$ is a 2-component spinor. We have only two basis vectors for $\xi$, say $\xi^{s=1} = (1,0)$ and $\xi^{s=2} = (0,1)$. Therefore we have only two possible four-vectors for $w^s(p)$ and we finally get:
+
+\quad $\displaystyle \psi(x) =\sum_{s=1,2} \int\frac{d^3 p}{(2\pi)^3} \frac{1}{\sqrt{2 E_{\vec{p}} }} \left[ b^s_{\vec{p}} u^s(\vec{p}) e^{-ipx} + {c^s_{\vec{p}}}^\dagger v^s(\vec{p})e^{+ipx}\right]$
+
+for some operators $b^s_{\vec{p}}$ and $c^s_{\vec{p}}$, where $u^s(\vec{p}) = (\sqrt{p\cdot\sigma}\xi^s,\sqrt{p\cdot\overline{\sigma}}\xi^s)$, $v^s(\vec{p}) = (\sqrt{p\cdot\sigma}\xi^s,-\sqrt{p\cdot\overline{\sigma}}\xi^s)$. We have the useful identities: 
+
+\smallskip
+
+\quad $\displaystyle \sum_s u^s(\vec{p})\overline{u}^s(\vec{p}) = \slashed{p}+m$, and \quad $\displaystyle \sum_s v^s(\vec{p})\overline{v}^s(\vec{p}) = \slashed{p}-m$
+
+\smallskip
+
+We get $\pi(x)$ trivially using $\pi(x)=i\psi^\dagger(x)$, and we see that the Fermi particle commutation relation $\left\{\psi_r(x),\pi_s(x)\right\} = i \delta_{r s}\delta(x-y)$,  $\left\{\psi_r(x),\psi_s(x)\right\} = \left\{\pi_r(x),\pi_s(x)\right\} = 0$ is satisfied if and only if
+
+\smallskip
+
+\quad $\displaystyle \left\{b^r_{\vec{p}}, {b^s_{\vec{q}}}^\dagger\right\} = (2\pi)^3 \delta^{r s}\delta(\vec{p} - \vec{q})$
+
+\quad $\displaystyle \left\{c^r_{\vec{p}}, {c^s_{\vec{q}}}^\dagger\right\} = (2\pi)^3 \delta^{r s}\delta(\vec{p} - \vec{q})$
+
+and all other anti-commutators are zero (between $b$ and $c$ as well).
+}
+\toshNewPage
+\toshProperty{Hamiltonian, Fock space}{From $\pi$ and $\psi$ we get the free field Hamiltonian $H_0$ after normal ordering
+
+\quad $\displaystyle H_0 = \int\frac{d^3 p}{(2\pi)^3}E_{\vec{p}}\, \left[ {b^s_{\vec{p}}}^\dagger\, b^s_{\vec{p}} + {c^s_{\vec{p}}}^\dagger\, c^s_{\vec{p}}\right]$
+
+and we find $\left[H_0,{b^s_{\vec{p}}}^\dagger\right] = E_{\vec{p}} {b^s_{\vec{p}}}^\dagger$ and $\left[H_0,b^s_{\vec{p}}\right] = -E_{\vec{p}} b^s_{\vec{p}}$, and likewise for $c^s_{\vec{p}}$ as we had for the real field.
+
+\smallskip
+
+As before we can create states with particles and antiparticles using the operators ${b^s_{\vec{p}} }^\dagger$ and ${c^s_{\vec{p}} }^\dagger$ but this time note that these operators anti-commute, i.e. for instance, ${b^s_{\vec{p}} }^\dagger{b^r_{\vec{q}} }^\dagger\ket{0} = - {b^r_{\vec{q}} }^\dagger{b^s_{\vec{p}} }^\dagger\ket{0}$ and in particular, ${b^s_{\vec{p}} }^\dagger{b^s_{\vec{p}} }^\dagger\ket{0} = 0$ leading to the Pauli exclusion principle.
+}
+\toshProperty{Feynman propagator for spinors}{The Feynman propagator for the spinor field reads
+
+\smallskip
+
+\quad $\displaystyle S_F(x-y) = \bra{0}T[\psi(x)\overline{\psi}(y)]\ket{0}$ 
+
+\quad\quad $\displaystyle= \left\{\begin{array}{cl} \bra{0} \psi(x)\overline{\psi}(y) \ket{0} & x^0 > y^0 \\  - \bra{0} \overline{\psi}(y)\psi(x)\ket{0} & x^0 < y^0 \end{array}\right.$
+
+\quad\quad $\displaystyle= \int\frac{d^4p}{(2\pi)^4} i e^{-ip(x-y)} \frac{\slashed{p} + m}{p^2-m^2+i\epsilon}$
+
+\smallskip
+
+The Feynman propagator is a Green function for the Dirac operator, i.e.
+
+\quad $\displaystyle (i\slashed\partial_x - m)S_F(x-y) = i\delta(x-y)$
+}
+\toshTableEnd
+\bigskip
+
+\newpage 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Canonical quantisation for photons
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Canonical quantisation for photons}
+\toshDefinition{Electromagnetic field, Lorentz Gauge}{The Lagrangian of the free electromagnetic field is, adding the Lorentz gauge condition $\partial_\mu A^\mu = 0$ in the Lagrangian:
+
+\smallskip
+
+\quad $\displaystyle \toshL_0 = -\frac{1}{4} F_{\mu\nu} F^{\mu \nu} - \frac{1}{2}(\partial_\mu A^\mu)^2$
+
+\smallskip
+
+where $F_{\mu\nu} = \partial_\mu A_\nu - \partial_\nu A_\mu$ and $A_\mu(x)$ is a real Lorentz vector field.
+
+The Euler-Lagrange equation gives
+
+\quad $\displaystyle \partial_\mu\partial^\mu A^\nu = 0$
+
+and the momentum is
+
+\smallskip
+
+\quad $\displaystyle\pi^0 = \frac{\partial \toshL_0}{\partial (\partial_0 A_0)} = -\partial_\mu A^\mu$, \quad $\displaystyle\pi^k = \frac{\partial \toshL_0}{\partial (\partial_0 A_k)} = \partial^k A^0 - \partial_0 A^k$ 
+
+
+
+}
+\toshProperty{Fourier transform}{Consider the generic Fourier transform for $A^\mu$ which is a 4-vector:
+
+\quad $\displaystyle A_\mu(x) = \sum_{\lambda=0}^3\int \frac{d^4 p}{(2\pi)^4}\epsilon_\mu^\lambda(\vec{p})e^{-ipx}$  
+
+where we choose $\epsilon^0_\mu$ to be timelike, $\epsilon^1_\mu$ and $\epsilon^2_\mu$ to be transverse to the momentum i.e. $\epsilon^1\cdot p = \epsilon^2\cdot p =0$, and $\epsilon^3_\mu$ to be longitudinal, i.e. aligned to $\vec{p}$. 
+
+Applying Euler-Lagrange, we get the constraint $p^0 = \pm|\vec{p}|$, and as for the real field
+
+\quad $\displaystyle A_\mu(x) = \sum_{\lambda = 0}^3 \int \frac{d^3 p}{(2\pi)^3} \frac{1}{\sqrt{2|\vec{p}|}}\epsilon^\lambda_\mu(\vec{p})\left[a^\lambda_{\vec{p}} e^{-ipx}+{a^\lambda_{\vec{p}}}^\dagger e^{+ipx}\right]$
+
+\quad $\displaystyle \pi_\mu(x) = \sum_{\lambda = 0}^3 \int \frac{d^3 p}{(2\pi)^3} \sqrt{\frac{|\vec{p}|}{2}}(+i)\epsilon^\lambda_\mu(\vec{p})\left[a^\lambda_{\vec{p}} e^{-ipx} - {a^\lambda_{\vec{p}}}^\dagger e^{+ipx}\right]$
+
+\smallskip
+
+The commutation relations $[A_\mu(x), A_\nu(y) ] = [\pi_\mu(x), \pi_\nu(y) ] = 0$ and $[A_\mu(x), \pi_\nu(y) ] = i\eta_{\mu\nu}\delta(x-y)$ are satisfied if and only if $[a^\alpha_{\vec{p}},a^\beta_{\vec{q}} ] = [{a^\alpha_{\vec{p}}}^\dagger,{a^\beta_{\vec{q}}}^\dagger ] = 0$ and
+
+\quad $\displaystyle \left[a^\alpha_{\vec{p}},{a^\beta_{\vec{q}}}^\dagger\right] = -\eta^{\alpha\beta} (2\pi)^3 \delta(\vec{p}-\vec{q})$
+}
+\toshProperty{Hamiltonian
+
+Gupta-Bleuler condition}{The Hamiltonian reads
+
+\smallskip
+
+\quad $\displaystyle H = \int\frac{d^3 p}{(2\pi)^3} |\vec{p}| \left(\sum_{k = 1}^3 {a^k_{\vec{p}}}^\dagger a^k_{\vec{p}} - {a^0_{\vec{p}}}^\dagger a^0_{\vec{p}}\right)$
+
+\smallskip
+
+which yields positive eignevalues provided that we follow the \toshDef{Gupta-Bleuler} condition: the physical states are described by states of  the sub-Hilbert space $\toshH_{phys}$ defined by $\bra{\psi} \partial_\mu A^\mu \ket{\phi} = 0$ for any $\ket{\psi}, \ket{\phi}$ in $\toshH_{phys}$.
+}
+\toshProperty{Feynman propagator for the electromagnetic field}{The Feynman propagator for the electromagnetic field reads
+
+\smallskip
+
+\quad $\displaystyle D_{\mu\nu}(x-y) = \bra{0}T[A_\mu(x) A_\nu(y)]\ket{0}$ 
+
+\quad\quad $\displaystyle= \int\frac{d^4p}{(2\pi)^4} i e^{-ip(x-y)} \frac{-i\eta_{\mu\nu}}{p^2+i\epsilon}$
+
+The Feynamn propagator is a Green function for the electromagnetic operator, i.e.
+
+\quad $\displaystyle \frac{\partial}{\partial x^\mu}\frac{\partial}{\partial x_\mu} D_{\alpha\beta}(x-y) = i\delta(x-y)\eta_{\alpha\beta}$
+}
+\toshTableEnd
+\bigskip
+
+\newpage 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Quantum Electrodynamics
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Quantum Electrodynamics}
+\toshProperty{The full Lagrangian for photons and charged Fermi particles}{
+
+\smallskip
+
+\quad $\displaystyle \toshL = -\frac{1}{4} F_{\mu\nu} F^{\mu\nu} + \overline{\psi}(i\slashed{D} - m)\psi$
+
+\smallskip
+
+\quad\quad $\displaystyle =  -\frac{1}{4} F_{\mu\nu} F^{\mu\nu} + \overline{\psi}(i\slashed{\partial} - m)\psi - e \overline{\psi}\slashed{A}\psi$
+
+\smallskip
+
+\quad\quad $\displaystyle = \toshL_0 + \toshL_I$
+
+\smallskip
+
+where $\toshL_0 =  -\frac{1}{4} F_{\mu\nu} F^{\mu\nu} + \overline{\psi}(i\slashed{\partial} - m)\psi$ describes the free electromagnetic and spinor fields, $\toshL_I =  - e \overline{\psi}\slashed{A}\psi =  - e \overline{\psi}\gamma^\mu A_\mu\psi $ describes the interaction between the electromagnetic and the spinor fields ($e\simeq 0.3$), and $D_\mu\psi = \partial_\mu \psi + i e A_\mu \psi$ is the \toshDef{covariant derivative}.
+
+}
+\toshProperty{Calculation of scattering matrix}{We compute the probability amplitude $\bra{f}S\ket{i}$ to go from an initial state $\ket{i} = \sqrt{2 E_{\vec{p}}} {a_{\vec{p}}}^\dagger\cdots\ket{0}$  to a final state $\ket{f} = \sqrt{2 E_{\vec{q}}}{b_{\vec{q}}}^\dagger\cdots\ket{0}$  where $a^\dagger$ and $b^\dagger$ are appropriate particle creation operators.
+
+We perform the computation perturbatively (noting that $H_I = -\int \toshL_I d^3 x $):
+
+\smallskip
+
+\quad $\displaystyle S =  \toshIdentity + i T\left[\int\toshL_I(x)dx\right] + \frac{i^2}{2!} T\left[\int \toshL_I(x_1)\toshL_I(x_2)dx_1 dx_2\right]+\cdots$ 
+
+\smallskip
+
+What we get are vacuum expectation values of operators such as $\bra{0} T[A_\mu(x_1) \psi(x_2)\cdots]\ket{0}$ which are simplified using Wick's theorem and expressed as integrals on products of Feynamn propagators (in case of doubt you can decompose into creation/annihilation operators and do all the calculations).
+}
+\toshProperty{Feynman rules}{We can deduce the following rules to compute the scattering matrix:
+
+\toshBlockStart
+\toshBlockDesc{1}{Consider only connected and amputated diagrams}
+\toshBlockItem{\quad (no bubble in the vacuum, no bubble on external legs)}
+\toshBlockDesc{2}{to each incoming fermion or outgoing anti-fermion, }
+\toshBlockItem{\quad with momentum $\vec{p}$ and spin $r$,  associate a spinor $u^r(\vec{p})$}
+\toshBlockDesc{3}{to each outgoing fermion or incoming anti-fermion, }
+\toshBlockItem{\quad with momentum $\vec{p}$ and spin $r$,  associate a spinor $\overline{u}^r(\vec{p})$}
+\toshBlockDesc{4}{to each incoming or outgoing photon, }
+\toshBlockItem{\quad associate a polarisation vector $\epsilon^\mu$ }
+\toshBlockDesc{5}{each fermion-photon vertex gets a factor $(-i e \gamma^\mu)$}
+\toshBlockDesc{6}{each internal fermion line gets the propagator factor }
+\toshBlockItem{\quad\quad $\displaystyle\frac{i (\slashed{p} + m)}{p^2 - m^2 + i\epsilon}$}
+\toshBlockDesc{7}{each internal photon line gets the propagator factor }
+\toshBlockItem{\quad\quad $\displaystyle\frac{(-i\eta_{\mu\nu})}{p^2 + i\epsilon}$}
+\toshBlockDesc{8}{Momentum conservation at each vertex}
+\toshBlockDesc{9}{Integrate over undetermined loop momenta}
+\toshBlockDesc{10}{Consider permutation of identical particles with the}
+\toshBlockItem{\quad minus sign for fermions}
+\toshBlockEnd
+
+
+}
+\toshNewPage
+\toshProperty{Example: electron electron scattering
+}{
+
+\bigskip
+
+
+\quad\quad\quad
+\begin{fmffile}{electronelectronA}
+\begin{fmfgraph*}(70,60)
+\fmfleft{i1,i2}
+\fmfright{o1,o2}
+\fmf{fermion}{i1,v1}
+\fmf{phantom}{v1,o1} % Invisible rubber band
+\fmf{fermion}{i2,v2}
+\fmf{phantom}{v2,o2} % also invisible rubber band
+\fmf{photon,label=$p-p'$}{v1,v2}
+% These are visible, but have no tension.
+\fmf{fermion,tension=0}{v1,o1}
+\fmf{fermion,tension=0}{v2,o2}
+\fmfdot{v1,v2}
+\fmflabel{$e^- (q,r)$}{i1} 
+\fmflabel{$e^- (p,s)$}{i2} % left
+\fmflabel{$e^- (q',r')$}{o1} % left
+\fmflabel{$e^- (p',s')$}{o2}
+\end{fmfgraph*}
+\end{fmffile}
+\quad\quad \quad\quad\quad\quad\quad
+\begin{fmffile}{electronelectronB}
+\begin{fmfgraph*}(70,60)
+\fmfleft{i1,i2}
+\fmfright{o1,o2}
+\fmf{fermion}{i1,v1}
+\fmf{phantom}{v1,o1} % Invisible rubber band
+\fmf{fermion}{i2,v2}
+\fmf{phantom}{v2,o2} % also invisible rubber band
+\fmf{photon,label=$p-q'$}{v1,v2}
+% These are visible, but have no tension.
+\fmf{fermion,tension=0}{v1,o2}
+\fmf{fermion,tension=0}{v2,o1}
+\fmfdot{v1,v2}
+\fmflabel{$e^- (q,r)$}{i1} 
+\fmflabel{$e^- (p,s)$}{i2} % left
+\fmflabel{$e^- (q',r')$}{o1} % left
+\fmflabel{$e^- (p',s')$}{o2}
+\end{fmfgraph*}
+\end{fmffile}
+
+\bigskip
+
+\bigskip
+
+\bigskip
+
+\quad $\displaystyle \bra{f} (S-\toshIdentity) \ket{i} = i\toshA (2\pi)^4\delta(p+q-p'-q')$
+
+\bigskip
+
+with 
+
+\smallskip
+
+\quad $\displaystyle \toshA = (-i e)^2\Bigg( + \frac{\left[\overline{u}^{s'}(p')\gamma^\mu u^s(p)\right] (-i\eta_{\mu\nu})\left[\overline{u}^{r'}(q')\gamma^\nu u^{r}(q)\right]}{(p'-p)^2}$
+
+\quad\quad\quad\quad\quad  $\displaystyle - \frac{\Big[\overline{u}^{s'}(p')\gamma^\mu u^r(q)\Big] (-i\eta_{\mu\nu})\left[\overline{u}^{r'}(q')\gamma^\nu u^{s}(p)\right]}{(p-q')^2}\Bigg)$
+
+\smallskip
+}
+\toshProperty{Example: electron positron scattering
+
+Bhabha scattering
+}{
+
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% to update the Feynman diagrams below
+% (1) LaTeX this file, then
+% (2) execute in command line
+%	mpost electronpositronA.mp
+%	mpost electronpositronB.mp
+% (3) then re-LaTeX this file
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\quad\quad
+\begin{fmffile}{electronpositronA}
+\begin{fmfgraph*}(70,60)
+\fmfleft{o1,i2}
+\fmfright{i1,o2}
+\fmf{fermion}{i1,v1}
+\fmf{phantom}{v1,o1} % Invisible rubber band
+\fmf{fermion}{i2,v2}
+\fmf{phantom}{v2,o2} % also invisible rubber band
+\fmf{photon,label=$p-p'$}{v1,v2}
+% These are visible, but have no tension.
+\fmf{fermion,tension=0}{v1,o1}
+\fmf{fermion,tension=0}{v2,o2}
+\fmfdot{v1,v2}
+\fmflabel{$e^+ (q',r')$}{i1} 
+\fmflabel{$e^- (p,s)$}{i2} % left
+\fmflabel{$e^+ (q,r)$}{o1} % left
+\fmflabel{$e^- (p',s')$}{o2}
+\end{fmfgraph*}
+\end{fmffile}
+\quad\quad \quad\quad\quad\quad\quad
+\begin{fmffile}{electronpositronB}
+\begin{fmfgraph*}(80,60)
+\fmfleft{i2,i1}
+\fmfright{o1,o2}
+\fmflabel{$e^- (p,s)$}{i1}
+\fmflabel{$e^+ (q,r)$}{i2}
+\fmflabel{$e^+ (q',r')$}{o1}
+\fmflabel{$e^- (p',s')$}{o2}
+\fmf{fermion}{i1,v1,i2}
+\fmf{fermion}{o1,v2,o2}
+\fmf{photon,label=$p+q$}{v1,v2}
+\fmfdot{v1,v2}
+\end{fmfgraph*}
+\end{fmffile}
+
+\bigskip
+
+\bigskip
+
+\bigskip
+
+\quad $\displaystyle \bra{f} (S-\toshIdentity) \ket{i} = i\toshA (2\pi)^4\delta(p+q-p'-q')$
+
+\bigskip
+
+with 
+
+\smallskip
+
+\quad $\displaystyle \toshA = (-i e)^2\Bigg( - \frac{\left[\overline{u}^{s'}(p')\gamma^\mu u^s(p)\right] (-i\eta_{\mu\nu})\left[\overline{v}^r(q)\gamma^\nu v^{r'}(q')\right]}{(p-p')^2}$
+
+\quad\quad\quad\quad\quad  $\displaystyle + \frac{\Big[\overline{v}^{r}(q)\gamma^\mu u^s(p)\Big] (-i\eta_{\mu\nu})\left[\overline{u}^{s'}(p')\gamma^\nu v^{r'}(q')\right]}{(p+q)^2}\Bigg)$
+
+\smallskip
+
+The $(-1)$ of the first term is due to the fact that the positron-positron trajectory is obtained from the permutation in the time direction of an electron-electron trajectory in the electron-electron scattering.
+}
+\toshNewPage
+\toshProperty{Example: electron-positron annihilation
+}{
+
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% to update the Feynman diagrams below
+% (1) LaTeX this file, then
+% (2) execute in command line
+%	mpost electronpositronA.mp
+%	mpost electronpositronB.mp
+% (3) then re-LaTeX this file
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\quad\quad
+\begin{fmffile}{gammaA}
+\begin{fmfgraph*}(70,60)
+\fmfleft{o1,i2}
+\fmfright{i1,o2}
+\fmf{photon}{i1,v1}
+\fmf{phantom}{v1,o1} % Invisible rubber band
+\fmf{fermion}{i2,v2}
+\fmf{phantom}{v2,o2} % also invisible rubber band
+\fmf{fermion,label=$p-p'$}{v2,v1}
+% These are visible, but have no tension.
+\fmf{fermion,tension=0}{v1,o1}
+\fmf{photon,tension=0}{v2,o2}
+\fmfdot{v1,v2}
+\fmflabel{$\epsilon^\mu_2 (q')$}{i1} 
+\fmflabel{$e^- (p,s)$}{i2} % left
+\fmflabel{$e^+ (q,r)$}{o1} % left
+\fmflabel{$\epsilon^\nu_1 (p')$}{o2}
+\end{fmfgraph*}
+\end{fmffile}
+\quad\quad \quad\quad\quad\quad\quad
+\begin{fmffile}{gammaB}
+\begin{fmfgraph*}(70,60)
+\fmfleft{o1,i2}
+\fmfright{i1,o2}
+\fmf{phantom}{i1,v1}
+\fmf{phantom}{v1,o1} % Invisible rubber band
+\fmf{fermion}{i2,v2}
+\fmf{phantom}{v2,o2} % also invisible rubber band
+\fmf{fermion,label=$p-q'$}{v2,v1}
+% These are visible, but have no tension.
+\fmf{fermion,tension=0}{v1,o1}
+\fmf{photon,tension=0}{v1,o2}
+\fmf{photon,tension=0}{v2,i1}
+\fmfdot{v1,v2}
+\fmflabel{$\epsilon^\mu_2 (q')$}{i1} 
+\fmflabel{$e^- (p,s)$}{i2} % left
+\fmflabel{$e^+ (q,r)$}{o1} % left
+\fmflabel{$\epsilon^\nu_1 (p')$}{o2}
+\end{fmfgraph*}
+\end{fmffile}
+
+\bigskip
+
+\bigskip
+
+\bigskip
+
+\quad $\displaystyle \bra{f} (S-\toshIdentity) \ket{i} = i\toshA (2\pi)^4\delta(p+q-p'-q')$
+
+\bigskip
+
+with 
+
+\smallskip
+
+\quad $\displaystyle \toshA = i(-i e)^2 \overline{v}^r(q)\Bigg( + \frac{\gamma_\mu(\slashed{p} - \slashed{p'}+m)\gamma_\nu}{(p-p')^2-m^2}$
+
+\quad\quad\quad\quad\quad  $\displaystyle + \frac{\gamma_\nu(\slashed{p} - \slashed{q'}+m)\gamma_\mu}{(p-q')^2-m^2}\Bigg) u^s(p)\epsilon^\nu_1(p')\epsilon^\mu_2(q')$
+
+\smallskip
+
+}
+
+
+
+\toshTableEnd
+\bigskip
+
+\end{document}

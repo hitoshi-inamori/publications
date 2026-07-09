@@ -1,0 +1,340 @@
+% Hitoshi Inamori
+% Cheat sheets Standard Format File
+
+
+%\documentstyle[11pt]{article}
+\documentclass[11pt,amsmath,amssymb,latexsym]{article}
+
+
+
+% Default margins are too wide all the way around.  I reset them here
+\setlength{\topmargin}{-.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{-0.3in}
+%\setlength{\evensidemargin}{.125in}
+\setlength{\textwidth}{6.25in}
+
+
+\usepackage{leftidx}% http://ctan.org/pkg/leftidx
+\usepackage{slashed}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% My commands are here: basically we create a new standard table using
+% \toshTable
+% Then 
+%		a definition is created using \toshDefinition
+%   a property is created using \toshProperty
+%   a proof (one column) is created using \toshProof
+%   an example (one column) is created using \toshExample
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\toshTableBegin} 			{\begin{tabular}{|p{5cm}|p{11cm}|}}
+\newcommand{\toshTableEnd} 				{\hline \end{tabular}}
+\newcommand{\toshTableTitle}[1] 	{\hline \multicolumn{2}{|l|}{{\bf{#1}}}\\ \hline}
+\newcommand{\toshTableNotation}[1]{\hline \multicolumn{2}{|p{16cm}|}{(\textbf{Note}) #1}\\}
+\newcommand{\toshDefinition}[2]		{\hline (D) {\bf{#1}} & {#2} \\}
+\newcommand{\toshProperty}[2]			{\hline (P) {#1} & {#2} \\}
+\newcommand{\toshProof}[1]				{\hline \multicolumn{2}{|p{16cm}|}{(\small \underline{Proof}) #1}\\}
+\newcommand{\toshExample}[1]			{\hline \multicolumn{2}{|p{16cm}|}{\small (Example) #1}\\}
+\newcommand{\toshNewPage}					{\hline \end{tabular} \newpage \toshTableBegin}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For Definitions or Properties with several conditions or implications
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\toshBlockStart}		{\begin{tabular}{l}}
+\newcommand{\toshBlockItem}[1]	{{#1} \\}
+\newcommand{\toshBlockDesc}[2]	{{\bf{(#1)}}\, {#2} \\}
+\newcommand{\toshBlockEnd}			{\end{tabular}}
+\newcommand{\toshLeftBlock}[1]	{$\left.{#1}\right]$}
+\newcommand{\toshRightBlock}[1]	{$\left[{#1}\right.$}
+\newcommand{\toshDef}[1]				{{\textbf{#1}}}
+\newcommand{\toshDual}{\tilde{E}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Preferred Symbols
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\toshEquivalent}		{$\iff$}
+\newcommand{\toshImply}					{\Rightarrow}
+\newcommand{\toshByDef}					{$\stackrel{D}{\iff}$}
+\newcommand{\toshEqByDef}				{\,\stackrel{D}{=}\,}
+\newcommand{\toshIdentity}			{{\mathbf{1}}}
+\newcommand{\toshItoInt}				{{\mathcal{I}}}
+\newcommand{\toshB}							{{\mathcal{B}}\,}
+\newcommand{\toshC}							{{\mathbf{C}}}
+\newcommand{\toshD}							{{\mathcal{D}}}
+\newcommand{\toshCylinder}			{{\mathcal{C}}_1}
+\newcommand{\toshF}							{{\mathcal{F}}\,}
+\newcommand{\toshG}							{{\mathcal{G}}\,}
+\newcommand{\toshH}							{{\mathcal{H}}\,}
+\newcommand{\toshL}							{{\mathcal{L}}}
+\newcommand{\toshLOne}					{{\mathcal{L}}^1}
+\newcommand{\toshM}							{{\mathcal{M}}\,}
+\newcommand{\toshMStep}					{M^2_{{step}}}
+\newcommand{\toshMTwo}					{M^2}					
+\newcommand{\toshN}							{{\mathbf{N}}\,}
+\newcommand{\toshNuST}					{{\nu^{m\times n}_{\toshH}(S,T)}}
+\newcommand{\toshST}						{\,/\,} % Such That
+\newcommand{\toshR}							{{\mathbf{R}}}
+\newcommand{\toshT}							{{\mathbf{T}}}
+\newcommand{\toshVar}						{{\textrm{Var}}}
+
+\newcommand{\grad}							{{\mathbf{grad}\,}}
+\newcommand{\divergence}						{{\textrm{div}\,}}
+\newcommand{\rot}							{{\mathbf{rot}\,}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Special Relativity and Electromagnetism
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\state}[1]{\left|{#1}\right>}
+\newcommand{\stateBasis}[2]{\left|{#1}\right>_{#2}}
+\newcommand{\bra}[1]{\left<{#1}\right|}
+\newcommand{\ket}[1]{\left|{#1}\right>}
+\newcommand{\braBasis}[2]{\left<{#1}\right|_{#2}}
+\newcommand{\braket}[2]{\left<{#1}|{#2}\right>}
+%\newcommand{\braketBasis}[3]{\leftidx{_{#3}}{\left<{#1}|{#2}\right>}_{#3}}
+\newcommand{\Tr}[1]{\textrm{Tr}\left({#1}\right)}
+\newcommand{\PartTr}[2]{\textrm{Tr}_{#2}\left({#1}\right)}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Begin document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title{Quantum field theory cheat sheet\\ -- path-integral formulation -- }
+\author{Hitoshi Inamori}
+%\renewcommand{\today}{April, 2008}
+\maketitle
+\begin{abstract}
+From Peskin Schroeder ``An introduction to Quantum Field Theory Chapter 9''
+\end{abstract}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Green function
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Green function in path integral formulation}
+\toshProperty{$n$-point Green function or correlation function}{The probability amplitude to observe $k_1, k_2, \ldots, k_n$ particles described by a field $\phi$ at space-time positions $x_1, x_2, \ldots, x_n$ is given by the \toshDef{$n$-point Green function} or \toshDef{$n$-point correlation function} \underline{denoted} as $\bra{\Omega} T\left[ \phi_H^{k_1}(x_1)\phi_H^{k_2}(x_2)\cdots\phi_H^{k_n}(x_n)\right]\ket{\Omega}$. 
+
+\smallskip
+
+According to the path-integral formulation, this function can be obtained from a Lorentz invariant Lagrangian $\toshL$:
+
+\bigskip
+
+\quad \framebox{\quad$\displaystyle \frac{\displaystyle\int\toshD\phi\, \phi^{k_1}(x_1)\phi^{k_2}(x_2)\cdots\phi^{k_n}(x_n) \exp\left[i\int d^4 x \toshL(\phi,\partial_\mu \phi)\right]}{\displaystyle\int\toshD\phi\, \exp\left[i\int d^4 x \toshL(\phi,\partial_\mu \phi)\right]}$\quad}
+
+\bigskip
+
+Note that in the above formula, there are no operators involved.
+
+\smallskip
+
+Note that each degree of freedom of $\phi$ (as a real number, i.e. a complex field has 2 degrees of freedom) represents a degree of freedom for the particle (spin, particle/anti-particle). 
+
+\smallskip
+
+Note that the observed fields must be explicitly listed. For instance, absence of $\phi^{k_2}(x_2)$ above means that there is no particle at point $x_2$, which is not equivalent to saying that we do not observe what happens at $x_2$.
+}
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Functional derivatives, generating function
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Functional derivatives, generating function}
+\toshDefinition{Functional derivatives for fields}{
+If space-time was discretized and each space-time point indexed by $i$, a field would be a vector $(\phi_i)_i$ and if we have a functional on the field $\phi$, a derivative with respect to $\phi_i$ for some space-time point indexed by $i$ would be defined as a standard derivative with respect to $\phi_i$. Namely $\frac{\partial}{\partial x_i} x_j = \delta_{i j}$ and $\frac{\partial}{\partial x_i} \sum_j x_j k_j = k_j$.
+
+\smallskip
+
+The \toshDef{functional derivative} is an extension of this for fields defined on a continous space-time:
+
+\quad $\displaystyle \frac{\delta}{\delta J(x)} J(y) = \delta(x-y)$, \quad and \quad $\displaystyle \frac{\delta}{\delta J(x)} \int d^4 y J(y)\psi(y) = \psi(x)$
+
+\smallskip
+
+For composite functions, the ordinary differentiation rules applies:
+
+\quad $\displaystyle \frac{\delta}{\delta J(x)} f(G[ J]) =  \frac{\delta G[J] }{\delta J(x)} f'[G[J]]$, for instance
+
+\quad $\displaystyle \frac{\delta}{\delta J(x)} \exp\left[i\int d^4 y J(y)\psi(y)\right] = i\psi(x)\exp\left[i\int d^4 y J(y)\psi(y)\right]$
+
+\smallskip
+
+For functional on derivatives of $J$, first integrate by parts to remove the derivatives (assuming surface terms are zero), for instance:
+
+\quad $\displaystyle \frac{\delta}{\delta J(x)} \int d^4 y (\partial_\mu J(y)) V^\mu(y) = - \partial_\mu V^\mu$
+
+}
+\toshDefinition{Generating functional}{The correlation functions can be written as functional derivatives of a functional $Z[J]$ called \toshDef{generating functional}:
+
+\quad $\displaystyle Z[J] = \int\toshD\phi \exp\left[ i\int d^4 x [\toshL(x) + J(x)\phi(x)]\right]$
+
+for instance
+
+ $\displaystyle \bra{\Omega} T\left[ \phi_H(x_1)\phi_H(x_2) \right]\ket{\Omega} = \frac{1}{Z_0} \left.\left(-i\frac{\delta}{\delta J(x_1)}\right)\left(-i\frac{\delta}{\delta J(x_2)}\right) Z[J]\right|_{J=0}$
+
+where $Z_0 = Z[J=0]$.
+}
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Free real scalar fields
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Free real scalar fields}
+\toshProperty{Generating functional}{The free Lagrangian of the real scalar field is 
+
+\quad $\displaystyle \toshL_0 = \frac{1}{2}(\partial_\mu\phi)(\partial^\mu\phi) - \frac{1}{2}m^2\phi^2$
+
+The exponent for the generating functional reads, after an integration by part and adding a $i\epsilon$ component so that the integral converges:
+
+\quad $\displaystyle \int d^4 x [\toshL_0 + J\phi] = \int d^4 x\left[\frac{1}{2}\phi(-\partial^2- m^2 + i\epsilon)\phi + J\phi\right]$
+
+using the change of variable $\phi(x)=\phi'(x)+ i\int d^4 y \Delta_F(x-y)J(y)$ with Jacobian 1 (where $\Delta_F$ is the Feynman propagator), using a double integration by parts and using the fact that $\Delta_F(x-y)$ is a Green function for the operator $(\partial^2+m^2)$ we get the generating functional:
+
+\smallskip
+
+\quad $\displaystyle Z[J] = Z_0 \exp\left[ -\frac{1}{2} \int d^4 x d^4 y \, J(x) \Delta_F(x-y)J(y)\right]$
+
+\smallskip
+
+we check in particular that
+
+\quad $\displaystyle \bra{0} T[\phi(x_1)\phi(x_2)]\ket{0} = -\frac{\delta^2}{\delta J(x_1) \delta J(x_2)} Z[J] = \Delta_F(x_1-x_2)$
+
+}
+\toshTableEnd
+\bigskip
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Free electromagnetic fields
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Free electromagnetic fields}
+\toshProperty{Generating functional}{The free Lagrangian for the electromagnetic field is
+
+\quad $\toshL_0 = -\frac{1}{4}F^{\mu\nu}F_{\mu\nu}$, where $F_{\mu\nu} = \partial_\mu A_\nu - \partial_\nu A_\mu$
+
+To deal with the gauge invariance, i.e. invariance under the shift 
+
+\quad $A_\mu(x) \mapsto A_\mu(x) + \frac{1}{e}\partial_\mu \alpha(x)$
+
+we restrict the functional integration to the field $A_\mu$ that nearly obeys the Lorentz gauge $G_\omega(A) = \partial^\mu A_\mu (x) - \omega(x) = 0$ with $\omega$ small. In practice we integrate over the functions $\alpha$ such that $G(A)=0$ and integrate over the function $\omega$ with the weight $\exp\left[-i\int d^4 \frac{\omega^2}{2\xi}\right]$. This gives, noting that the action $S[A]$ and any observable $O(A)$ being gauge invariant:
+
+\quad $\displaystyle\int \toshD A e^{iS[A]}$
+
+\quad $\displaystyle = \int\toshD\omega e^{-i\int d^4 x \frac{\omega^2}{2\xi}} \det(G_\omega)\int\toshD\alpha \int\toshD A e^{iS[A]} \delta(G_\omega(A))$
+
+\quad $= \det(G_\omega)\int\toshD\alpha \int\toshD A e^{iS[A]} \exp\left[-i\int d^4 x\frac{1}{2\xi}(\partial^\mu A_\mu)^2\right]$
+
+where $\det(G_\omega) = \det(\partial^2/e)$ is independent of $\alpha$ and $A$. We get:
+
+\quad $\displaystyle\bra{\Omega} T[O(A)]\ket{\Omega} = \frac{\displaystyle \toshD A O(A) \exp\left[ i\int d^4 x [\toshL_0 - \frac{1}{2\xi}(\partial^\mu A_\mu)^2]\right]}{\displaystyle \toshD A \exp\left[ i\int d^4 x [\toshL_0 - \frac{1}{2\xi}(\partial^\mu A_\mu)^2]\right]}$
+
+}
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Grassmann numbers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Grassmann numbers}
+\toshDefinition{Grassmann numbers}{By definition, if $\theta$ and $\eta$ are \toshDef{Grassmann numbers} and $a$ an ordinary number
+
+\smallskip
+
+\toshBlockStart
+\toshBlockDesc{anticommutation} {$\theta \eta = - \eta\theta$ thus $\theta^2=0$}
+\toshBlockDesc{integral, real number} {$\int d\theta \, a = 0$, $\int d\theta \, \theta = 1$}
+\toshBlockDesc{integral, complex number} {$\theta$ and $\theta^*$ are considered as}
+\toshBlockItem{\quad  independent numbers, and $\int d\theta^* d\theta (\theta\theta^*) = 1$}
+\toshBlockDesc{derivative} {$\frac{\partial}{\partial \eta} \theta\eta = - \frac{\partial}{\partial \eta} \eta\theta = -\theta$}
+\toshBlockEnd
+
+\smallskip
+
+Addition, multiplication with ordinary numbers follow ordinary rules, in particular $a\theta = \theta a$.
+}
+\toshProperty{Properties}{
+For any Grassman numbers $\theta$, and ordinary numbers $b$, and Hermitian matrix $B$:
+
+\toshBlockStart
+\toshBlockDesc{1} {any function of $\theta$ reads $f(\theta) = a + b\theta$ (Taylor expansion)}
+\toshBlockDesc{2} {in an integration $\int d\theta_1 d\theta_2\cdots$ only the integrand $\theta_1\theta_2\cdots$}
+\toshBlockItem{\quad contributes}
+\toshBlockDesc{3} {$\int d\theta^* d\theta\, e^{-\theta^* b \theta} = b$}
+\toshBlockDesc{4} {$\int d\theta^* d\theta\, \theta\theta^* e^{-\theta^* b \theta} = 1$}
+\toshBlockDesc{5} {$\left(\prod_i \int d\theta^*_i d\theta_i\right) e^{-\theta_i B_{i j} \theta_j} = \det B$ }
+\toshBlockDesc{6} {$\left(\prod_i \int d\theta^*_i d\theta_i\right) \theta_k \theta_l e^{-\theta_i B_{i j} \theta_j} = \det B (D^{-1})_{kl}$ }
+\toshBlockEnd
+
+}
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Free spinor fields
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Free spinor fields}
+\toshProperty{Generating functional}{The free Lagrangian for the spinor field is
+
+\quad $\displaystyle \toshL_0 = \overline{\psi} (i\slashed{\partial} - m)\psi$
+
+The spinor field is a Grassmann field i.e. it reads as
+
+\quad $\psi(x) = \sum_i \psi_i \phi_i(x)$
+
+where $\phi_i(x)$ is the basis of four-component spinors made of ordinary complex numbers and $\psi_i$ are constant Grassmann complex numbers.
+
+\smallskip
+
+The generating functional reads
+
+\quad $\displaystyle Z[\overline{\eta},\eta ] = \int\toshD\overline{\psi}\toshD\psi \, \exp\left[ i \int d^4 x \left[\overline{\psi} (i\slashed{\partial}-m)\psi + \overline{\eta}\psi + \overline{\psi}\eta\right]\right]$
+
+\smallskip
+
+\quad \quad \quad $\displaystyle = Z_0 \exp\left[ - \int d^4 x \, d^4 y \, \overline{\eta}(x)S_F(x-y)\eta(y)\right]$
+
+
+}
+
+
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Quantum electrodynamics
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Quantum electrodynamics}
+\toshProperty{Generating functional}{The full Lagrangian reads
+
+\quad $\displaystyle \toshL = \overline{\psi}(i\slashed{\partial} - m)\psi - \frac{1}{4} F_{\mu\nu} F^{\mu \nu} - e\overline{\psi}\gamma^\mu A_\mu\psi$
+
+\quad \quad $\displaystyle = \toshL_0 - e\overline{\psi}\gamma^\mu A_\mu\psi$
+
+The generating function for the full theory can be written perturbatively expanding the exponential for the interaction term:
+
+\smallskip
+
+$\displaystyle\exp\left[ i \int d^4 x \toshL \right] = \exp\left[ i \int d^4 x \toshL_0 \right] \times\left\{ 1 - ie\int d^4 x \overline{\psi}\gamma^\mu A_\mu \psi + \cdots\right\}$
+
+}
+
+
+\toshTableEnd
+\bigskip
+
+ 
+\end{document}

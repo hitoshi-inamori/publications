@@ -1,0 +1,586 @@
+% Hitoshi Inamori
+% Cheat sheets Standard Format File
+
+
+%\documentstyle[11pt]{article}
+\documentclass[11pt,amsmath,amssymb,latexsym]{article}
+
+
+
+% Default margins are too wide all the way around.  I reset them here
+\setlength{\topmargin}{-.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{-0.3in}
+%\setlength{\evensidemargin}{.125in}
+\setlength{\textwidth}{6.25in}
+
+
+\usepackage{leftidx}% http://ctan.org/pkg/leftidx
+\usepackage{slashed}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% My commands are here: basically we create a new standard table using
+% \toshTable
+% Then 
+%		a definition is created using \toshDefinition
+%   a property is created using \toshProperty
+%   a proof (one column) is created using \toshProof
+%   an example (one column) is created using \toshExample
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\toshTableBegin} 			{\begin{tabular}{|p{5cm}|p{11cm}|}}
+\newcommand{\toshTableEnd} 				{\hline \end{tabular}}
+\newcommand{\toshTableTitle}[1] 	{\hline \multicolumn{2}{|l|}{{\bf{#1}}}\\ \hline}
+\newcommand{\toshTableNotation}[1]{\hline \multicolumn{2}{|p{16cm}|}{(\textbf{Note}) #1}\\}
+\newcommand{\toshDefinition}[2]		{\hline (D) {\bf{#1}} & {#2} \\}
+\newcommand{\toshProperty}[2]			{\hline (P) {#1} & {#2} \\}
+\newcommand{\toshProof}[1]				{\hline \multicolumn{2}{|p{16cm}|}{(\small \underline{Proof}) #1}\\}
+\newcommand{\toshExample}[1]			{\hline \multicolumn{2}{|p{16cm}|}{\small (Example) #1}\\}
+\newcommand{\toshNewPage}					{\hline \end{tabular} \newpage \toshTableBegin}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For Definitions or Properties with several conditions or implications
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\toshBlockStart}		{\begin{tabular}{l}}
+\newcommand{\toshBlockItem}[1]	{{#1} \\}
+\newcommand{\toshBlockDesc}[2]	{{\bf{(#1)}}\, {#2} \\}
+\newcommand{\toshBlockEnd}			{\end{tabular}}
+\newcommand{\toshLeftBlock}[1]	{$\left.{#1}\right]$}
+\newcommand{\toshRightBlock}[1]	{$\left[{#1}\right.$}
+\newcommand{\toshDef}[1]				{{\textbf{#1}}}
+\newcommand{\toshDual}{\tilde{E}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Preferred Symbols
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\toshEquivalent}		{$\iff$}
+\newcommand{\toshImply}					{\Rightarrow}
+\newcommand{\toshByDef}					{$\stackrel{D}{\iff}$}
+\newcommand{\toshEqByDef}				{\,\stackrel{D}{=}\,}
+\newcommand{\toshIdentity}			{{\mathbf{1}}}
+\newcommand{\toshItoInt}				{{\mathcal{I}}}
+\newcommand{\toshA}							{{\mathcal{A}}}
+\newcommand{\toshB}							{{\mathcal{B}}\,}
+\newcommand{\toshC}							{{\mathbf{C}}}
+\newcommand{\toshCylinder}			{{\mathcal{C}}_1}
+\newcommand{\toshF}							{{\mathcal{F}}\,}
+\newcommand{\toshG}							{{\mathcal{G}}\,}
+\newcommand{\toshH}							{{\mathcal{H}}\,}
+\newcommand{\toshL}							{{\mathcal{L}}}
+\newcommand{\toshLOne}					{{\mathcal{L}}^1}
+\newcommand{\toshM}							{{\mathcal{M}}\,}
+\newcommand{\toshMStep}					{M^2_{{step}}}
+\newcommand{\toshMTwo}					{M^2}					
+\newcommand{\toshN}							{{\mathbf{N}}\,}
+\newcommand{\toshNuST}					{{\nu^{m\times n}_{\toshH}(S,T)}}
+\newcommand{\toshST}						{\,/\,} % Such That
+\newcommand{\toshR}							{{\mathbf{R}}}
+\newcommand{\toshT}							{{\mathbf{T}}}
+\newcommand{\toshVar}						{{\textrm{Var}}}
+
+\newcommand{\grad}							{{\mathbf{grad}\,}}
+\newcommand{\divergence}						{{\textrm{div}\,}}
+\newcommand{\rot}							{{\mathbf{rot}\,}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Special Relativity and Electromagnetism
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\state}[1]{\left|{#1}\right>}
+\newcommand{\ket}[1]{\left|{#1}\right>}
+\newcommand{\stateBasis}[2]{\left|{#1}\right>_{#2}}
+\newcommand{\bra}[1]{\left<{#1}\right|}
+\newcommand{\braBasis}[2]{\left<{#1}\right|_{#2}}
+\newcommand{\braket}[2]{\left<{#1}|{#2}\right>}
+%\newcommand{\braketBasis}[3]{\leftidx{_{#3}}{\left<{#1}|{#2}\right>}_{#3}}
+\newcommand{\Tr}[1]{\textrm{Tr}\left({#1}\right)}
+\newcommand{\PartTr}[2]{\textrm{Tr}_{#2}\left({#1}\right)}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Begin document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title{Quantum field theory cheat sheet\\ -- prerequisites -- }
+\author{Hitoshi Inamori}
+%\renewcommand{\today}{April, 2008}
+\maketitle
+\begin{abstract}
+From David Tong Quantum Field Theory Part III Mathematical Tripos course and Peskin Schroeder ``An introduction to Quantum Field Theory''
+\end{abstract}
+
+
+\textbf{Mathematical preliminaries}
+\bigskip
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fourier transform, Dirac functions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Fourier transform, Dirac functions}
+\toshDefinition{Fourier transform (one dimension)}{
+\quad $\displaystyle f(x) = \int_{-\infty}^{+\infty}\frac{d k}{2\pi} e^{-i k x}\tilde{f}(k)$
+
+\quad $\displaystyle \tilde{f}(k) = \int_{-\infty}^{+\infty}d x e^{+i k x}f(x)$
+}
+\toshProperty{Dirac function}{
+\quad $\displaystyle\int d x f(x)\delta(x-a) = f(a)$
+
+\quad $\displaystyle\int d x f(x)\delta^{(n)}(x-a) = (-1)^k f^{(k)}(a)$
+
+\quad $\displaystyle\delta(g(x)) = \sum_i\frac{\delta(x-x_i)}{|g'(x_i)|}$ where $x_i$ are roots of the function $g$
+
+\quad $\displaystyle\delta(\vec{g}(\vec{x})) = \sum_i\frac{\delta(\vec{x}-\vec{x}_i)}{\det\left(\frac{\partial g_i}{\partial x_j}\right)_{ij}}$ where $\vec{x}_i$ are roots of the function $\vec{g}$
+
+\quad $\displaystyle\int_{-\infty}^{+\infty} dx e^{ikx} = \int_{-\infty}^{+\infty} dx e^{-ikx} = (2\pi) \delta(k)$
+}
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Contour integral
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Contour integral}
+\toshProperty{Darboux inequality}{If $|f(z)|\leq M$ for any point $z$ on a contour $C$ (not necessarily a loop), then
+
+\quad $\displaystyle \left|\int_C f(z) dz \right| \leq  M L$
+
+\smallskip
+
+where $L$ is the length of the contour $C$.
+}
+\toshProperty{Residue theorem (simplified)}{Let $\gamma: [a,b]\rightarrow\toshC$ be a \toshDef{positively oriented loop} i.e. $\gamma(t)$ runs over $C$ anti-clockwise (trigonometric wise).
+
+Let $f$ be analytic inside $C$ except for a finite number of poles of order 1 $\{z_i\}_i$ inside $C$ (meaning $(z-z_i) f(z)$ is analytic at $z_i$). Then
+
+\smallskip
+
+\quad $\displaystyle \int_C f(z)dz = 2\pi i \sum_i Res(f,z_i)$
+
+where 
+
+\quad $\displaystyle Res(f,z_0) = \lim_{z\rightarrow z_0} \left[(z-z_0)f(z)\right]$
+}
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other mathematical results
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Other mathematical results}
+\toshProperty{Riemann-Lebesgue lemma}{Let $f:\toshR\rightarrow\toshR$ be a function. If the Lebesgue integral of $|f|$ is finite then
+
+\quad $\displaystyle \int_{-\infty}^{\infty} d x f(x) e^{-iz x} \rightarrow 0$ when $|z|\rightarrow \infty$
+}
+\toshTableEnd
+\bigskip
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pauli matrices
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Pauli matrices}
+\toshDefinition{Pauli matrices}{
+\quad 
+$\sigma^1 = \left( \begin{array}{cc} 0 & 1 \\ 1 & 0 \end{array}\right)$\quad
+$\sigma^2 = \left( \begin{array}{cc} 0 & -i \\ i &  0 \end{array}\right)$\quad
+$\sigma^3 = \left( \begin{array}{cc} 1 & 0 \\ 0 & -1 \end{array}\right)$
+
+\bigskip
+
+\quad $\sigma^i \sigma^j = \delta^{i j} \toshIdentity + i \epsilon^{i j k}\sigma^k$ where $\epsilon^{i j k}$ is antisymmetric and $\epsilon^{1 2 3} = 1$
+
+\bigskip
+
+\quad $\{\sigma^i,\sigma^j\} = \sigma^i \sigma^j + \sigma^j \sigma^i = 2 \delta^{i j}\toshIdentity$
+
+\bigskip
+
+\quad $[\sigma^i,\sigma^j ]  =  \sigma^i \sigma^j - \sigma^j \sigma^i = 2  i \epsilon^{i j k}\sigma^k$
+}
+\toshDefinition{Pauli matrices for spinors}{
+
+\quad $\displaystyle \sigma^\mu = \left(\toshIdentity,\sigma^k\right)$ \quad \quad $\overline{\sigma}^\mu = \left(\toshIdentity, - \sigma^k\right)$ 
+}
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Clifford algebra
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Clifford algebra}
+\toshDefinition{Clifford algebra}{A set of four matrices $\gamma^\mu$ $\mu=0,1,2,3$ form a \toshDef{Clifford algebra} if
+
+\smallskip
+
+\quad $\displaystyle \left\{\gamma^\mu,\gamma^\nu\right\} = \gamma^\mu\gamma^\nu +\gamma^\nu\gamma^\mu =  2\eta^{\mu\nu}\toshIdentity$
+
+}
+\toshProperty{Weyl/Chiral representation}{Clifford algebra requires at least 4 dimension ($4\times 4$ matrices). The following matrices, called \toshDef{Weyl} or \toshDef{Chiral} representation, form a Clifford algebra:
+
+\bigskip
+
+\quad\quad $\gamma^\mu =\left(\begin{array}{cc} 0 & \sigma^\mu \\ \overline{\sigma}^\mu  & 0\end{array}\right)$
+
+\smallskip
+
+Properties:
+
+\toshBlockStart
+\toshBlockDesc{1}{$\displaystyle (\gamma^0)^2 = \toshIdentity$, \quad $\displaystyle (\gamma^k)^2 = -\toshIdentity$}
+\toshBlockDesc{2}{$\displaystyle(\gamma^0)^\dagger = \gamma^0$, $(\gamma^k)^\dagger = -\gamma^k$}
+\toshBlockDesc{3}{$\displaystyle\gamma^0 \gamma^\mu \gamma^0 = (\gamma^\mu)^\dagger$}
+\toshBlockEnd
+}
+\toshDefinition{$\gamma^5$}{
+
+\smallskip
+
+\quad$\displaystyle \gamma^5 = -i\gamma^0\gamma^1\gamma^2\gamma^3$
+
+\smallskip
+
+Properties:
+
+\toshBlockStart
+\toshBlockDesc{1}{$\displaystyle\{\gamma^5,\gamma^\mu\} = 0$}
+\toshBlockDesc{2}{$\displaystyle (\gamma^5)^2=\toshIdentity$}
+\toshBlockDesc{3}{In the Chiral representation,} 
+\toshBlockItem{\quad\quad$\gamma^5 = \left(\begin{array}{cc} \toshIdentity & 0 \\ 0 & -\toshIdentity\end{array}\right)$}
+\toshBlockEnd
+}
+\toshDefinition{$\slashed{A}$}{For any four vector $A^\mu$, $\slashed{A} = \gamma_\mu A^\mu$
+}
+\toshProperty{Trace identities}{For Clifford algebra in 4 dimension,
+
+\toshBlockStart
+\toshBlockDesc{1}{The trace of any product of odd number of $\gamma$'s is zero}
+\toshBlockDesc{2}{$\Tr{\gamma^\mu\gamma^\nu} = 4\eta^{\mu\nu}$}
+\toshBlockDesc{3}{$\Tr{\gamma^\mu\gamma^\nu\gamma^\rho\gamma^\sigma} = 4(\eta^{\mu\nu}\eta^{\rho\sigma}-\eta^{\mu\rho}\eta^{\nu\sigma}+\eta^{\mu\sigma}\eta^{\nu\rho})$}
+\toshBlockDesc{4}{$\Tr{\gamma^5} = 0$}
+\toshBlockDesc{5}{$\Tr{\gamma^\mu\gamma^\nu\gamma^5} = 0$}
+\toshBlockEnd
+
+
+
+}
+
+
+\toshTableEnd
+\bigskip
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Units
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Units}
+\toshDefinition{natural units}{$\hbar=c=1$}
+\toshProperty{dimension}{The dimension is given by the mass dimension, $[\textrm{mass}] = 1$. 
+
+$[\textrm{length}] = [\textrm{time}]= -1 $
+
+$[\textrm{energy}]=[\textrm{mass}]= 1$
+
+$[\textrm{action}]= 0$ as it is the argument of an exponential function
+
+$[\textrm{Lagrangian density}]= d$ as $S=\int d^d x \mathcal{L}$ 
+
+\smallskip
+
+From this you get the dimension for the field.
+Generally renormalizable theory must have dimensionless coupling constants.
+}
+\toshProperty{few numbers}{
+electron mass 0.5 MeV
+
+proton mass 1 GeV
+}
+\toshTableEnd
+\bigskip
+
+
+\newpage
+
+
+\textbf{Special relativity}
+\bigskip
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Special relativity
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\toshTableBegin
+\toshTableTitle{Special relativity}
+\toshDefinition{Minkowski metric}{$\eta_{\mu\nu} = \eta^{\mu\nu} = \left(\begin{array}{cccc}1 & & & \\ & -1 & & \\ & & -1 & \\ & & & -1\end{array}\right)$
+
+\smallskip
+
+For any \toshDef{four-vector} $X=X^\mu=(X^0,X^1, X^2, X^3) = (X^0,\vec{X})$
+
+\smallskip
+
+the \toshDef{covariant coordinates} are $X_\nu = \eta_{\nu\mu}X^\mu = (X^0,-\vec{X})$
+
+\smallskip
+
+\toshDef{(Scalar product)} for any four vectors $X$ and $Y$, 
+
+$X\cdot Y = X^\mu Y_\mu = \eta_{\mu\nu} X^\mu Y^\nu = X^0 Y^0 - \vec{X}\cdot\vec{Y}= X^0 Y^0 - \sum_k X^k Y^k$
+
+(note that $X\cdot Y$ and $\vec{X}\cdot\vec{Y}$ have opposite sign for the space component)
+
+\smallskip
+
+\quad $\displaystyle\partial_\mu = \frac{\partial}{\partial x^\mu} = \left(\frac{\partial}{\partial x^0},\vec{\nabla}\right)$
+\quad \quad $\displaystyle\partial^\mu = \frac{\partial}{\partial x_\mu} = \left(\frac{\partial}{\partial x^0},-\vec{\nabla}\right)$
+
+
+\quad $\displaystyle\partial^\mu\partial_\mu = \frac{\partial^2}{\partial (x^0)^2} - \Delta$ where $\Delta =\partial^2_x +\partial^2_y +\partial^2_z$
+}
+\toshDefinition{Lorentz transformation}{Under a \toshDef{Lorentz transformation}, the four-vector transform as:
+
+\smallskip
+
+
+\quad $\displaystyle X^\mu \mapsto (X')^\mu = {\Lambda^\mu}_\nu X^\nu$
+
+\smallskip
+
+with the condition
+\smallskip
+
+\quad $\displaystyle {\Lambda^\mu}_\alpha \eta^{\alpha\beta}{\Lambda^\nu}_\beta = \eta^{\mu\nu}$
+
+The Lorentz transformations form a group (if $\Lambda$ and $\Lambda'$ are two Lorentz transformations then $\Lambda\Lambda'$ is a Lorentz transformation). It is composed of:
+
+(1) the \toshDef{proper orthochronous} Lorentz transformations $\Lambda$ for which there are 6 real numbers $\Omega_{\rho\sigma}$  with $\Omega_{\rho\sigma} = -\Omega_{\sigma\rho}$such as
+
+\quad $\displaystyle \Lambda = \exp\left[\frac{1}{2} \Omega_{\rho\sigma} \mathcal{M}^{\rho\sigma}\right]$
+
+where 
+
+\quad $\displaystyle\left(\mathcal{M}^{\rho\sigma}\right)^{\alpha\beta} = \eta^{\rho\alpha}\eta^{\sigma\beta} - \eta^{\sigma\alpha}\eta^{\rho\beta}$
+
+\smallskip
+
+The $\Omega_{i,j}$ leads to spatial rotations. Example $\Omega_{1,2} = \theta$ leads to $\small\Lambda = \left(\begin{array}{cccc}1 & 0 & 0 & 0 \\ 0 & \cos\theta & -\sin\theta & 0 \\ 0 & \sin\theta & \cos\theta & 0 \\ 0& 0& 0& 1\end{array}\right)$ i.e. a rotation in the $xy$ plane.
+
+The $\Omega_{0,i}$ leads to \toshDef{Lorentz boosts}. Example $\Omega_{0,1} = \phi$ leads to $\small\Lambda = \left(\begin{array}{cccc}\cosh\phi & -\sinh\phi & 0 & 0 \\ -\sinh\phi & \cosh\phi & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0& 0& 0& 1\end{array}\right)$ i.e. a speed increase in the $x$ direction, with $\cosh\phi= 1/\sqrt{1-v^2}$ and $\sinh\phi=v/\sqrt{1-v^2}$.
+
+\bigskip
+
+(2) the \toshDef{Parity} transformation $P = \textrm{diag} (1,-1,-1,-1)$
+
+\bigskip
+
+(3) the \toshDef{Time reversal} transformation $T = \textrm{diag} (-1,1,1,1)$
+}
+\toshNewPage
+\toshDefinition{Lorentz scalar/vector fields}{A \toshDef{Lorentz scalar field} or a \toshDef{Lorentz invariant} is a scalar field $\phi(x)$ such that under the proper orthochronous Lorentz transformation $x\mapsto \Lambda x$,
+
+\quad $\phi(x)\mapsto \phi'(x) = \phi(\Lambda^{-1} x)$ 
+
+i.e. the transformed field $\phi'$ at the transformed coordinate $\Lambda x$ is equal to the original field at the original coordinates.
+
+A \toshDef{Lorentz vector field} is a four-vector field $A(x)=A^\mu(x)$ such that under the proper orthochronous Lorentz transformation $x\mapsto \Lambda x$,
+
+\quad $A^\mu(x)\mapsto A'^\mu(x) = {\Lambda^\mu}_\nu A^\nu(\Lambda^{-1} x)$ 
+}
+\toshProperty{Lorentz invariant measures}{For any four vector $p$
+
+\smallskip
+
+(1) $d^4 p = dp^0 dp^1 dp^2 dp^3 =\left|\frac{D(p^\mu)}{D(p'^\mu)}\right| dp'^0dp'^1dp'^2dp'^3$ 
+
+\quad $= dp'^0dp'^1dp'^2dp'^3$ is a Lorentz invariant (Jacobian is 1).
+
+\bigskip
+
+(2) $\delta(p^2-C)$ and $\theta(p^0 > K)$  are Lorentz invariant, 
+
+\quad where $C$ and $K$ are constant and $\theta(x)$ is the Heaviside function
+
+\bigskip
+
+(3) therefore $\displaystyle\int d^4 p\, \delta(p_0^2-\vec{p}^2 - C)\theta(p_0 > 0) = \int\left.\frac{d^3\vec{p}}{2 p_0}\right|_{p_0 =\sqrt{ \vec{p}^2 + C}}$
+
+\quad is a Lorentz invariant measure,
+
+\bigskip
+
+(4) and $2 p_0\,\delta(\vec{p}-\vec{q})$ is a Lorentz invariant, as $\int\frac{d^3\vec{p}}{2 p_0} 2 p_0\delta(\vec{p}-\vec{q}) = 1$ 
+
+\quad is a Lorentz invariant.
+}
+\toshTableEnd
+\bigskip
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Spinors
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\toshTableBegin
+\toshTableTitle{Spinors}
+\toshProperty{Matrix representation of the Lorentz group}{A mapping $\Lambda\mapsto M(\Lambda)\in\mathcal{M}_n(\toshC)$ is a representation of the Lorentz group for the $n$-dimensional field $\psi(x)\in\toshC^n$ if, for any Lorentz transformation,
+
+\smallskip
+
+\quad $\displaystyle\psi(x)\mapsto \psi'(x) = M(\Lambda)\psi(\Lambda^{-1} x)$
+
+\smallskip
+
+The Lorentz transformations form a group, i.e. $\Lambda \Lambda'$ is Lorentz transformation for any Lorentz transformations $\Lambda$ and $\Lambda'$, and we have $M(\Lambda)M(\Lambda') = M(\Lambda \Lambda')$.
+
+For any continuous group, the transformations that lie infinitesimally close to the identity define a vector space, called the \toshDef{Lie algebra} of the group. The basis vectors for this vector space are called the \toshDef{generators} of the Lie algebra, or of the group. 
+
+For four-vectors, we have 6 generators of the Lie algebra $\mathcal{M}^{\rho\sigma}$ as any proper orthochronous Lorentz transformations $\Lambda$ reads
+
+\quad $\displaystyle \Lambda = \exp\left[\frac{1}{2} \Omega_{\rho\sigma} \mathcal{M}^{\rho\sigma}\right]$
+
+and they obey the Lie algebra relation
+
+\smallskip
+
+\quad $\displaystyle[\mathcal{M}^{\alpha\beta},\mathcal{M}^{\gamma\delta}] = \eta^{\beta \gamma}\mathcal{M}^{\alpha\delta}-\eta^{\alpha \gamma}\mathcal{M}^{\beta\delta}+\eta^{\alpha \delta}\mathcal{M}^{\beta\gamma} -\eta^{\beta \delta}\mathcal{M}^{\alpha\gamma}$
+
+\smallskip
+
+If we have any set of 6 matrices in $\mathcal{M}_n(\toshC)$, $S^{\rho\sigma}$ (with $S^{\rho\sigma} = -S^{\sigma\rho}$) which obey the same Lie algebra relations, then the matrices $S^{\rho\sigma}$ form a representation of the Lie algebra and
+
+\quad $\displaystyle S[\Lambda] = \exp\left[\frac{1}{2} \Omega_{\rho\sigma} S^{\rho\sigma}\right]$
+
+is the representation of the Lorentz transformation $\Lambda$ above.
+}
+\toshProperty{Spinor representation}{The 6 matrices in $\mathcal{M}_4(\toshC)$
+
+\smallskip
+
+\quad $\displaystyle S^{\rho\sigma} = \frac{1}{4} [\gamma^\rho, \gamma^\sigma] = \frac{1}{2} \gamma^\rho\gamma^\sigma - \frac{1}{2}\eta^{\rho\sigma}\toshIdentity$
+
+\smallskip
+
+form a representation of the Lorentz Lie algebra.
+
+\smallskip
+
+For a spatial rotation $\Omega_{i j}=-\epsilon_{i j k}\phi^k$ (rotation of angle $|\phi|$ around vector $\vec{\phi}$) we have
+
+\quad $\displaystyle S[\Lambda] = \exp\left(\frac{1}{2}\Omega_{\rho\sigma}S^{\rho\sigma}\right) = \left(\begin{array}{cc} e^{+i\vec{\phi}\cdot\vec{\sigma}/2} & 0 \\ 0 & e^{+i\vec{\phi}\cdot\vec{\sigma}/2}\end{array}\right)$
+
+Note that a $2\pi$ rotation around axis $z$ gives $S[\Lambda] = -\toshIdentity$.
+
+\smallskip
+
+For a boost $\Omega_{0 i} = \chi_i$, we have
+
+\smallskip
+
+\quad $\displaystyle S[\Lambda] = \left(\begin{array}{cc} e^{\vec{\chi}\cdot\vec{\sigma}/2} & 0 \\ 0 & e^{-\vec{\chi}\cdot\vec{\sigma}/2}\end{array}\right)$
+
+Note that it is not unitary ($S[\Lambda]^\dagger S[\Lambda] \neq\toshIdentity$). There exists no finite dimensional unitary representations for the Lorentz boosts, which is not a compact group. 
+
+A map $\psi: x\mapsto \psi(x)\in\toshC^4$ which transforms as $\psi(x)\mapsto S[\Lambda]\psi(\Lambda^{-1}x)$ under Lorentz transformation is a \toshDef{spinor} field.
+}
+\toshProperty{The adjoint spinor}{
+
+From the identity $\gamma^0\gamma^\mu\gamma^0=(\gamma^\mu)^\dagger$ we get $(S^{\mu\nu})^\dagger = -\gamma^0 S^{\mu\nu} \gamma^0$
+
+\smallskip
+
+i.e. $S[\Lambda]^\dagger = \exp\left(\frac{1}{2}\Omega_{\rho\sigma}(S^{\rho\sigma})^\dagger\right)=\gamma^0 S[\Lambda]^{-1}\gamma^0$
+
+\smallskip
+
+Define the \toshDef{adjoint} of a spinor field $\psi(x)$ by $\overline{\psi} = \psi^\dagger \gamma^0$
+
+then  $\overline{\psi} \psi$ is a Lorentz scalar, and $\left(\overline{\psi}\gamma^\mu \psi\right)_\mu$ a Lorentz vector.
+}
+\toshTableEnd
+\bigskip
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Scattering amplitude, Decay rate, Cross section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Scattering amplitude, Decay rate, Cross section}
+\toshDefinition{Scattering amplitude}{Let $S=U(t_+, t_-)$ be the unitary evolution operator, and let $\ket{i}$ be the initial state of total momentum $P_i$ and $\ket{f}$ be the final state of total momentum $P_f$. The \toshDef{transition amplitude} $\toshA_{f i}$ between the states $\ket{i}$ and $\ket{f}$  is defined by:
+
+\smallskip
+
+\quad $\displaystyle \bra{f} (S - \toshIdentity) \ket{i} = i \toshA_{f i} (2\pi)^4\delta(P_f-P_i)$
+}
+\toshProperty{Transition probability}{The probability for particles in initial state $\ket{i}$ to evolve into a final state $\ket{f}$ (specified by the momenta $\vec{p}_f$) is given by
+
+\smallskip
+
+\quad $\displaystyle P = \frac{\left| \bra{f} (S-\toshIdentity)\ket{i} \right|^2}{\braket{f}{f}\braket{i}{i}}$
+
+with the Lorentz invariant normalisations $\braket{i}{i} = \prod_i 2 E_{\vec{p_i}} V$  where $V$ stands for $(2\pi)^3\delta(\vec{0})$, and $\braket{f}{f} = \prod_f 2 E_{\vec{p_f}} d^3 p_f (2\pi)^3$.
+
+\smallskip
+
+We get
+
+\quad $\displaystyle dP = \prod_i \frac{1}{2 E_{\vec{p_i}} V } \left|\toshA_{f i}\right|^2 V T \, d\Pi$ , with
+
+\quad $\displaystyle d\Pi = (2\pi)^4\delta(P_f-P_i)\prod_f \frac{d^3 p_f}{(2\pi)^3}\frac{1}{2 E_{\vec{p}_f}}$
+
+where $VT$ stands for one of the $(2\pi)^4\delta(P_f-P_i)$.
+}
+\toshProperty{Decay rate}{If the initial state is a single particle at rest, $E_{\vec{p}_i} = m$ and the decay probability per unit of time $\Gamma=\partial_0 P$ reads
+
+\smallskip
+
+\quad $\displaystyle \Gamma=\frac{1}{2 m}\int |\toshA_{f i}|^2 d\Pi$
+
+}
+\toshProperty{Cross section}{If the initial state is a set of converging two particles 1 and 2, the diffrential cross section, defined as the probability of a scattering occuring during an unit time and for an unit flux $F$ is
+
+\smallskip
+
+\quad $\displaystyle d\sigma = \frac{1}{2 E_1}\frac{1}{2 E_2}\frac{1}{V F}|\toshA_{f i}|^2 d\Pi = \frac{1}{4 E_1 E_2}\frac{1}{|\vec{v}_1 - \vec{v}_2|}|\toshA_{f i}|^2 d\Pi $
+
+\smallskip
+
+with $F = |\vec{v}_1 - \vec{v}_2| / V$.
+}
+\toshDefinition{Mandelstam variable}{For the situation with 2 incoming particles of momenta $p_1$ and $p_2$ and 2 outgoing particles of momenta $p'_1$ and $p'_2$, we define the \toshDef{Mandelstam variables}:
+
+\smallskip
+
+\quad $\displaystyle s = (p_1+p_2)^2 = (p'_1+p'_2)^2$
+
+\quad $\displaystyle t = (p_1-p'_1)^2 = (p_2-p'_2)^2$
+
+\quad $\displaystyle u = (p_1-p'_2)^2 = (p_2-p'_1)^2$
+
+\smallskip 
+
+With the following property:
+
+\quad $\displaystyle s+t+u = \sum_i m_i^2$
+}
+\toshTableEnd
+\bigskip
+
+
+ 
+\end{document}
