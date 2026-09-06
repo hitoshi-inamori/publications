@@ -1,0 +1,1018 @@
+% Hitoshi Inamori
+% Cheat sheets Standard Format File
+% !TEX root = Quantum Mechanics.tex
+\documentstyle[11pt]{article}
+
+%\usepackage{leftidx}% http://ctan.org/pkg/leftidx
+% Default margins are too wide all the way around.  I reset them here
+\setlength{\topmargin}{-.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{-0.3in}
+%\setlength{\evensidemargin}{.125in}
+\setlength{\textwidth}{6.25in}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% My commands are here: basically we create a new standard table using
+% \toshTable
+% Then 
+%		a definition is created using \toshDefinition
+%   a property is created using \toshProperty
+%   a proof (one column) is created using \toshProof
+%   an example (one column) is created using \toshExample
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\toshTableBegin} 			{\begin{tabular}{|p{5cm}|p{11cm}|}}
+\newcommand{\toshTableEnd} 				{\hline \end{tabular}}
+\newcommand{\toshTableTitle}[1] 	{\hline \multicolumn{2}{|l|}{{\bf{#1}}}\\ \hline}
+\newcommand{\toshTableNotation}[1]{\hline \multicolumn{2}{|p{16cm}|}{(\textbf{Note}) #1}\\}
+\newcommand{\toshDefinition}[2]		{\hline (D) {\bf{#1}} & {#2} \\}
+\newcommand{\toshProperty}[2]			{\hline (P) {#1} & {#2} \\}
+\newcommand{\toshProof}[1]				{\hline \multicolumn{2}{|p{16cm}|}{(\small \underline{Proof}) #1}\\}
+\newcommand{\toshExample}[1]			{\hline \multicolumn{2}{|p{16cm}|}{\small (Example) #1}\\}
+\newcommand{\toshNewPage}					{\hline \end{tabular} \newpage \toshTableBegin}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For Definitions or Properties with several conditions or implications
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\toshBlockStart}		{\begin{tabular}{l}}
+\newcommand{\toshBlockItem}[1]	{{#1} \\}
+\newcommand{\toshBlockDesc}[2]	{{\bf{(#1)}}\, {#2} \\}
+\newcommand{\toshBlockEnd}			{\end{tabular}}
+\newcommand{\toshLeftBlock}[1]	{$\left.{#1}\right]$}
+\newcommand{\toshRightBlock}[1]	{$\left[{#1}\right.$}
+\newcommand{\toshDef}[1]				{{\textbf{#1}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Preferred Symbols
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\toshEquivalent}		{$\iff$}
+\newcommand{\toshImply}					{\Rightarrow}
+\newcommand{\toshByDef}					{$\stackrel{D}{\iff}$}
+\newcommand{\toshEqByDef}				{\,\stackrel{D}{=}\,}
+\newcommand{\toshIdentity}			{{\mathbf{1}}}
+\newcommand{\toshItoInt}				{{\mathcal{I}}}
+\newcommand{\toshB}							{{\mathcal{B}}\,}
+\newcommand{\toshC}							{{\mathbf{C}}}
+\newcommand{\toshCylinder}			{{\mathcal{C}}_1}
+\newcommand{\toshF}							{{\mathcal{F}}\,}
+\newcommand{\toshG}							{{\mathcal{G}}\,}
+\newcommand{\toshH}							{{\mathcal{H}}\,}
+\newcommand{\toshL}							{{\mathcal{L}}}
+\newcommand{\toshLOne}					{{\mathcal{L}}^1}
+\newcommand{\toshM}							{{\mathcal{M}}\,}
+\newcommand{\toshMStep}					{M^2_{{step}}}
+\newcommand{\toshMTwo}					{M^2}					
+\newcommand{\toshN}							{{\mathbf{N}}\,}
+\newcommand{\toshNuST}					{{\nu^{m\times n}_{\toshH}(S,T)}}
+\newcommand{\toshST}						{\,/\,} % Such That
+\newcommand{\toshR}							{{\mathbf{R}}}
+\newcommand{\toshT}							{{\mathbf{T}}}
+\newcommand{\toshVar}						{{\textrm{Var}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Quantum physics
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\state}[1]{\left|{#1}\right>}
+\newcommand{\stateBasis}[2]{\left|{#1}\right>_{#2}}
+\newcommand{\bra}[1]{\left<{#1}\right|}
+\newcommand{\braBasis}[2]{\left<{#1}\right|_{#2}}
+\newcommand{\braket}[2]{\left<{#1}|{#2}\right>}
+%\newcommand{\braketBasis}[3]{\leftidx{_{#3}}{\left<{#1}|{#2}\right>}_{#3}}
+\newcommand{\Tr}[1]{\textrm{Tr}\left({#1}\right)}
+\newcommand{\PartTr}[2]{\textrm{Tr}_{#2}\left({#1}\right)}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Begin document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title{Quantum Mechanics cheat sheet}
+\author{Hitoshi Inamori}
+%\renewcommand{\today}{May 1, 2021}
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{thebibliography}{}
+\bibitem{IntroductionToQuantumInformation} J\'anos A. Bergou and Mark Hillery, Introduction to the Theory of Quantum Information Processing, Springer 2015
+\bibitem{Mermin}N. David Mermin, Quantum mysteries revisited, American Journal of Physics 58, 731 1990
+\bibitem{QuantumMeasurementTheory} Kurt Jacobs, Quantum Measurement Theory, Cambridge 2014
+\end{thebibliography}
+
+\bigskip
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Classical probability
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Classical probability}
+% Bayes theorem
+\toshProperty{Bayes theorem}{
+Bayes theorem states that the \toshDef{posterior} probability for a random variable $X$ after obtaining the value $y$ for a random variable $Y$ is obtained by multiplying the \toshDef{prior} on $X$ by the \toshDef{likelihood function} $P(Y=y | X=x)$ and by normalizing the result such that the sum over $x$ gives $P(Y=y)$:
+
+
+$P(X=x　|Y=y) =\frac{P(X=x)P(Y=y|X=x)}{\mathcal{N}}$, where
+
+ 
+${\mathcal{N}} =\int_\infty^\infty P(Y=y|X=x)P(X=x)dx=P(Y=y)$ 
+
+}
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Basic arithmetics
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Some standard formulae}
+\toshProperty{Complex conjugate}{
+
+	\toshBlockStart
+		\toshBlockDesc{1}{$\overline{z+w}=\overline{z}+\overline{w}$}
+		\toshBlockDesc{2}{$\overline{z\times w}=\overline{z}\times\overline{w}$}
+		\toshBlockDesc{3}{$|z|^2=z\overline{z}$}
+		\toshBlockDesc{4}{$z^{-1}=\frac{\overline{z}}{|z|^2}$ if $z\neq 0$, $\frac{1}{a+i b}=\frac{a-i b}{a^2+b^2}$ for $a$, $b$ non-zero real}
+		\toshBlockDesc{5}{$\exp(\overline{z}) = \overline{\exp(z)}$}	
+		\toshBlockDesc{6}{$\ln(\overline{z}) = \overline{\ln(z)}$ if $z\neq 0$}	
+	\toshBlockEnd 
+}
+\toshProperty{Trigonometry}{
+	\toshBlockStart
+		\toshBlockDesc{1}{$\cos(a+b)=\cos a \cos b-\sin a \sin b$}
+		\toshBlockDesc{2}{$\sin(a+b)=\sin a \cos b+\cos a \sin b$}
+		\toshBlockDesc{3}{$\cos a \cos b =\frac{1}{2}\left[ \cos(a-b)+\cos(a+b)\right]$}
+		\toshBlockDesc{4}{$\sin a \sin b =\frac{1}{2}\left[ \cos(a-b)-\cos(a+b)\right]$}
+		\toshBlockDesc{5}{$\sin a \cos b =\frac{1}{2}\left[ \sin(a-b)+\sin(a+b)\right]$}
+		\toshBlockDesc{6}{$\cos p + \cos q = 2\cos \frac{p+q}{2} \cos\frac{p-q}{2}$}
+		\toshBlockDesc{7}{$\sin p + \sin q = 2\sin \frac{p+q}{2} \cos\frac{p-q}{2}$}
+		\toshBlockDesc{8}{$\cos x = \frac{e^{i x}+e^{- i x}}{2}$,\quad $\sin x = \frac{e^{i x}-e^{- i x}}{2 i }$}
+		\toshBlockDesc{9}{$\sin \frac{\pi}{6} = 1/2$, $\sin \frac{\pi}{4} = \sqrt{2}/2$, $\sin \frac{\pi}{3} = \sqrt{3}/2$}
+	\toshBlockEnd 
+}
+\toshProperty{Dirac Distribution}{
+	\toshBlockStart
+		\toshBlockDesc{1}{$\int_{-\infty}^{\infty} f(x)\delta(x-a)dx =f(a)$ for any function $f:\toshR\rightarrow \toshR$}
+		\toshBlockDesc{2}{$\delta(x-a)=\frac{1}{2\pi}\int_{-\infty}^{\infty} e^{i p (x-a)}dp$}
+		\toshBlockDesc{3}{$\delta(\alpha x)=\frac{\delta(x)}{|\alpha|}$}
+		\toshBlockDesc{4}{$\delta(a-x)=\delta(x-a)$}
+		\toshBlockDesc{5}{$\delta(g(x))=\sum_i \frac{\delta(x-x_i)}{|g'(x_i)|}$ where $x_i$ are roots of function $g$}
+		\toshBlockDesc{6}{$\int_{-\infty}^{\infty} f(x)\delta^{(k)}(x-a)dx =(-1)^k f^{(k)}(a)$}
+		\toshBlockDesc{7}{$\int_{-\infty}^{\infty} f(x)\delta(x-a)dx=\int_{-\infty}^{\infty} f(x)H'(x-a)dx$}
+		\toshBlockDesc{8}{$\frac{1}{\sigma\sqrt{\pi}}\exp\left[-\left(\frac{x-a}{\sigma}\right)^2\right]\rightarrow\delta(x-a)$ for $\sigma\rightarrow 0$}
+		
+	\toshBlockEnd 
+}
+\toshProperty{Fourier Transform for function $f:\toshR\rightarrow \toshC$}{
+
+	\toshBlockStart
+		\toshBlockDesc{1}{$f(x) =\int_{-\infty}^{\infty} \widehat{f}(p)e^{i 2\pi x p}dp$ with $\widehat{f}(p) =\int_{-\infty}^{\infty} f(x)e^{-i 2\pi x p}dx$}
+		\toshBlockDesc{2}{$\int_{-\infty}^{\infty} f(x) \overline{g(x)} dx = \int_{-\infty}^{\infty} \widehat{f}(p) \overline{\widehat{g}(p)}dp$ \quad (Parseval)}
+		\toshBlockDesc{3}{if $h(x) = (f * g)(x)=\int_{-\infty}^{\infty} f(y)g(x-y)dy$ }
+		\toshBlockItem{\quad\quad then $\widehat{h}(p) = \widehat{f}(p)\cdot\widehat{g}(p)$ (convolution)}		
+	\toshBlockEnd 
+}
+\toshProperty{Fourier Series for periodic function $f:[0,2\pi]\rightarrow \toshC$}{
+
+	\toshBlockStart
+		\toshBlockDesc{1}{$f(x) =\sum_{n=-\infty}^\infty \widehat{f}_n e^{i 2\pi x n}$ with $\widehat{f}_n =\int_{0}^{2\pi} f(x)e^{-i 2\pi x n }dx$}
+		\toshBlockDesc{2}{$\int_{-\infty}^{\infty} f(x) \overline{g(x)} dx = \sum_{n=-\infty}^{\infty} \widehat{f}_n\overline{\widehat{g}_n}$ \quad (Parseval)}
+	\toshBlockEnd 
+}
+
+
+\toshProperty{Stirling approximation}{
+$N! \approx N^N e^{-N} \sqrt{2\pi N}$
+
+$\ln(N!) \approx N \ln N - N$
+}
+
+
+\toshTableEnd
+\bigskip
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MATRIX THEORY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\toshTableBegin
+\toshTableTitle{Matrix theory}
+% Hermitian matrix
+\toshTableNotation{
+We denote by $M_n(\toshC)$ the set of $n$-dimensional square matrices with entries in $\toshC$.
+}
+
+\toshDefinition{Unitary matrix}{
+$U\in M_n(\toshC)$ is \toshDef{unitary} \toshEquivalent $U^\dag=U^{-1}$
+}
+\toshProperty{Properties for unitary matrices}{
+$U$ is unitary $\toshImply$ 
+
+\smallskip
+
+\toshRightBlock{
+	\toshBlockStart
+		\toshBlockDesc{1}{$U$ can be diagonalized by a unitary matrix}
+		\toshBlockDesc{2}{all eigenvalues of $U$ have norm 1}
+		\toshBlockDesc{3}{the columns of $U$ form an orthonormal basis of $\toshC^n$}
+		\toshBlockDesc{4}{the rows of $U$ form an orthonormal basis of $\toshC^n$}
+		\toshBlockDesc{5}{there exists a hermitian matrix $H$ such that $U=\exp[i H]$}
+		
+	\toshBlockEnd 
+}
+}
+
+\toshDefinition{Hermitian matrix}{
+$A\in M_n(\toshC)$ is \toshDef{hermitian} \toshEquivalent $ A^\dag = A$
+}
+\toshProperty{Properties for hermitian matrices}{
+$A$ is hermitian $\toshImply$ 
+
+\smallskip
+
+\toshRightBlock{
+	\toshBlockStart
+		\toshBlockDesc{1}{$A$ can be diagonalized by a unitary matrix}
+		\toshBlockDesc{2}{all eigenvalues of $A$ are real numbers}
+	\toshBlockEnd 
+}
+}
+\toshProperty{Polar decomposition}{
+Any matrix $A\in M_n(\toshC)$ can be decomposed in the form
+
+\quad $A=U P = Q U$
+
+ where $U$ is unitary, and 
+ $P=\sqrt{A^\dag A}$ and $Q=\sqrt{A A^\dag}$ are positive semidefinite (i.e. for all $x\in \toshC^n$, $x^\dag P x\geq 0$), hermitian matrices ($A^\dag A$ is non negative because $\forall x, \| A x \|^2 =x^\dag A^\dag A x \geq 0$). 
+}
+\toshDefinition{Exponential of a matrix}{ For any matrix $A\in M_n(\toshC)$, 
+
+\quad $\exp(A) = e^A= \sum_{k=1}^\infty \frac{A^k}{k!}$ 
+
+The above series always converges.
+}
+\toshProperty{Properties}{
+
+\smallskip
+
+	\toshBlockStart
+		\toshBlockDesc{1}{if $[X,Y]=XY-YX=0$ then $e^{X+Y}=e^{X}e^{Y}$}
+		\toshBlockDesc{2}{if $[X,Y]$ commutes with $X$ and $Y$, $e^{X}e^{Y}=e^{X+Y+\frac{1}{2}[X,Y]}$ }
+		\toshBlockDesc{3}{otherwise need to apply  Baker-Campbell-Hausdorff formula}
+		\toshBlockDesc{4}{if $Y$ is invertible, $e^{YXY^{-1}}=Y e^{X} Y^{-1}$}	
+	\toshBlockEnd 
+}
+\toshDefinition{Logarithm of a matrix}{ For any matrix $A\in M_n(\toshC)$, the matrix $B\in M_n(\toshC)$ is a \toshDef{logarithm} of $A$ if
+
+\quad $\exp(B) = A$. 
+
+It is usually not unique.
+}
+\toshProperty{Property}{
+
+ For any matrix $A\in M_n(\toshC)$, and any unitary matrix $U\in M_n(\toshC)$,
+ 
+ \smallskip
+ 
+ \quad $\exp(U^\dag A U)= U^\dag \exp(A) U$,
+ 
+  \smallskip
+ 
+ \quad $\ln( U^\dag A U) = U^\dag \ln(A) U$, provided $\ln(A)$ exists.
+ 
+ 
+ }
+
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Basics
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\toshTableBegin
+\toshTableTitle{Basics linear algebra}
+\toshTableNotation{
+For any Hilbert space $H$, the set of linear maps on $H$ is denoted $\toshL(H)$.
+}
+\toshDefinition{Trace}{Let $H_n$ be a $n$-dimensional Hilbert space and let $X\in\toshL(H_n)$. 
+The \toshDef{trace} of $X$ is defined as
+
+\quad $\Tr{X} = \sum_i \bra{e_i} X\state{e_i}$
+
+where $\{\state{e_i}\}_{i=1,\ldots,n}$ is any orthonormal basis of $H_n$.
+}
+\toshProperty{Properties}{
+\toshBlockStart
+	\toshBlockDesc{1}{the above definition is independent of the choice of basis,}
+	\toshBlockDesc{2}{for any operators $X$ and $Y$ on $H_n$, $\Tr{XY}=\Tr{YX}$}
+\toshBlockEnd
+}
+\toshTableNotation{
+Let $H_A\otimes H_B$ be the product space of the Hilbert spaces $H_A$ and $H_B$ endowed with the respective  orthonormal bases $\{\stateBasis{e_a}{A}\}_{a=1,2,\ldots}$ and $\{\stateBasis{e_b}{B}\}_{b=1,2,\ldots}$. 
+
+}
+\toshDefinition{Partial inner product}{
+Let $\stateBasis{\phi}{A}$ be a state in $H_A$. The \toshDef{partial inner product} $\braBasis{\phi}{A}$ is defined as
+
+\quad $\braBasis{\phi}{A} : H_A\otimes H_B \rightarrow H_B$
+
+such that, for any state $\state{\psi}=\sum_{a,b} \mu_{a b} \stateBasis{e_a}{A}\otimes \stateBasis{e_b}{B} \in H_A\otimes H_B $,
+
+\quad $\braBasis{\phi}{A}\state{\psi} = \sum_{a,b} \mu_{a b} \braBasis{\phi}{A}\stateBasis{e_a}{A}\otimes \stateBasis{e_b}{B}$
+
+We also adopt the notation
+
+\quad $\bra{\psi}\stateBasis{\phi}{A} = \left(\braBasis{\phi}{A}\state{\psi} \right)^\dag = \sum_{a,b} \mu^*_{a b} \braBasis{e}{A}\stateBasis{\phi}{A}\otimes \braBasis{e_b}{B} $
+}
+\toshDefinition{Partial trace}{The \toshDef{partial trace over $H_A$}, $\textrm{Tr}_A$ is defined as:
+
+\quad $\textrm{Tr}_A: \toshL(H_A\otimes H_B) \rightarrow  \toshL(H_B)$
+
+where, for any linear map $X \in\toshL(H_A\otimes H_B)$,
+
+\quad $\PartTr{X}{A} = \sum_{a} \braBasis{e_a}{A} X \stateBasis{e_a}{A}$
+ 
+}
+
+\toshTableEnd
+\bigskip
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Density matrix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Density matrix}
+\toshTableNotation{
+Let $H_n$ the Hilbert space of dimension $n$.
+}
+\toshDefinition{Density matrix}{
+The matrix $\rho\in \toshL(H_n)$ is a \toshDef{density matrix} if there exists
+\toshRightBlock{
+	\toshBlockStart
+		\toshBlockItem{a set $\{ p_i \}_{i=1,2,\ldots}$, with $\sum_i p_i = 1$ and $p_i\in[0,1]$ for all $i$, and,}
+		\toshBlockItem{$\{ \state{\phi_i}\}_{i=1,2,\ldots}$ with $\state{\phi_i}\in H_n$}
+	\toshBlockEnd 
+}
+
+such that
+
+\quad $\rho = \sum_i p_i \state{\phi_i}\bra{\phi_i}$.
+
+\smallskip
+
+We say that such $\rho$ describes a \toshDef{pure-state ensemble} in which the system is in state  $\state{\phi_i}$ with probability $p_i$, for $i=1,2,\ldots$
+}
+\toshDefinition{Special types of density matrices}{
+
+
+\toshBlockStart
+	\toshBlockDesc{pure}{$\rho$ is pure if there exists $\state{\phi}\in H_n$ such that $\rho=\state{\phi}\bra{\phi}$}
+	\toshBlockDesc{mixed}{$\rho$ is mixed if it is not pure}
+	\toshBlockDesc{completely mixed}{$\rho$ is completely mixed if $\rho=\frac{1}{n}\toshIdentity$}
+\toshBlockEnd
+}
+\toshProperty{Equivalent definition}{
+An operator $\rho$ is a density matrix \toshEquivalent
+
+\toshRightBlock{
+\toshBlockStart
+	\toshBlockDesc{1}{$\rho$ is hermitian,}
+	\toshBlockDesc{2}{$\Tr{\rho}=1$,}
+	\toshBlockDesc{3}{$\rho$ is positive, i.e. $\forall\state{\psi}\in H_n, \bra{\psi}\rho\state{\psi}\geq 0$,}
+\toshBlockEnd
+}
+}
+\toshProperty{Pure state}{
+\smallskip
+$\rho$ is pure \toshEquivalent $\Tr{\rho^2} = 1$
+
+}
+\toshProperty{Ensemble decompositions}{
+
+A density matrix can be written as $\sum_{i=1}^A \alpha_i \state{a_i}\bra{a_i}$ and $\sum_{j=1}^B \beta_j \state{b_j}\bra{b_j}$ with $A \geq B$  \toshEquivalent There exists a unitary matrix $U$ of dimension $A$ such that:
+
+\smallskip
+
+\quad $\sqrt{\alpha_i}\state{a_i} = \sum_{j=1}^B U_{i j} \sqrt{\beta_j} \state{b_j}$.
+
+}
+\toshProperty{Schmidt decomposition}{
+Let $H=H_A\otimes H_B$ be the product space of the Hilbert spaces $H_A$ and $H_B$.  
+
+For any state $\state{\Psi_{AB}}\in H$, there exist orthonormal bases $\{\state{a_i}\}_i$ for $H_A$ and $\{\state{b_j}\}_j$ 
+for $H_B$ such that:
+
+\smallskip
+
+\quad $\state{\Psi_{AB}} = \sum_{k=1}^n \sqrt{\lambda_k} \state{a_k}\otimes\state{b_k}$
+
+\smallskip
+
+where $n \leq \min(\dim(H_A) , \dim(H_B))$.
+
+Note that the partial traces $\PartTr{\state{\Psi_{AB}}\bra{\Psi_{AB}}}{A}$ and $\PartTr{\state{\Psi_{AB}}\bra{\Psi_{AB}}}{B}$ share the same non-zero eigenvalues.
+}
+\toshProof{Let $\{\state{a_i}\}_i$ be the basis diagonalizing the partial density $\rho_A =\PartTr{\state{\Psi_{AB}}\bra{\Psi_{AB}}}{B}$. For some basis  $\{\state{v_j}\}_j$ of $H_B$, the state  $\state{\Psi_{AB}}$ can be written as $\state{\Psi_{AB}} =\sum_{i,j}c_{i,j}\state{a_i}\otimes \state{v_j} = \sum_{i}\state{a_i}\otimes \state{\tilde{b}_i}$ where $\state{\tilde{b}_i}=\sum_j c_{i,j} \state{v_j}$. We then have $\rho_A = \sum_{i,j} \braket{\tilde{b}_j}{\tilde{b}_i}\state{a_i}\bra{a_j}$ thus  $\braket{\tilde{b}_j}{\tilde{b}_i}=\delta_{i,j} \lambda_i$ where $\lambda_i$ are the eigenvalues of $\rho_A$. Normalizing the states $\state{\tilde{b}_i}$ we get the result.
+}
+\toshProperty{Purification}{
+For any density matrix $\rho_A = \sum_i p_i \stateBasis{\psi_i}{A}\braBasis{\psi_i}{A}$ where $\stateBasis{\psi_i}{A}$ are any states in $H_A$, there exists a Hilbert space $H_B$ and an orthonormal basis  $\{\state{b_j}\}_j$ for $H_B$ such that
+
+\smallskip
+
+\quad $\rho_A =\PartTr{\state{\Psi_{AB}}\bra{\Psi_{AB}}}{B}$, \quad where
+
+\smallskip
+
+\quad $\state{\Psi_{AB}} = \sum_i \sqrt{p_i} \stateBasis{\psi_i}{A}\otimes \state{b_i}$.
+
+}
+\toshDefinition{Placing}{When the partial trace of a universe state, $\state{\psi}$, gives the density state $\rho$ for a subsystem, we say that $\state{\psi}$ \toshDef{places} the system in the state $\rho$.
+}
+%\toshBlockDesc{4}{$\rho$ is pure \toshEquivalent $\Tr{\rho^2}=1$.}
+\toshTableEnd
+\bigskip
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bloch Sphere
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Bloch sphere}
+\toshDefinition{Pauli Matrices}{
+\quad $\sigma_z = \left( \begin{array}{cc} 1 & 0 \\ 0 & -1 \end{array}\right)$\quad
+$\sigma_x = \left( \begin{array}{cc} 0 & 1 \\ 1 & 0 \end{array}\right)$\quad
+$\sigma_y = \left( \begin{array}{cc} 0 & -i \\ i & 0 \end{array}\right)$
+}
+\toshDefinition{one qubit representation}{A density operator for a single qubit can be expressed as
+
+\quad $\rho = \frac{1}{2}\left(\toshIdentity + \vec{u}\cdot\vec{\sigma}\right)$
+
+where $\vec{u}$ is a vector of norm less or equal to unity. When $\| \vec{u}\| =1$ the state $\rho$ is pure, when $\| \vec{u}\| =0$ it is completely mixed.
+}
+
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Entanglement
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{entanglement}
+\toshDefinition{for pure states}{A pure state $\stateBasis{\psi}{AB}$ in product space $H_A\otimes H_B$ is \toshDef{not entangled} if it can be written as a product of two pure states in $H_A$ and $H_B$, i.e. $\stateBasis{\psi}{AB}=\stateBasis{\psi}{A}\otimes\stateBasis{\psi}{B}$.
+
+Otherwise it is \toshDef{entangled}.
+}
+\toshDefinition{for density matrices}{A density matrix $\rho_{AB}$ in $\toshL(H_A\otimes H_B)$ is \toshDef{separable} if it can be written as a mixture of product of states, i.e. $\rho=\sum_i p_i \rho_{A i}\otimes \rho_{B i}$ for some $p_i\in[0,1]$, $\rho_{A i}\in\toshL(H_A)$, $\rho_{B i}\in\toshL(H_B)$. 
+
+Otherwise it is \toshDef{entangled}.
+}
+\toshDefinition{maximally entangled}{A state is \toshDef{maximally entangled} if it is entangled and its reduced density matrices are proprotional to identity.
+}
+\toshProperty{classical correlation}{
+For a pure state that is not entangled, measurements on systems $A$ and $B$ are not correlated.
+
+For a separable density matrix, measurements on systems $A$ and $B$ are only classically correlated, or not correlated.
+}	
+\toshProperty{Bell or CSHS inequality}{Let Alice and Bob be two remote experimenters. Alice makes a measurement $a$ or $a'$, both measurements can each give $+1$ or $-1$. Independently of Alice, Bob makes the measurement $b$ or $b'$, both measurement can each give $+1$ or $-1$.
+
+Then, if there exists a hidden variable $\lambda$ that gives the measurement result for all combinations of the measurement choice, then we have the Clauser Horne Shimony Holt inequality:
+
+\smallskip
+
+\quad $-2\leq E[a\times b]+E[a\times b']+E[a'\times b]-E[a'\times b'] \leq 2$
+
+\smallskip
+ }
+ \toshProof{$E[a\times b]+E[a\times b']+E[a'\times b]-E[a'\times b'] = \int P(\lambda) d\lambda [a(\lambda)(b(\lambda)+b'(\lambda)) + a'(\lambda)(b(\lambda)-b'(\lambda))] \leq 2$ because $b\pm b'$ is 0 or 2 (one is 0 when the other one is 2).
+ }
+ \toshProperty{violation of Bell inequality}{Let $a$ be the measurement along $\sigma_x$ and $a'$ be along $\sigma_y$ and similarly for $b$ and $b'$. Let the initial state be $\state{\Psi}=\frac{1}{\sqrt{2}} \left(\state{00}+e^{i\pi/4}\state{11}\right)$. Then we get the violation of the above inequality with the term in the middle equal $2\sqrt{2}$.
+ }
+ \toshTableEnd
+
+ \toshTableBegin
+ \toshProperty{Mermin-GHZ paradox}{Let $A$, $B$ and $C$, three remote experimenters perform the measurement of the observable $x$ or $y$ (exclusive or), the measurement yielding $+1$ or $-1$ with both observables. Assume that the setup is so that the product of $A$, $B$, $C$'s measurement outcomes is +1 in case $A$, $B$, $C$ chose the bases $x$, $y$, $y$ or $y$, $x$, $y$ or $y$, $y$, $x$ respectively. Then a classical theory based on hidden variables predicts that such product must be +1 for the bases $x$, $x$, $x$. 
+ 
+ Quantum mechanics violates this classical prediction with the state $\state{\Psi}=\frac{1}{\sqrt{2}} \left(\state{+++}-\state{---}\right)$ and the observables $x=\sigma_x$, $y=\sigma_y$ and the states $\state{+}$ and $\state{-}$ are the eigenstates of $\sigma_z$ with eigenvalues $+1$ and $-1$ respectively, with $\sigma_i$ being the Pauli matrices.
+ }
+ \toshProof{A hidden variable theory would tell independently to each detector the result of the measurement of the observation depending on the choice of the observable of the experimenter (so the outcome given the choice of $x$ or $y$ for each experimenter. This table must be separate for each experimenter as they are remote). This would look like $\begin{array}{c|ccc}  & A & B & C \\ \hline x &  + & - & - \\ y & - & + & +\end{array}$ meaning $A$, $B$, $C$ will observe $-1$, $-1$, $+1$ if they chose $y$, $x$, $y$, giving the product $+1$. There are $2^6=64$ binary tables of size 6, but you have the conditions $X_A Y_B Y_C=1$, $Y_A X_B Y_C=1$, $Y_A Y_B X_C=1$. Multiply the first equation by $Y_B Y_C$, the second by $Y_A Y_C$ and the third by $Y_A Y_B$ and you get (as $Y_i^2=1$) $X_A =Y_B Y_C$, $X_B=Y_A Y_C $, $X_C=Y_A Y_B$. You can set $-1$ or $+1$ for each $Y_i$ which gives the 8 possible tables
+
+\quad $\begin{array}{c|ccc}  & A & B & C \\ \hline x &  + & + & + \\ y & + & + & +\end{array}$ \quad $\begin{array}{c|ccc}  & A & B & C \\ \hline x &  + & - & - \\ y & + & - & -\end{array}$ \quad $\begin{array}{c|ccc}  & A & B & C \\ \hline x &  - & + & - \\ y & - & + & -\end{array}$\quad $\begin{array}{c|ccc}  & A & B & C \\ \hline x &  - & - & + \\ y & - & - & +\end{array}$
+
+\quad $\begin{array}{c|ccc}  & A & B & C \\ \hline x &  + & - & - \\ y & - & + & +\end{array}$ \quad $\begin{array}{c|ccc}  & A & B & C \\ \hline x &  + & + & + \\ y & - & - & -\end{array}$ \quad $\begin{array}{c|ccc}  & A & B & C \\ \hline x &  - & - & + \\ y & + & + & -\end{array}$\quad $\begin{array}{c|ccc}  & A & B & C \\ \hline x &  - & + & - \\ y & + & - & +\end{array}$
+
+From this you get that for the choice $x$, $x$, $x$ the product of the outcomes is always $+1$.
+
+The violation with the quantum setup is straightforward to check, given that $\sigma_x\state{\pm}=\state{\mp}$ and $\sigma_y\state{\pm}=\pm i \state{\mp}$ 
+}
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Measurement
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Measurement}
+\toshDefinition{von Neumann measurement}{
+Let $\rho\in\toshL(H)$ be the density matrix giving the state of the system prior to the measurement.
+
+The von Neumann measurement in the orthonormal basis $\{\state{i}\}_i$ of $H$ finds the system in the state
+
+\smallskip
+
+\quad $\tilde{\rho}_i = \frac{P_i \rho P_i}{\Tr{P_i \rho P_i}}$
+
+\smallskip
+
+with the probability 
+
+\smallskip
+
+\quad $p_i = \Tr{P_i \rho P_i}$
+
+\smallskip
+
+where $P_i=\state{i}\bra{i}$ is the projection operator onto the basis state $\state{i}$. In this case, note that $\tilde{\rho}_i$ is simply equal to $P_i$. 
+
+\smallskip
+
+The state of the system after the measurement can be described in the mixed form:
+
+\smallskip
+
+\quad $\sum_i p_i \tilde{\rho}_i = \sum_i P_i \rho P_i$,
+
+\smallskip
+
+not forgetting that the result of the measurement is stored somewhere outside the system, keeping the evolution of the system plus the outer world unitary.
+}
+\toshDefinition{Generalized measurement}{
+Let $\rho\in\toshL(H)$ be the density matrix giving the state of the system prior to the measurement.
+
+Any set of operators of $\toshL(H)$,  $\{A_i\}_i$ such that
+
+\smallskip
+
+\quad $\sum_i A_i^\dag A_i = \toshIdentity$
+
+\smallskip
+
+describes a possible measurement on the system, where the measurement finds the system in state
+
+\smallskip
+
+\quad $\tilde{\rho}_i = \frac{A_i \rho A_i^\dag}{\Tr{A_i \rho A_i^\dag}}$
+
+\smallskip
+
+with the probability 
+
+\smallskip
+
+\quad $p_i = \Tr{A_i \rho A^\dag_i}$.
+
+\smallskip
+
+Note that the operators $A_i$ are not necessarily hermitian nor unitary. Again, the state of the system restricted to $H$ after the measurement can be described as:
+
+\quad $\sum_i p_i \tilde{\rho}_i = \sum_i A_i \rho A^\dag_i$
+
+}
+\toshProperty{Interpreting generalized measurement}{Applying the polar decomposition $A_i= U_i P_i$ for each $A_i$ that form the generalized measurement $\{A_i\}_i$, we have that:
+
+\smallskip
+
+\quad $\sum_i A_i^\dag A_i = \sum_i (P_i)^2 = \toshIdentity$
+
+\smallskip
+
+
+and the measurement finds the system in state:
+
+\smallskip
+
+\quad $\tilde{\rho}_i = U_i \left(\frac{P_i \rho P_i}{p_i}\right) U_i^\dag$
+
+\smallskip
+
+with the probability 
+
+\smallskip
+
+\quad $p_i = \Tr{P_i \rho P_i} = \Tr{P_i^2 \rho}$,
+
+\smallskip
+
+where the $P_i$ are positive semidefinite hermitian operators and $U_i$ are unitary. As unitary transformation does not change the eigenvalues and can be interpreted as time evolution, the above formula describes an information gathering by the operator $P_i$ followed by a \toshDef{feedback} in which we apply $U_i$ depending on the result $i$ of the information gathering measurement.
+}
+\toshNewPage
+\toshProperty{Generalized measurement is a von Neumann measurement}{
+Any generalized measurement on a Hilbert space $H$ can be described as a von Neumann measurement on a larger Hilbert space $H\otimes H_E$.
+
+More precisely, let $\{ A_i\}_{i=1,\ldots,n}$ describe the generalized measurement on $H$. Then there exist a Hilbert space $H_E$ of dimension $n$, a unitary operator $U\in\toshL(H_E\otimes H)$ and an orthonormal basis of $H_E$, $\{\stateBasis{i}{E}\}_{i=1,\ldots,n}$ so that, for each $i=1,\ldots,n$,
+
+\smallskip
+
+
+
+\quad $\forall\rho\in\toshL(H)$, 
+
+\quad\quad  $A_i\rho A^\dag_i = \PartTr{\left(P_i\otimes \toshIdentity_H\right) U \left\{ \stateBasis{1}{E}\braBasis{1}{E}\otimes\rho\right\} U^\dag \left(P_i\otimes \toshIdentity_H\right)}{E}$
+
+\smallskip
+
+where we denote $P_i = \stateBasis{i}{E}\braBasis{i}{E}$ the projection operators on $H_E$.
+
+Usually, the space $H$ is called the \toshDef{target} and the space $H_E$ the \toshDef{probe} space. 
+}
+\toshProof{Let $h$ be the dimension of the space $H$. Consider the matrix of width $h$ and height $n\times h$ formed the matrices $A_i$ stacked in column. This matrix defines $h$ vectors $\{\vec{u}_j\}_j$, of $H_E \otimes H$ that are orthonormal between themselves, because $\sum_i A_i^\dag A_i = \toshIdentity$. Indeed, $\vec{u}_j\cdot \vec{u}_k = \sum_i \sum_l (A_i)_{l,j}^*(A_i)_{l,k} = \sum_i \sum_l (A_i^\dag)_{j,l}(A_i)_{l,k}=\sum_i (A_i^\dag A_i)_{j,k}=\delta_{j,k}$. Therefore by completing the orthonormal basis (for the remaining $n\times h - h$ vectors), there exists a unitary matrix $U$ of dimension $n\times h$ such that its first $h$ columns are given by the stacked matrices $A_i$. That is, $U=\sum_{i,j=1,\ldots,n}  \stateBasis{i}{E}\braBasis{j}{E}\otimes B_{i,j}$ where the $B_{i,j}$ are $h$ dimensional and $B_{i,1}=A_i$ for all $i$.
+
+Now suppose that the probe space is initially in state $\stateBasis{1}{E}$. The initial combined state is  $\stateBasis{1}{E}\braBasis{1}{E}\otimes\rho$ and by applying the unitary operator $U$ and (partially) projecting with $P_i$ on the probe space, we get:
+
+$\left(P_i\otimes \toshIdentity_H\right) U \left\{ \stateBasis{1}{E}\braBasis{1}{E}\otimes\rho\right\} U^\dag \left(P_i\otimes \toshIdentity_H\right)= \left(P_i\otimes \toshIdentity_H\right) \stateBasis{i}{E}\braBasis{1}{E}\otimes B_{i,1}\left\{ \stateBasis{1}{E}\braBasis{1}{E}\otimes\rho\right\}\stateBasis{1}{E}\braBasis{i}{E}\otimes B^\dag_{i,1}$ and tracing over $H_E$ we obtain, using $B_{i,1}=A_i$, $ \PartTr{\left(P_i\otimes \toshIdentity_H\right) U \left\{ \stateBasis{1}{E}\braBasis{1}{E}\otimes\rho\right\} U^\dag \left(P_i\otimes \toshIdentity_H\right)}{E}= A_i \rho A^\dag_i$.
+}
+\toshProperty{Sequence of measurement as a single measurement}{All processes that involes sequences of measurements with intermediary evolution depending on the results of past measurements, can be described as a single unitary process followed by a single measurement performed at the end.
+}
+
+
+\toshProof{Let  $\{ A_i\}_{i=1,\ldots,n}$ be a general measurement and suppose that we apply the unitary transformation $U_i$ upon seeing the result $i$. Then  $\{ U_i A_i\}_{i=1,\ldots,n}$ is also a general measurement as $A_i^\dag U_i^\dag U_i A_i=A_i^\dag A_i$, and therefore there exists $H_E$, $U\in \toshL(H_E\otimes H)$ and projection operators $P_i\in\toshL(H_E)$ such that: $U_i A_i \rho A_i^\dag U_i^\dag =  \PartTr{\left(P_i\otimes \toshIdentity_H\right) U \left\{ \stateBasis{1}{E}\braBasis{1}{E}\otimes\rho\right\} U^\dag \left(P_i\otimes \toshIdentity_H\right)}{E}$. The density operator after this first measurement and feedback is 
+
+$\sum_i U_i A_i \rho A_i^\dag U_i^\dag= \sum_i\PartTr{\left(P_i\otimes \toshIdentity_H\right) U \left\{ \stateBasis{1}{E}\braBasis{1}{E}\otimes\rho\right\} U^\dag \left(P_i\otimes \toshIdentity_H\right)}{E} $
+
+$=\sum_i\PartTr{\left(P_i\otimes \toshIdentity_H\right) U \left\{ \stateBasis{1}{E}\braBasis{1}{E}\otimes\rho\right\} U^\dag}{E}$$ =\PartTr{\ U \left\{ \stateBasis{1}{E}\braBasis{1}{E}\otimes\rho\right\} U^\dag}{E}$
+
+because $P_i$ are projectors. Now you can reiterate for the second general measurement that can depend on the first outcome $i$, $\{B_{i,j}\}_{i,j}$ followed by the unitary transformations $V_{i,j}$, to get the density matrix after the measurement as
+
+$\sum_{i,j} V_{i,j} B_{i,j}  U_i A_i \rho A_i^\dag U_i^\dag B_{i,j} V^\dag_{i,j} =\PartTr{\ VU \left\{ \stateBasis{1,1}{E,F}\braBasis{1,1}{E,F}\otimes\rho\right\} U^\dag V^\dag}{E\otimes F}$
+
+which can be read as a unitary transformation on $H_F\otimes H_E\otimes H$ followed by a final projection on $H_E\otimes H_F$ with a pre-defined projectors $P_i\otimes P_j$ (you cannot change the projectors as they are conditioned by the iterated measurements).
+}
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% von Neuman Entropy
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{von Neumann entropy}
+\toshDefinition{von Neumann entropy}{For any density matrix $\rho\in\toshL(H_n)$, the \toshDef{von Neumann entropy} of state $\rho$ is defined as
+
+\smallskip
+
+\quad $S(\rho) = -\Tr{\rho \ln \rho} = -\sum_{i=1}^n \lambda_i \ln \lambda_i$
+
+\smallskip
+
+where the $\{\lambda_i\}_{i=1,\ldots,n}$ are the eigenvalues of $\rho$.
+}
+\toshProperty{Properties}{
+\toshBlockStart
+	\toshBlockDesc{1}{$0\leq S(\rho) \leq \ln(n)$}
+	\toshBlockDesc{2}{$S(\rho) = 0 $ if and only if $\rho$ is pure}
+	\toshBlockDesc{3}{$S(\rho) = \ln(n) $ if and only if $\rho$ is completely mixed}
+	\toshBlockDesc{4}{$S$ is invariant under unitary transform, i.e. $S(U\rho U^\dag)=S(\rho)$}
+	\toshBlockDesc{concavity}{for $\rho_k$ density matrices and $p_k$ positive,  $\sum_k p_k = 1$}
+	\toshBlockItem{\quad$S(\sum_k p_k\rho_k) \geq \sum_k p_k S(\rho_k)$}
+
+\toshBlockEnd
+}
+\toshProperty{Subadditivity}{If $\rho$ is a density for $H_A\otimes H_B$, and $\rho_A = \PartTr{\rho}{B}$, $\rho_B = \PartTr{\rho}{A}$ are the densities for $H_A$ and $H_B$, then
+
+\toshBlockStart
+	\toshBlockDesc{1}{$S(\rho)\leq S(\rho_A) +S(\rho_B)$ with equality iff $\rho=\rho_A\otimes\rho_B$}
+	\toshBlockDesc{2}{$| S(\rho_A) - S(\rho_B)| \leq S(\rho)$}
+\toshBlockEnd
+}
+\toshProperty{Strong subadditivity}{for any three systems $A$, $B$, and $C$,
+
+\smallskip
+
+\quad $S(\rho_{ABC}) + S(\rho_B) \leq S(\rho_{AB}) + S(\rho_{BC})$.
+}
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% von Neuman Entropy
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{thermodynamic entropy}
+\toshDefinition{macro and micro states}{
+The \toshDef{macrostate} of a system is defined by those global physical properties that one can measure with simple macroscopic apparatus. The mutually orthogonal quantum states that the system could be in, given its macrostate, are the \toshDef{accessible microstates} of the system for this macrostate. The observer has access only to the macrostate.
+}
+\toshDefinition{thermodynamic entropy}{The \toshDef{thermodynamic entropy} of a system associated with a given macrostate, is defined as the logarithm of the total number $\Omega$ of accessible microstates for this macrostate (possibly multiplied by the Boltzmann's constant $k=1.38064 \times10^{-23}$)
+
+\quad $S=k \ln(\Omega)$
+}
+\toshProperty{Fundamental postulate of statistical mechanics}{\textbf{All the accessible microstates of a closed system are equally likely.}
+
+\smallskip
+
+Remark: if we have two systems that are interacting, the microstates of the combined system will be equally likely, but this may not be true for those of the subsystems.
+}
+\toshProperty{Possible explanation of the fundamental postulate}{
+Denote by $\rho$ the density state of a system that would have been obtained by tracing our the rest of the universe, starting from a completely mixed state for the universe.
+
+It turns out that almost all pure states for the universe would place the system in a state that is very close to $\rho$, i.e. tracing out the complement of the system yields a density state close to $\rho$ for the system.
+}
+\toshProperty{Second law of thermodynamics}{The fundamental postulate of statistical mechanics implies that a system will always evolve to the macrostate with the highest entropy (i.e. the maximum number of microstates).
+For instance, a macrostate in which particles of gas are evenly spread throughout a room has way more microstates than a macrostate in which these particles are confined in a small volume of the room.
+
+ The origin of irreversibility is not a time-assymetry in the evolution of quantum mechanics, but the asymmetry between the macrostates, in that some have more microstates than others. 
+
+
+If we start a system in a state that is out of equilibrium and run the evolution backward in time, the system will equilibrate in the same way as it equilibrates forward in time.
+}
+\toshProperty{Landauer's erasure principle}{When a single bit of information is erased from a system (i.e. we take a qubit whose initial state is $\state{0}$ or $\state{1}$ and apply a process which transforms the state into $\state{0}$), the entropy of the environment must increase by $k\ln(2)$.
+}
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Quantum Eraser
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{quantum eraser}
+\toshTableNotation{
+\quad $\framebox{\it H} = \frac{1}{2}\left( \begin{array}{cc} 1 & 1 \\ 1 & -1 \end{array}\right)$, 
+\quad $\framebox{$\phi$} = \left( \begin{array}{cc} 1 & 0 \\ 0 & \exp(i\phi) \end{array}\right)$.
+}
+\toshProperty{Step 1: simple interferometer}{
+The following setup
+
+\quad\quad
+\begin{picture}(120,30)
+\put(20,10){\line(1,0){10}}
+\put(42,10){\line(1,0){20}}
+\put(74,10){\line(1,0){10}}
+\put(96,10){\line(1,0){10}}
+\put(30,4){\framebox(12,12){$H$}}
+%\put(52,10){\circle*{4}}
+\put(62,4){\framebox(12,12){$\phi$}}
+\put(84,4){\framebox(12,12){$H$}}
+\put(10,10){\makebox(0,0){$\state{0}$}}
+\end{picture}
+
+leads to the final state:
+
+\quad $\state{\psi_1} = e^{i\frac{\phi}{2}} \left(\cos\frac{\phi}{2}\state{0} - i\sin\frac{\phi}{2}\state{1}\right)$
+
+and measurement of the qubit leads to an interference fringe:
+
+ \quad $P(0)=\cos^2\frac{\phi}{2}$ and $P(1) =\sin^2\frac{\phi}{2}$.
+}
+\toshProperty{Step 2: coupling kills interference}{
+Coupling the first qubit with another qubit kills the interference as the setup:
+
+\quad\quad
+\begin{picture}(120,50)
+\put(20,40){\line(1,0){10}}
+\put(42,40){\line(1,0){20}}
+\put(74,40){\line(1,0){10}}
+\put(96,40){\line(1,0){10}}
+\put(30,34){\framebox(12,12){$H$}}
+\put(62,34){\framebox(12,12){$\phi$}}
+\put(84,34){\framebox(12,12){$H$}}
+\put(10,40){\makebox(0,0){$\state{0}$}}
+
+\put(52,40){\circle*{4}}
+\put(52,40){\line(0,-1){29}}
+\put(52,15){\circle{8}}
+\put(20,15){\line(1,0){86}}
+\put(10,15){\makebox(0,0){$\state{0}$}}
+\end{picture}
+
+leads to the final state:
+
+\quad $\state{\psi_2} = \frac{1}{2} \left(\state{00}+\state{10}+e^{i\phi}\state{01} - e^{i\phi}\state{11}\right)$
+
+and measurement of the first qubit gives a result without the interference pattern:
+
+ \quad $P(0)=\frac{1}{2}$ and $P(1)=\frac{1}{2}$, actually all $P(ij)$ are $\frac{1}{4}$
+}
+\toshProperty{Step 3: quantum ``eraser''}{Now if you ``erase'' the information from the second qubit by measuring it in a conjugate basis, then you do get back the interference from the first qubit, only if you consider the results conditional to the measurement outcome of the second qubit. The following setup:
+
+\quad\quad
+\begin{picture}(120,50)
+\put(20,40){\line(1,0){10}}
+\put(42,40){\line(1,0){20}}
+\put(74,40){\line(1,0){10}}
+\put(96,40){\line(1,0){32}}
+\put(30,34){\framebox(12,12){$H$}}
+\put(62,34){\framebox(12,12){$\phi$}}
+\put(84,34){\framebox(12,12){$H$}}
+\put(10,40){\makebox(0,0){$\state{0}$}}
+
+\put(52,40){\circle*{4}}
+\put(52,40){\line(0,-1){29}}
+\put(52,15){\circle{8}}
+\put(20,15){\line(1,0){86}}
+\put(106,9){\framebox(12,12){$H$}}
+\put(118,15){\line(1,0){10}}
+\put(10,15){\makebox(0,0){$\state{0}$}}
+\end{picture}
+
+leads to the final state:
+
+\quad $\state{\psi_3} = \frac{e^{i\frac{\phi}{2}}}{\sqrt{2}} \left(\cos\frac{\phi}{2}\state{00}-i \sin\frac{\phi}{2}\state{10}-i \sin\frac{\phi}{2}\state{01} + \cos\frac{\phi}{2}\state{11}\right)$
+
+which does not change the marginal probability for the measurement of qubit 1 which stays at $\frac{1}{2}$ (otherwise you could have superluminal signaling between the qubit 1 and 2), but if you consider results from qubit 1, conditional on qubit 2 giving 0 for instance, you have interference pattern:
+
+\quad $P(0 | 0) =\frac{P(00)}{P(00)+P(10)}=\cos^2\frac{\phi}{2}$, and $P(1|0)=\sin^2\frac{\phi}{2}$
+}
+\toshProperty{Step 4: delayed quantum `eraser'}{You can also ``delay'' whether the change of basis for qubit 2 had been performed or not by coupling it to a third qubit:
+
+\quad\quad
+\begin{picture}(120,80)
+\put(20,70){\line(1,0){10}}
+\put(42,70){\line(1,0){20}}
+\put(74,70){\line(1,0){10}}
+\put(96,70){\line(1,0){32}}
+\put(30,64){\framebox(12,12){$H$}}
+\put(62,64){\framebox(12,12){$\phi$}}
+\put(84,64){\framebox(12,12){$H$}}
+\put(10,70){\makebox(0,0){$\state{0}$}}
+
+\put(52,70){\circle*{4}}
+\put(52,70){\line(0,-1){29}}
+\put(52,45){\circle{8}}
+\put(20,45){\line(1,0){86}}
+\put(106,39){\framebox(12,12){$H$}}
+\put(118,45){\line(1,0){10}}
+\put(10,45){\makebox(0,0){$\state{0}$}}
+
+\put(20,20){\line(1,0){10}}
+\put(30,14){\framebox(12,12){$H$}}
+\put(42,20){\line(1,0){86}}
+\put(10,20){\makebox(0,0){$\state{0}$}}
+\put(112,39){\line(0,-1){19}}
+\put(112,20){\circle*{4}}
+\end{picture}
+
+leading to the final state $\state{\psi_4}=\state{\psi_2}\otimes\state{0}+\state{\psi_3}\otimes\state{1}$.
+}
+
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% cloning and U-NOT gate
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{cloning and U-NOT gate}
+\toshProperty{approximative cloning and U-NOT gate}{Cloning a quantum state ($\state{\phi}\otimes\state{0}\mapsto\state{\phi}\otimes\state{\phi}$) is not possible.
+
+\smallskip
+
+Performing a Universal-Not (for a qubit $\state{\phi}=\alpha\state{0}+\beta\state{1}$, a U-NOT maps $\state{\phi}$ to $\state{\phi_\perp} = \beta^*\state{0}-\alpha^*\state{1}$) is not possible because it is anti-unitary ($A$ is anti-unitary if for any $\state{x}$ and $\state{y}$, $\braket{Ax}{Ay}=(\braket{x}{y})^*=\braket{y}{x}$)
+
+\smallskip
+
+However, the following circuit performs an approximate cloning and U-NOT
+
+\quad\quad
+\begin{picture}(170,80)
+
+\put(20,70){\line(1,0){120}}
+\put(40,70){\circle*{4}}
+\put(60,70){\circle*{4}}
+\put(80,70){\circle{8}}
+\put(100,70){\circle{8}}
+\put(40,70){\line(0,-1){29}}
+\put(60,70){\line(0,-1){54}}
+\put(80,74){\line(0,-1){29}}
+\put(100,74){\line(0,-1){54}}
+\put(10,70){\makebox(0,0){$\state{\psi}$}}
+
+
+\put(40,45){\circle{8}}
+\put(20,45){\line(1,0){120}}
+\put(80,45){\circle*{4}}
+
+\put(60,20){\circle{8}}
+\put(20,20){\line(1,0){100}}
+\put(100,20){\circle*{4}}
+\put(120,16){\framebox(12,12){$\scriptstyle i\sigma_y$}}
+\put(132,20){\line(1,0){8}}
+
+\put(17,17){\line(0,1){30}}
+\put(17,17){\line(1,0){2}}
+\put(17,47){\line(1,0){2}}
+\put(7,32){\makebox(0,0){$\state{\chi}$}}
+
+\put(143,17){\line(0,1){56}}
+\put(143,17){\line(-1,0){2}}
+\put(143,73){\line(-1,0){2}}
+\put(153,45){\makebox(0,0){$\state{\xi}$}}
+\end{picture}
+
+where $\state{\chi}=\frac{\mu}{\sqrt{2}}\left(\state{00}+\state{11}\right) +\frac{\nu}{\sqrt{2}}\left(\state{00}+\state{01}\right)$, where $\mu$ and $\nu$ are real numbers, in the sense that
+
+\quad $\rho_1=\PartTr{\state{\xi}\bra{\xi}}{23} = (\mu^2 + \mu\nu)\state{\psi}\bra{\psi}+\frac{\nu^2}{2}\toshIdentity$
+
+\quad $\rho_2=\PartTr{\state{\xi}\bra{\xi}}{13} = (\nu^2 + \mu\nu)\state{\psi}\bra{\psi}+\frac{\mu^2}{2}\toshIdentity$
+
+\quad $\rho_3=\PartTr{\state{\xi}\bra{\xi}}{12} = \frac{1}{2}(1+\mu\nu)\state{\psi_\perp}\bra{\psi_\perp}+ \frac{1}{2}(1-\mu\nu)\state{\psi}\bra{\psi}$.
+
+For $\mu=\nu=1/\sqrt{3}$ one obtains
+
+\quad $\rho_1 = \rho_2 = \frac{5}{6}\state{\psi}\bra{\psi} + \frac{1}{6}\state{\psi_\perp}\bra{\psi_\perp}$ 
+
+i.e. qubits 1 and 2 are clone of $\state{\psi}$ with fidelity $5/6$, and 
+
+\quad $\rho_3 =\frac{2}{3}\state{\psi_\perp}\bra{\psi_\perp} + \frac{1}{3}\state{\psi}\bra{\psi}.$ 
+}
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% programmable machines
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{programmable machines}
+\toshDefinition{programmable machine $G$}{A \toshDef{programmable machine} is a unitary operator $G$ acting on a product space $H_{data}\otimes H_{program}$, where the program state $\state{\chi}\in H_{program}$ specifies what operation is to be applied on the data state $\state{\psi}\in H_{data}$.
+}
+\toshProperty{Nielsen and Chuang}{Each unitary operator that the machine can implement requires an additional dimension in the program space $H_{program}$. 
+
+More precisely, if $\state{\chi_1}\in H_{program}$ implements the unitary operator $U_1\in\toshL(H_{data})$ and $\state{\chi_2}\in H_{program}$ implements the unitary operator $U_2\in\toshL(H_{data})$, then: $\braket{\chi_1}{\chi_2}=0$, or there exists $\theta\in R$ such that $U_1=e^{i\theta}U_2$.
+}
+\toshProof{For any $\state{\psi}\in H_{data}$, there exists $\state{\xi(\psi)}\in  H_{program}$ that could depend on $\state{\psi}$ so that 
+
+\quad $G \state{\psi}\otimes\state{\chi} = U\state{\psi}\otimes\state{\xi(\psi)}$.
+
+So for any two states  $\state{\psi}$ and $\state{\phi}\in H_{data}$, we have $\bra{\phi}\otimes\bra{\chi}G^\dag G\state{\psi}\otimes\state{\chi}=\braket{\phi}{\psi}= \bra{\phi}U^\dag U\state{\psi}\braket{\xi(\phi)}{\xi(\psi)}$, which proves that $\braket{\xi(\phi)}{\xi(\psi)}=1$, and $\state{\xi(\psi)}=\state{\xi}$ actually does not depend on the state $\state{\psi}$.
+
+Now if you have $\state{\chi_1}$ implementing $U_1$ and $\state{\chi_2}$ implementing $U_2$, you have 
+
+\quad $G \state{\psi}\otimes\state{\chi_1} = U\state{\psi}\otimes\state{\xi_1}$, and $G \state{\psi}\otimes\state{\chi_2} = U\state{\psi}\otimes\state{\xi_2}$,
+ 
+ and taking the inner product we get $\braket{\chi_1}{\chi_2}=\bra{\psi}U_2^\dag U_1\state{\psi} \braket{\xi_1}{\xi_2}$. If $\braket{\xi_1}{\xi_2}$ is not zero, then we have $\bra{\psi}U_2^\dag U_1\state{\psi} = \braket{\chi_1}{\chi_2} / \braket{\xi_1}{\xi_2}$ with the rhs being independent of $\state{\psi}$ which means $U_2^\dag=U_1^{-1}$ modulo a phase factor. The other alternative is  $\braket{\xi_1}{\xi_2}$ to be zero which implies $ \braket{\chi_1}{\chi_2}$ to be zero as well.
+}
+\toshTableEnd
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Kochen-Specker paradox
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\toshTableBegin
+\toshTableTitle{Kochen-Specker paradox}
+\toshDefinition{Spin-1 matrices}{
+\smallskip
+
+$S_1 = \left( \begin{array}{ccc} 0 & 0 & 0 \\  0 & 0 & -i \\ 0 & i & 0 \end{array}\right)$\quad
+$S_2 = \left( \begin{array}{ccc} 0 & 0 & i \\  0 & 0 & 0 \\ -i & 0 & 0 \end{array}\right)$\quad
+$S_3 = \left( \begin{array}{ccc} 0 & -i & 0 \\  i & 0 & 0 \\ 0 & 0 & 0 \end{array}\right)$
+
+\smallskip
+
+For any vector $\vec{u}=(u_1, u_2, u_3)\in R^3$, $S_{\vec{u}}=\sum_j u_j S_j$
+}
+\toshProperty{Properties}{
+\smallskip
+ 
+\toshBlockStart
+	\toshBlockDesc{1}{$[S_1, S_2]=iS_3$, \quad$[S_2, S_3]=iS_1$, \quad $[S_3, S_1]=iS_2$}
+	\toshBlockDesc{2}{$[S^2_i, S^2_j]=0$,  for all $i$, $j$}
+	\toshBlockDesc{3}{$S^2_i$, has eigenvalues $0$ (rank 1) and $1$ (rank 2), for all $i$}
+	\toshBlockDesc{4}{$S_1^2+S_2^2+S_3^2 = 2\times\toshIdentity$}
+\toshBlockEnd
+
+}
+\toshProperty{1-0-1 rule}{
+For any orthonormal basis $\{ \vec{a}, \vec{b}, \vec{c}\}$ of $R^3$, the operators $S^2_{\vec{a}}$, $S^2_{\vec{b}}$ and $S^2_{\vec{c}}$ 
+ commute and their measurement yields the outcomes 1, 0, 1 in some order.
+}
+\toshProperty{Kochen-Specker paradox}{There exists no deterministic mapping $f: \vec{u} \in R^3\mapsto f(\vec{u})\in \{0,1\}$ that reproduces quantum mechanics prediction for $S^2_{\vec{u}}$ for any $\vec{u}\in R^3$.
+
+This result is usually referred to as another theorem (with Bell's inequality) going against hidden variable theories.
+}
+\toshProof{see for instance The Strong Free Will Theorem by Conway and Kochen, Notice of the AMS, Vol 56, Number 2 p 226}
+
+\toshTableEnd
+\bigskip
+
+ 
+\end{document}
